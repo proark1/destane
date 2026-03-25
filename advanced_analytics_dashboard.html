@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DESTANE | Analytics Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-high": "#2a2a2a",
+              "surface": "#131313",
+              "secondary-fixed": "#ffdea5",
+              "surface-container-lowest": "#0e0e0e",
+              "surface-container-low": "#1c1b1b",
+              "on-primary-fixed": "#241a00",
+              "on-primary-fixed-variant": "#574500",
+              "inverse-primary": "#735c00",
+              "surface-container-highest": "#353534",
+              "tertiary-fixed": "#ffdcbf",
+              "primary-fixed-dim": "#e9c349",
+              "surface-tint": "#e9c349",
+              "inverse-on-surface": "#313030",
+              "tertiary-fixed-dim": "#f1bc8c",
+              "outline": "#99907c",
+              "on-primary-container": "#554300",
+              "primary": "#f2ca50",
+              "surface-bright": "#3a3939",
+              "tertiary": "#fac493",
+              "on-tertiary": "#492905",
+              "on-tertiary-fixed": "#2d1600",
+              "surface-container": "#201f1f",
+              "inverse-surface": "#e5e2e1",
+              "on-tertiary-fixed-variant": "#633f19",
+              "on-secondary": "#412d00",
+              "on-secondary-fixed-variant": "#5d4201",
+              "on-surface-variant": "#d0c5af",
+              "outline-variant": "#4d4635",
+              "on-background": "#e5e2e1",
+              "secondary-fixed-dim": "#e9c176",
+              "primary-container": "#d4af37",
+              "on-surface": "#e5e2e1",
+              "on-secondary-fixed": "#261900",
+              "background": "#131313",
+              "secondary": "#e9c176",
+              "surface-variant": "#353534",
+              "on-error": "#690005",
+              "primary-fixed": "#ffe088",
+              "secondary-container": "#604403",
+              "error-container": "#93000a",
+              "error": "#ffb4ab",
+              "on-tertiary-container": "#613d17",
+              "on-secondary-container": "#dab36a",
+              "tertiary-container": "#dca97a",
+              "on-primary": "#3c2f00",
+              "surface-dim": "#131313",
+              "on-error-container": "#ffdad6"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-headline { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-card {
+            background: rgba(32, 31, 31, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(77, 70, 53, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary/30 min-h-screen">
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full w-64 border-r border-[#4d4635]/10 bg-[#0e0e0e] flex flex-col h-full py-6 z-40 hidden md:flex">
+<div class="px-6 mb-8">
+<h1 class="text-xl font-bold text-[#f2ca50] tracking-tighter">DESTANE</h1>
+</div>
+<div class="flex flex-col flex-1 space-y-1">
+<a class="text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['Plus_Jakarta_Sans'] text-sm tracking-tight">Dashboard</span>
+</a>
+<a class="text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-['Plus_Jakarta_Sans'] text-sm tracking-tight">Portfolio</span>
+</a>
+<a class="text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">movie_filter</span>
+<span class="font-['Plus_Jakarta_Sans'] text-sm tracking-tight">Marketplace</span>
+</a>
+<a class="bg-gradient-to-r from-[#f2ca50] to-[#d4af37] text-[#131313] font-bold rounded-md px-4 py-3 mx-2 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">insights</span>
+<span class="font-['Plus_Jakarta_Sans'] text-sm tracking-tight">Analytics</span>
+</a>
+<a class="text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Plus_Jakarta_Sans'] text-sm tracking-tight">Settings</span>
+</a>
+</div>
+<div class="mt-auto px-4 py-6 border-t border-outline-variant/10">
+<div class="flex items-center gap-3 px-2 mb-6">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary">person</span>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface">Cinematic Curator</p>
+<p class="text-[10px] text-primary uppercase tracking-widest">Premium Tier</p>
+</div>
+</div>
+<a class="text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-2 flex items-center gap-3 text-xs transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">help</span> Support
+            </a>
+<a class="text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-2 flex items-center gap-3 text-xs transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">logout</span> Logout
+            </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-64 min-h-screen relative">
+<!-- TopAppBar (Shared Component) -->
+<header class="sticky top-0 z-50 bg-[#131313]/80 backdrop-blur-xl border-b border-[#4d4635]/15 flex justify-between items-center w-full px-8 py-4 max-w-none">
+<div class="flex items-center gap-8">
+<div class="md:hidden text-2xl font-black tracking-tighter text-[#f2ca50]">DESTANE</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-[#f2ca50]/60 hover:text-[#f2ca50] transition-colors font-['Plus_Jakarta_Sans'] tracking-[-0.02em] font-bold uppercase text-[0.75rem]" href="#">Watch</a>
+<a class="text-[#f2ca50]/60 hover:text-[#f2ca50] transition-colors font-['Plus_Jakarta_Sans'] tracking-[-0.02em] font-bold uppercase text-[0.75rem]" href="#">Invest</a>
+<a class="text-[#f2ca50]/60 hover:text-[#f2ca50] transition-colors font-['Plus_Jakarta_Sans'] tracking-[-0.02em] font-bold uppercase text-[0.75rem]" href="#">Creators</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden lg:flex items-center bg-surface-container-lowest border border-outline-variant/20 rounded px-3 py-1.5">
+<span class="material-symbols-outlined text-on-surface-variant text-sm mr-2">search</span>
+<input class="bg-transparent border-none text-xs focus:ring-0 text-on-surface w-48" placeholder="Search Assets..." type="text"/>
+</div>
+<button class="p-2 text-primary/60 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="bg-gradient-to-r from-[#f2ca50] to-[#d4af37] text-[#131313] font-['Plus_Jakarta_Sans'] tracking-[-0.02em] font-bold uppercase text-[0.75rem] px-6 py-2 rounded-md active:scale-95 duration-200 ease-in-out">
+                    Connect Wallet
+                </button>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-8 max-w-7xl mx-auto">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+<div>
+<span class="text-[0.65rem] uppercase tracking-[0.3em] text-primary font-bold mb-2 block">Performance Portal</span>
+<h2 class="text-4xl md:text-5xl font-black text-on-surface tracking-tighter leading-none mb-4">Analytics Screen</h2>
+<p class="text-on-surface-variant max-w-lg leading-relaxed text-sm">Real-time cinematic asset performance, liquidity flows, and audience sentiment metrics for the elite Destane ecosystem.</p>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<!-- Period Filter -->
+<div class="flex bg-surface-container-low p-1 rounded-lg border border-outline-variant/10">
+<button class="px-4 py-1.5 text-[0.65rem] font-bold uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors">7D</button>
+<button class="px-4 py-1.5 text-[0.65rem] font-bold uppercase tracking-wider bg-surface-container-highest text-primary rounded shadow-sm">30D</button>
+<button class="px-4 py-1.5 text-[0.65rem] font-bold uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors">1Y</button>
+</div>
+<!-- Download CTA -->
+<button class="flex items-center gap-2 bg-surface-container-highest text-primary border border-primary/20 hover:bg-primary/10 transition-all px-5 py-2 rounded-md active:scale-95">
+<span class="material-symbols-outlined text-sm">download</span>
+<span class="text-[0.65rem] font-bold uppercase tracking-wider">Download Data</span>
+</button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Main Chart: Revenue Projection -->
+<div class="md:col-span-8 glass-card rounded-xl p-8 relative overflow-hidden">
+<div class="flex justify-between items-start mb-10">
+<div>
+<h3 class="text-lg font-bold text-on-surface mb-1">Revenue Projection vs Actual</h3>
+<p class="text-xs text-on-surface-variant">Global performance across all cinematic liquidity pools</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary shadow-[0_0_8px_rgba(242,202,80,0.5)]"></span>
+<span class="text-[10px] font-bold text-on-surface/60 uppercase">Actual</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-surface-container-highest border border-outline/30"></span>
+<span class="text-[10px] font-bold text-on-surface/60 uppercase">Projected</span>
+</div>
+</div>
+</div>
+<!-- Mock Chart Visualization -->
+<div class="h-64 flex items-end justify-between gap-2 relative">
+<!-- Horizontal Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-10">
+<div class="border-t border-on-surface"></div>
+<div class="border-t border-on-surface"></div>
+<div class="border-t border-on-surface"></div>
+<div class="border-t border-on-surface"></div>
+</div>
+<!-- Chart Bars -->
+<div class="flex-1 flex flex-col justify-end items-center gap-1">
+<div class="w-full bg-surface-container-highest rounded-t-sm h-[60%]"></div>
+<div class="w-full bg-gradient-to-t from-primary/20 to-primary rounded-t-sm h-[45%] -mt-10 relative z-10 group cursor-pointer hover:brightness-110">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-surface-container-highest text-primary text-[10px] px-2 py-1 rounded border border-primary/30 whitespace-nowrap">$4.2M</div>
+</div>
+<span class="text-[9px] uppercase tracking-tighter mt-2 text-on-surface-variant">Jan</span>
+</div>
+<div class="flex-1 flex flex-col justify-end items-center gap-1">
+<div class="w-full bg-surface-container-highest rounded-t-sm h-[70%]"></div>
+<div class="w-full bg-gradient-to-t from-primary/20 to-primary rounded-t-sm h-[55%] -mt-10 relative z-10"></div>
+<span class="text-[9px] uppercase tracking-tighter mt-2 text-on-surface-variant">Feb</span>
+</div>
+<div class="flex-1 flex flex-col justify-end items-center gap-1">
+<div class="w-full bg-surface-container-highest rounded-t-sm h-[65%]"></div>
+<div class="w-full bg-gradient-to-t from-primary/20 to-primary rounded-t-sm h-[75%] -mt-10 relative z-10"></div>
+<span class="text-[9px] uppercase tracking-tighter mt-2 text-on-surface-variant">Mar</span>
+</div>
+<div class="flex-1 flex flex-col justify-end items-center gap-1">
+<div class="w-full bg-surface-container-highest rounded-t-sm h-[80%]"></div>
+<div class="w-full bg-gradient-to-t from-primary/20 to-primary rounded-t-sm h-[65%] -mt-10 relative z-10"></div>
+<span class="text-[9px] uppercase tracking-tighter mt-2 text-on-surface-variant">Apr</span>
+</div>
+<div class="flex-1 flex flex-col justify-end items-center gap-1">
+<div class="w-full bg-surface-container-highest rounded-t-sm h-[55%]"></div>
+<div class="w-full bg-gradient-to-t from-primary/20 to-primary rounded-t-sm h-[85%] -mt-10 relative z-10"></div>
+<span class="text-[9px] uppercase tracking-tighter mt-2 text-on-surface-variant">May</span>
+</div>
+<div class="flex-1 flex flex-col justify-end items-center gap-1">
+<div class="w-full bg-surface-container-highest rounded-t-sm h-[90%]"></div>
+<div class="w-full bg-gradient-to-t from-primary/20 to-primary rounded-t-sm h-[88%] -mt-10 relative z-10"></div>
+<span class="text-[9px] uppercase tracking-tighter mt-2 text-on-surface-variant">Jun</span>
+</div>
+</div>
+</div>
+<!-- Marketplace Snapshot: Token Trading Volume -->
+<div class="md:col-span-4 flex flex-col gap-6">
+<div class="glass-card rounded-xl p-6 flex-1">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-xs font-bold uppercase tracking-widest text-primary">Token Trading Volume</h3>
+<span class="material-symbols-outlined text-primary/40 text-sm">swap_vert</span>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest/50 rounded-lg">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">A</div>
+<div>
+<p class="text-xs font-bold text-on-surface">Aeon Prime</p>
+<p class="text-[9px] text-on-surface-variant">Sci-Fi Thriller</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-on-surface">$124.5k</p>
+<p class="text-[9px] text-primary">+12.4%</p>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest/50 rounded-lg">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-tertiary/10 flex items-center justify-center text-tertiary font-bold text-xs">V</div>
+<div>
+<p class="text-xs font-bold text-on-surface">Velvet Noir</p>
+<p class="text-[9px] text-on-surface-variant">Indie Drama</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-on-surface">$89.2k</p>
+<p class="text-[9px] text-error">-2.1%</p>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest/50 rounded-lg">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">G</div>
+<div>
+<p class="text-xs font-bold text-on-surface">Glitch City</p>
+<p class="text-[9px] text-on-surface-variant">Anime Core</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-on-surface">$256.8k</p>
+<p class="text-[9px] text-primary">+45.8%</p>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-card rounded-xl p-6 bg-gradient-to-br from-surface-container to-surface-container-low">
+<h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-4">Market Liquidity</h3>
+<div class="flex items-end gap-2 mb-2">
+<span class="text-3xl font-black text-on-surface tracking-tighter">$14.2M</span>
+<span class="text-[10px] font-bold text-primary mb-1 pb-0.5">ESTIMATED</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full w-2/3 bg-gradient-to-r from-primary to-tertiary shadow-[0_0_10px_rgba(242,202,80,0.3)]"></div>
+</div>
+<p class="text-[9px] text-on-surface-variant mt-2">Current pool depth exceeds previous 30D average by 18%.</p>
+</div>
+</div>
+<!-- Full Width: Audience Sentiment Heatmap -->
+<div class="md:col-span-12 glass-card rounded-xl p-8">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h3 class="text-lg font-bold text-on-surface">Audience Sentiment Heatmap</h3>
+<p class="text-xs text-on-surface-variant">Global engagement intensity and community resonance indices</p>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-on-surface/40 uppercase">Cold</span>
+<div class="flex h-2 w-32 rounded-full overflow-hidden">
+<div class="w-1/4 h-full bg-[#131313]"></div>
+<div class="w-1/4 h-full bg-[#4d4635]"></div>
+<div class="w-1/4 h-full bg-[#d4af37]"></div>
+<div class="w-1/4 h-full bg-[#f2ca50]"></div>
+</div>
+<span class="text-[10px] font-bold text-on-surface/40 uppercase">Peak</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-6 md:grid-cols-12 gap-2 h-48">
+<!-- Heatmap Cells -->
+<div class="bg-surface-container-highest/20 rounded-sm"></div>
+<div class="bg-surface-container-highest/40 rounded-sm"></div>
+<div class="bg-primary/10 rounded-sm"></div>
+<div class="bg-primary/20 rounded-sm"></div>
+<div class="bg-primary/40 rounded-sm"></div>
+<div class="bg-primary/60 rounded-sm"></div>
+<div class="bg-primary/80 rounded-sm border border-primary/30"></div>
+<div class="bg-primary rounded-sm border border-white/10 shadow-[0_0_15px_rgba(242,202,80,0.4)]"></div>
+<div class="bg-primary/70 rounded-sm"></div>
+<div class="bg-primary/50 rounded-sm"></div>
+<div class="bg-primary/30 rounded-sm"></div>
+<div class="bg-primary/10 rounded-sm"></div>
+<div class="bg-surface-container-highest/10 rounded-sm"></div>
+<div class="bg-surface-container-highest/30 rounded-sm"></div>
+<div class="bg-primary/20 rounded-sm"></div>
+<div class="bg-primary/50 rounded-sm"></div>
+<div class="bg-primary/70 rounded-sm"></div>
+<div class="bg-primary/90 rounded-sm border border-white/10 shadow-[0_0_15px_rgba(242,202,80,0.3)]"></div>
+<div class="bg-primary rounded-sm border border-white/10"></div>
+<div class="bg-primary/80 rounded-sm"></div>
+<div class="bg-primary/60 rounded-sm"></div>
+<div class="bg-primary/40 rounded-sm"></div>
+<div class="bg-primary/20 rounded-sm"></div>
+<div class="bg-surface-container-highest/10 rounded-sm"></div>
+<div class="bg-surface-container-highest/20 rounded-sm"></div>
+<div class="bg-primary/10 rounded-sm"></div>
+<div class="bg-primary/30 rounded-sm"></div>
+<div class="bg-primary/60 rounded-sm"></div>
+<div class="bg-primary/80 rounded-sm"></div>
+<div class="bg-primary/90 rounded-sm border border-white/10"></div>
+<div class="bg-primary/70 rounded-sm"></div>
+<div class="bg-primary/50 rounded-sm"></div>
+<div class="bg-primary/30 rounded-sm"></div>
+<div class="bg-primary/10 rounded-sm"></div>
+<div class="bg-surface-container-highest/30 rounded-sm"></div>
+<div class="bg-surface-container-highest/10 rounded-sm"></div>
+</div>
+<div class="mt-6 flex flex-wrap gap-8">
+<div class="flex items-center gap-3">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Sentiment Index:</span>
+<span class="text-sm font-black text-primary">8.4 / 10</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Viral Velocity:</span>
+<span class="text-sm font-black text-tertiary">Extreme</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Social Mention Peak:</span>
+<span class="text-sm font-black text-on-surface">2.4M / hr</span>
+</div>
+</div>
+</div>
+<!-- Asset Detail Cards -->
+<div class="md:col-span-6 glass-card rounded-xl p-6 flex items-center gap-6 group hover:bg-surface-container-high transition-all">
+<div class="w-24 h-32 rounded-lg bg-surface-container-highest overflow-hidden relative">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="cinematic film production still with dramatic lighting and high contrast shadows cinematic mood gold tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZvOJY8DPAffSwXqrwZ50kYnvTSFOfFlCcWO946pJZfVtNh5VCYxtm3WH6hubGJ8Vnx8nL0qSuhNeKiu73VoJjullmbRK76XQ8-ShURtfC4t6Dgf84OWG80IUS0zlMM8MMLdgd1JpwRsrQx3EHUKyAMDkQfK2SI81U8Vk10wzz_PjbvN7aGC3-ulFQcNEK4C6c8FvsGbrh9yYOJvFn4hLlcoSXmjPq5TNocxcGhehirmEO-UbJ3YfcPcoWLU8FKv-_FNjK3oT-VQ"/>
+</div>
+<div class="flex-1">
+<span class="text-[9px] font-bold text-primary uppercase tracking-[0.2em]">Top Performer</span>
+<h4 class="text-lg font-bold text-on-surface mb-2 tracking-tight">The Gilded Horizon</h4>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="text-[9px] text-on-surface-variant uppercase">Current Floor</p>
+<p class="text-sm font-bold text-on-surface">4.82 ETH</p>
+</div>
+<div>
+<p class="text-[9px] text-on-surface-variant uppercase">APY (Realized)</p>
+<p class="text-sm font-bold text-primary">24.5%</p>
+</div>
+</div>
+</div>
+</div>
+<div class="md:col-span-6 glass-card rounded-xl p-6 flex items-center gap-6 group hover:bg-surface-container-high transition-all">
+<div class="w-24 h-32 rounded-lg bg-surface-container-highest overflow-hidden relative">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="abstract digital art showing glowing particles of light in dark space warm gold and amber color palette" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy693Y4cGYrWDxmgejNUjoHmT9jToPWtPf4GjlPNkIHQx76NzGz2dNkd4X0h70Cap6iJ6zp8jjXYsLIaB9CnC9070ecws4Wb71nNpEoUfcaDUXXt3s2Lz0IU_kfGYtzc3sDkexHH87m6HI3qrGiVuY2-VCwe_HOJtGYRVoux-O8d9SLErRUX7UhgcvVwrZuh_BhLgzT4GnEzSqtpX1G-YWg3FZYAUntzXMFMtDjyBWfpQuiylCV3mU69ZCsfR8isahtLwFkv25xg"/>
+</div>
+<div class="flex-1">
+<span class="text-[9px] font-bold text-tertiary uppercase tracking-[0.2em]">High Growth</span>
+<h4 class="text-lg font-bold text-on-surface mb-2 tracking-tight">Digital Afterlife v2</h4>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="text-[9px] text-on-surface-variant uppercase">Current Floor</p>
+<p class="text-sm font-bold text-on-surface">1.15 ETH</p>
+</div>
+<div>
+<p class="text-[9px] text-on-surface-variant uppercase">APY (Realized)</p>
+<p class="text-sm font-bold text-primary">48.2%</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Spacer -->
+<div class="h-16"></div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Shared Component - Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-[#131313]/90 backdrop-blur-xl border-t border-outline-variant/20 flex justify-around items-center py-3 z-50">
+<a class="flex flex-col items-center gap-1 text-[#f2ca50]/60" href="#">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<span class="text-[10px] uppercase font-bold tracking-tighter">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#f2ca50]" href="#">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">insights</span>
+<span class="text-[10px] uppercase font-bold tracking-tighter">Analytics</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#f2ca50]/60" href="#">
+<span class="material-symbols-outlined text-xl">movie_filter</span>
+<span class="text-[10px] uppercase font-bold tracking-tighter">Assets</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#f2ca50]/60" href="#">
+<span class="material-symbols-outlined text-xl">account_balance_wallet</span>
+<span class="text-[10px] uppercase font-bold tracking-tighter">Wallet</span>
+</a>
+</nav>
+</body></html>

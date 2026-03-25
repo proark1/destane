@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DESTANE | Platform Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-high": "#2a2a2a",
+              "surface": "#131313",
+              "secondary-fixed": "#ffdea5",
+              "surface-container-lowest": "#0e0e0e",
+              "surface-container-low": "#1c1b1b",
+              "on-primary-fixed": "#241a00",
+              "on-primary-fixed-variant": "#574500",
+              "inverse-primary": "#735c00",
+              "surface-container-highest": "#353534",
+              "tertiary-fixed": "#ffdcbf",
+              "primary-fixed-dim": "#e9c349",
+              "surface-tint": "#e9c349",
+              "inverse-on-surface": "#313030",
+              "tertiary-fixed-dim": "#f1bc8c",
+              "outline": "#99907c",
+              "on-primary-container": "#554300",
+              "primary": "#f2ca50",
+              "surface-bright": "#3a3939",
+              "tertiary": "#fac493",
+              "on-tertiary": "#492905",
+              "on-tertiary-fixed": "#2d1600",
+              "surface-container": "#201f1f",
+              "inverse-surface": "#e5e2e1",
+              "on-tertiary-fixed-variant": "#633f19",
+              "on-secondary": "#412d00",
+              "on-secondary-fixed-variant": "#5d4201",
+              "on-surface-variant": "#d0c5af",
+              "outline-variant": "#4d4635",
+              "on-background": "#e5e2e1",
+              "secondary-fixed-dim": "#e9c176",
+              "primary-container": "#d4af37",
+              "on-surface": "#e5e2e1",
+              "on-secondary-fixed": "#261900",
+              "background": "#131313",
+              "secondary": "#e9c176",
+              "surface-variant": "#353534",
+              "on-error": "#690005",
+              "primary-fixed": "#ffe088",
+              "secondary-container": "#604403",
+              "error-container": "#93000a",
+              "error": "#ffb4ab",
+              "on-tertiary-container": "#613d17",
+              "on-secondary-container": "#dab36a",
+              "tertiary-container": "#dca97a",
+              "on-primary": "#3c2f00",
+              "surface-dim": "#131313",
+              "on-error-container": "#ffdad6"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(32, 31, 31, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .gold-gradient {
+            background: linear-gradient(135deg, #f2ca50 0%, #d4af37 100%);
+        }
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<header class="bg-[#131313]/80 backdrop-blur-xl border-b border-[#4d4635]/15 docked full-width top-0 z-50 shadow-[0_20px_40px_rgba(233,195,73,0.05)] sticky">
+<div class="flex justify-between items-center w-full px-8 py-4 max-w-none">
+<div class="text-2xl font-black tracking-tighter text-[#f2ca50]">DESTANE</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="font-['Plus_Jakarta_Sans'] tracking-[-0.02em] font-bold uppercase text-[0.75rem] text-[#f2ca50]/60 hover:text-[#f2ca50] transition-colors" href="#">Watch</a>
+<a class="font-['Plus_Jakarta_Sans'] tracking-[-0.02em] font-bold uppercase text-[0.75rem] text-[#f2ca50]/60 hover:text-[#f2ca50] transition-colors" href="#">Invest</a>
+<a class="font-['Plus_Jakarta_Sans'] tracking-[-0.02em] font-bold uppercase text-[0.75rem] text-[#f2ca50]/60 hover:text-[#f2ca50] transition-colors" href="#">Creators</a>
+</nav>
+<div class="flex items-center gap-6">
+<button class="p-2 text-[#f2ca50]/60 hover:text-[#f2ca50] hover:bg-[#f2ca50]/10 transition-all duration-300 rounded-lg">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="gold-gradient text-[#131313] font-['Plus_Jakarta_Sans'] tracking-[-0.02em] font-bold uppercase text-[0.75rem] px-6 py-2 rounded-md active:scale-95 duration-200 ease-in-out">
+                    Connect Wallet
+                </button>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 border-r border-[#4d4635]/10 bg-[#0e0e0e] z-40 hidden lg:block pt-24">
+<div class="flex flex-col h-full py-6">
+<div class="px-6 mb-10">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 rounded-lg overflow-hidden border border-primary/20">
+<img alt="User Profile Gold Avatar" class="w-full h-full object-cover" data-alt="Modern abstract digital art with golden textures and deep shadows for user profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmP_zgNnwZ6DlRqoXXbkwma5cSLdk0g7Y2m1_0SEJxocadof9qrU3Uo73LpFPrQDw8O4FmjY8imFlzAl375i5MMbKEEYVCS3DKYKGA3qv1Wg8hhROvplAVRulLapKHshu2X3MgGWCtF_GhlgMY0T45RQ17UvjQZFvw_Ge1u6GKbn7eSL0KPOBHB2qtk3cFmQosuO6qtj2WJLXoIfJoUhhJV-DbYKaMqLk_2RhUL2P33zehgNkEfmFXq-gz447jnPccNfmjwaEdTQ"/>
+</div>
+<div>
+<h3 class="font-headline font-bold text-sm text-[#f2ca50]">Cinematic Curator</h3>
+<p class="text-[10px] uppercase tracking-widest text-[#f2ca50]/50">Premium Tier</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md font-['Plus_Jakarta_Sans'] text-sm tracking-tight group" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md font-['Plus_Jakarta_Sans'] text-sm tracking-tight group" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span>Portfolio</span>
+</a>
+<a class="flex items-center gap-3 text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md font-['Plus_Jakarta_Sans'] text-sm tracking-tight group" href="#">
+<span class="material-symbols-outlined" data-icon="movie_filter">movie_filter</span>
+<span>Marketplace</span>
+</a>
+<a class="flex items-center gap-3 text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md font-['Plus_Jakarta_Sans'] text-sm tracking-tight group" href="#">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 bg-gradient-to-r from-[#f2ca50] to-[#d4af37] text-[#131313] font-bold rounded-md px-4 py-3 mx-2 font-['Plus_Jakarta_Sans'] text-sm tracking-tight translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto space-y-1 pt-6 border-t border-[#4d4635]/10">
+<a class="flex items-center gap-3 text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md font-['Plus_Jakarta_Sans'] text-sm tracking-tight" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md font-['Plus_Jakarta_Sans'] text-sm tracking-tight" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 lg:ml-64 p-8 lg:p-16">
+<header class="mb-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="text-5xl font-headline font-extrabold tracking-tighter text-on-surface mb-2">Platform Settings</h1>
+<p class="text-on-surface-variant max-w-lg font-body">Manage your architectural digital assets, security protocols, and cinematic investment preferences.</p>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-low p-4 rounded-xl border border-outline-variant/10">
+<div class="p-2 rounded-lg bg-primary/10">
+<span class="material-symbols-outlined text-primary" data-icon="verified_user">verified_user</span>
+</div>
+<div>
+<span class="text-[10px] uppercase tracking-[0.1em] text-on-surface-variant font-bold">Verification Status</span>
+<div class="flex items-center gap-2">
+<span class="text-sm font-bold text-on-surface">KYC Level 2</span>
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Bento Grid Settings Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Profile Section -->
+<section class="md:col-span-8 glass-panel rounded-xl p-8 border border-outline-variant/10">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-xl font-headline font-bold text-on-surface">Personal Profile</h2>
+<button class="text-primary text-xs font-bold uppercase tracking-widest hover:underline">Edit Info</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+<div class="space-y-1">
+<label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-semibold">Display Name</label>
+<p class="text-on-surface font-medium py-2 border-b border-outline-variant/20">Alexander Sterling</p>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-semibold">Email Address</label>
+<p class="text-on-surface font-medium py-2 border-b border-outline-variant/20">a.sterling@curator.destane.io</p>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-semibold">Bio</label>
+<p class="text-on-surface-variant text-sm italic py-2">"Investing in the future of cinematic storytelling and tokenized film production."</p>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-semibold">Location</label>
+<p class="text-on-surface font-medium py-2 border-b border-outline-variant/20">Dubai, UAE</p>
+</div>
+</div>
+</section>
+<!-- 2FA & Security -->
+<section class="md:col-span-4 bg-surface-container-low rounded-xl p-8 border border-outline-variant/10 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 rounded-lg bg-tertiary/10 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-tertiary" data-icon="security">security</span>
+</div>
+<h2 class="text-xl font-headline font-bold text-on-surface mb-2">Two-Factor Auth</h2>
+<p class="text-sm text-on-surface-variant mb-6 leading-relaxed">Enhance your account security by requiring a mobile verification code for all transactions.</p>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container rounded-lg">
+<span class="text-sm font-bold text-primary">STATUS: ACTIVE</span>
+<div class="w-10 h-5 bg-primary/20 rounded-full relative">
+<div class="absolute right-1 top-1 w-3 h-3 bg-primary rounded-full"></div>
+</div>
+</div>
+</section>
+<!-- Connected Wallets -->
+<section class="md:col-span-12 glass-panel rounded-xl p-8 border border-outline-variant/10">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+<div>
+<h2 class="text-xl font-headline font-bold text-on-surface">Connected Wallets</h2>
+<p class="text-sm text-on-surface-variant">Manage your funding sources and payout destinations.</p>
+</div>
+<button class="flex items-center justify-center gap-2 border border-primary/30 text-primary px-6 py-3 rounded-md hover:bg-primary/5 transition-all text-sm font-bold uppercase tracking-widest">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                            Link New Wallet
+                        </button>
+</div>
+<div class="space-y-4">
+<!-- Wallet Item 1 -->
+<div class="flex items-center justify-between p-5 bg-surface-container-lowest rounded-xl border border-outline-variant/5 hover:border-primary/20 transition-all group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="account_balance_wallet" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Primary MetaMask</h4>
+<p class="text-xs font-mono text-on-surface-variant">0x71C...8eE2 <span class="ml-2 px-1.5 py-0.5 bg-surface-container-highest rounded text-[10px] uppercase font-sans">Default</span></p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold text-on-surface">12.45 ETH</p>
+<p class="text-[10px] text-on-surface-variant">≈ $31,402.10</p>
+</div>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<!-- Wallet Item 2 -->
+<div class="flex items-center justify-between p-5 bg-surface-container-lowest rounded-xl border border-outline-variant/5 hover:border-primary/20 transition-all group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Institutional Ledger</h4>
+<p class="text-xs font-mono text-on-surface-variant">0x12A...9c4F</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold text-on-surface">45,000.00 USDC</p>
+<p class="text-[10px] text-on-surface-variant">≈ $45,000.00</p>
+</div>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Notification Preferences -->
+<section class="md:col-span-6 bg-surface-container-low rounded-xl p-8 border border-outline-variant/10">
+<h2 class="text-xl font-headline font-bold text-on-surface mb-6">Notifications</h2>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div>
+<p class="font-bold text-sm text-on-surface">Investment Alerts</p>
+<p class="text-xs text-on-surface-variant">Notify me when new cinematic rounds open.</p>
+</div>
+<div class="w-10 h-5 bg-primary rounded-full relative">
+<div class="absolute right-1 top-1 w-3 h-3 bg-on-primary rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="font-bold text-sm text-on-surface">Market Shifts</p>
+<p class="text-xs text-on-surface-variant">Daily summary of token performance.</p>
+</div>
+<div class="w-10 h-5 bg-surface-container-highest rounded-full relative">
+<div class="absolute left-1 top-1 w-3 h-3 bg-on-surface-variant rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="font-bold text-sm text-on-surface">Newsletter</p>
+<p class="text-xs text-on-surface-variant">Behind the scenes and creator updates.</p>
+</div>
+<div class="w-10 h-5 bg-primary rounded-full relative">
+<div class="absolute right-1 top-1 w-3 h-3 bg-on-primary rounded-full"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Privacy & Data -->
+<section class="md:col-span-6 bg-surface-container-low rounded-xl p-8 border border-outline-variant/10">
+<h2 class="text-xl font-headline font-bold text-on-surface mb-6">Privacy &amp; Data</h2>
+<div class="space-y-4">
+<button class="w-full flex items-center justify-between p-4 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all text-left">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="download">download</span>
+<span class="text-sm font-medium">Download My Portfolio Data</span>
+</div>
+<span class="material-symbols-outlined text-xs text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all text-left">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="visibility_off">visibility_off</span>
+<span class="text-sm font-medium">Anonymize Profile in Marketplace</span>
+</div>
+<div class="w-10 h-5 bg-surface-container-highest rounded-full relative">
+<div class="absolute left-1 top-1 w-3 h-3 bg-on-surface-variant rounded-full"></div>
+</div>
+</button>
+<button class="w-full flex items-center justify-between p-4 rounded-lg bg-error-container/10 border border-error/10 hover:bg-error-container/20 transition-all text-left group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error" data-icon="no_accounts">no_accounts</span>
+<span class="text-sm font-bold text-error">Deactivate Curator Account</span>
+</div>
+</button>
+</div>
+</section>
+</div>
+<!-- Footer Meta -->
+<footer class="mt-16 pt-8 border-t border-outline-variant/10 flex flex-col sm:flex-row justify-between items-center gap-4">
+<p class="text-xs text-on-surface-variant">© 2024 DESTANE DIGITAL ASSETS. ALL RIGHTS RESERVED.</p>
+<div class="flex gap-6">
+<a class="text-[10px] uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="text-[10px] uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+</div>
+</footer>
+</main>
+</div>
+<!-- Mobile Navigation Shell -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full bg-[#131313]/90 backdrop-blur-xl border-t border-[#4d4635]/15 flex justify-around items-center py-4 z-50">
+<button class="flex flex-col items-center gap-1 text-[#f2ca50]/50">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[8px] uppercase font-bold">Dash</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-[#f2ca50]/50">
+<span class="material-symbols-outlined" data-icon="movie_filter">movie_filter</span>
+<span class="text-[8px] uppercase font-bold">Market</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-[#f2ca50]">
+<span class="material-symbols-outlined" data-icon="settings" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="text-[8px] uppercase font-bold">Settings</span>
+</button>
+</nav>
+</body></html>
