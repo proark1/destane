@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import DashboardLayout from "@/components/DashboardLayout";
 import { getSession } from "@/lib/auth";
 
@@ -43,6 +44,15 @@ export default async function SettingsPage() {
             <span className="material-symbols-outlined text-primary text-xl">person</span>
             Personal Profile
           </h3>
+          <div className="flex items-center gap-6 mb-8">
+            <div className="w-20 h-20 rounded-lg overflow-hidden border border-outline-variant/20">
+              <img src="/images/ui/empty-avatar.svg" alt="Profile" className="w-full h-full object-cover" />
+            </div>
+            <div>
+              <p className="text-lg font-bold text-on-surface font-[family-name:var(--font-plus-jakarta)]">Alexander Sterling</p>
+              <p className="text-xs text-on-surface-variant">Premium Tier Investor</p>
+            </div>
+          </div>
           <div className="space-y-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>

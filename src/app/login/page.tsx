@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { useState } from "react";
 import Link from "next/link";
@@ -36,8 +37,10 @@ export default function LoginPage() {
     <div className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden bg-surface-container-lowest">
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 blur-[120px] rounded-full" />
       <div className="absolute bottom-[-5%] right-[-5%] w-[30%] h-[30%] bg-tertiary/5 blur-[100px] rounded-full" />
+      <img src="/images/ui/auth-bg.svg" alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none" aria-hidden="true" />
 
       <div className="mb-12 text-center relative z-10">
+        <img src="/images/ui/destane-logo.svg" alt="" className="w-12 h-12 mb-4" />
         <Link href="/" className="font-[family-name:var(--font-plus-jakarta)] font-extrabold text-2xl tracking-tighter text-primary">
           DESTANE
         </Link>

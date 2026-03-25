@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import DashboardLayout from "@/components/DashboardLayout";
 import { getSession } from "@/lib/auth";
 
@@ -133,11 +134,8 @@ export default async function ProducerPage() {
             <h3 className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold tracking-tight mb-4">
               Audience Heatmap
             </h3>
-            <div className="aspect-[16/9] bg-surface-container-highest/50 rounded-lg flex items-center justify-center">
-              <div className="text-center">
-                <span className="material-symbols-outlined text-on-surface-variant/30 text-4xl">public</span>
-                <p className="font-[family-name:var(--font-inter)] text-xs text-on-surface-variant/40 mt-2">Interactive map loading...</p>
-              </div>
+            <div className="aspect-[16/9] bg-surface-container-highest/50 rounded-lg flex items-center justify-center relative overflow-hidden">
+              <img src="/images/ui/world-map.svg" alt="Global Interest Map" className="w-full h-full object-contain opacity-40" />
             </div>
             <div className="flex gap-4 mt-4">
               {[{ region: "North America", pct: "42%" }, { region: "Europe", pct: "31%" }, { region: "Asia-Pacific", pct: "19%" }].map((r) => (

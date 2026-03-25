@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import DashboardLayout from "@/components/DashboardLayout";
 import { getSession } from "@/lib/auth";
 
@@ -76,9 +77,14 @@ export default async function AnalyticsPage() {
                 { token: "NEX-X", name: "Neon Exodus", price: "$5.10", change: "-2.1%", volume: "$620K", positive: false },
               ].map((t) => (
                 <div key={t.token} className="flex items-center justify-between py-3 border-b border-outline-variant/10 last:border-0">
-                  <div>
-                    <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold">{t.token}</p>
-                    <p className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant">{t.name}</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-surface-container-highest rounded overflow-hidden flex-shrink-0 relative">
+                      <img src="/images/ui/film-reel.svg" alt="" className="w-full h-full object-cover opacity-40" />
+                    </div>
+                    <div>
+                      <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold">{t.token}</p>
+                      <p className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant">{t.name}</p>
+                    </div>
                   </div>
                   <div className="text-right">
                     <p className="font-[family-name:var(--font-inter)] text-sm font-medium">{t.price}</p>
@@ -147,7 +153,10 @@ export default async function AnalyticsPage() {
               <span className="font-[family-name:var(--font-inter)] text-[9px] text-on-surface-variant/40">High</span>
             </div>
             <div className="mt-3 pt-3 border-t border-outline-variant/10 text-center">
-              <p className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold text-primary">87%</p>
+              <div className="flex items-center justify-center gap-2">
+                <img src="/images/ui/shield-verified.svg" alt="Verified" className="w-4 h-4 opacity-60" />
+                <p className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold text-primary">87%</p>
+              </div>
               <p className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant">Overall Positive Sentiment</p>
             </div>
           </div>

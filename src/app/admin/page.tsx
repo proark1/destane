@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import DashboardLayout from "@/components/DashboardLayout";
 import { getSession } from "@/lib/auth";
 
@@ -109,8 +110,15 @@ export default async function AdminPage() {
                 {approvalQueue.map((item) => (
                   <tr key={item.project} className="border-t border-outline-variant/10 hover:bg-surface-container-low/50 transition-colors">
                     <td className="px-6 py-4">
-                      <p className="font-[family-name:var(--font-plus-jakarta)] font-bold">{item.project}</p>
-                      <p className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant">{item.producer}</p>
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-surface-container-highest rounded overflow-hidden flex-shrink-0">
+                          <img src="/images/ui/film-reel.svg" alt="" className="w-full h-full object-cover" />
+                        </div>
+                        <div>
+                          <p className="font-[family-name:var(--font-plus-jakarta)] font-bold">{item.project}</p>
+                          <p className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant">{item.producer}</p>
+                        </div>
+                      </div>
                     </td>
                     <td className="px-6 py-4 font-[family-name:var(--font-inter)] font-medium">{item.goal}</td>
                     <td className="px-6 py-4 font-[family-name:var(--font-inter)] text-on-surface-variant text-xs">{item.tokenStructure}</td>

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" fill="none">
+  <rect width="1000" height="500" fill="transparent"/>
+  <!-- Simplified continent outlines -->
+  <g opacity="0.15" fill="#4d4635">
+    <!-- North America -->
+    <path d="M150 80 L250 70 L280 90 L290 130 L270 170 L240 180 L220 200 L200 210 L170 200 L150 210 L130 190 L120 160 L110 130 L120 100Z"/>
+    <!-- South America -->
+    <path d="M220 230 L250 220 L270 240 L280 280 L275 320 L260 360 L240 380 L220 370 L210 340 L200 300 L210 260Z"/>
+    <!-- Europe -->
+    <path d="M440 70 L490 60 L510 80 L520 100 L510 120 L490 130 L470 125 L450 110 L440 90Z"/>
+    <!-- Africa -->
+    <path d="M460 150 L510 140 L530 160 L540 200 L535 250 L520 290 L500 310 L480 300 L460 270 L450 230 L455 190Z"/>
+    <!-- Asia -->
+    <path d="M530 60 L650 50 L720 70 L760 100 L780 130 L770 160 L740 170 L700 165 L660 150 L620 140 L580 130 L550 110 L530 90Z"/>
+    <!-- Australia -->
+    <path d="M740 280 L790 270 L820 285 L830 310 L810 330 L780 335 L750 320 L740 300Z"/>
+  </g>
+  <!-- Grid lines -->
+  <g stroke="#4d4635" stroke-width="0.3" opacity="0.08">
+    <line x1="0" y1="125" x2="1000" y2="125"/>
+    <line x1="0" y1="250" x2="1000" y2="250"/>
+    <line x1="0" y1="375" x2="1000" y2="375"/>
+    <line x1="250" y1="0" x2="250" y2="500"/>
+    <line x1="500" y1="0" x2="500" y2="500"/>
+    <line x1="750" y1="0" x2="750" y2="500"/>
+  </g>
+</svg>

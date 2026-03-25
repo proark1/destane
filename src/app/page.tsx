@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -44,8 +45,10 @@ export default function Home() {
         <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-tertiary/5" />
         <div className="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-primary/5 blur-[150px] rounded-full" />
         <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-tertiary/5 blur-[120px] rounded-full" />
+        <img src="/images/ui/hero-pattern.svg" alt="" className="absolute inset-0 w-full h-full object-cover mix-blend-screen pointer-events-none" aria-hidden="true" />
 
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+          <img src="/images/ui/destane-logo.svg" alt="" className="w-14 h-14 mx-auto mb-6" />
           <p className="font-[family-name:var(--font-inter)] text-[10px] md:text-xs uppercase tracking-[0.3em] text-primary mb-6">
             The Future of Film Finance
           </p>
