@@ -107,9 +107,11 @@
 <div class="relative hidden lg:block">
 <input class="bg-surface-container-lowest border border-outline-variant/30 rounded-md px-4 py-2 text-sm w-64 focus:ring-1 focus:ring-primary outline-none transition-all placeholder:opacity-30" placeholder="Search parameters..." type="text"/>
 </div>
-<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold px-5 py-2 rounded-md hover:scale-95 transition-transform duration-300">
-                Connect Wallet
-            </button>
+<a href="login.html" data-auth="guest" class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-5 py-2 rounded-md font-bold text-sm tracking-tight no-underline">Sign In</a>
+<div data-auth="user" style="display:none" class="flex items-center gap-3">
+<span class="text-on-surface-variant text-xs">Welcome, <span data-auth="username" class="text-primary font-bold"></span></span>
+<button data-auth="logout" class="bg-surface-container-highest text-on-surface-variant px-4 py-2 rounded-md text-xs font-bold hover:text-primary transition-colors">Sign Out</button>
+</div>
 </div>
 </header>
 <!-- SideNavBar -->
@@ -141,6 +143,11 @@
                 Settings
             </a>
 </nav>
+<div data-auth="user" style="display:none" class="px-6 py-4 border-t border-outline-variant/10 mb-4">
+<p class="text-[10px] text-on-surface-variant/60 uppercase tracking-widest">Signed in as</p>
+<p data-auth="username" class="text-sm text-primary font-bold mt-1"></p>
+<button data-auth="logout" class="mt-2 text-xs text-on-surface-variant/40 hover:text-primary transition-colors">Sign Out</button>
+</div>
 <div class="px-6 mt-auto">
 <button class="w-full bg-surface-container-highest border border-primary/30 text-primary py-3 rounded-md text-xs font-bold uppercase tracking-widest hover:bg-primary/10 transition-colors">
                 Mint New Token
@@ -452,5 +459,6 @@
   <a href="advanced_analytics_dashboard.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">insights</span><span class="text-[8px] font-bold uppercase tracking-widest">Analytics</span></a>
   <a href="user_platform_settings.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">settings</span><span class="text-[8px] font-bold uppercase tracking-widest">Settings</span></a>
 </nav>
+<script src="js/auth.js"></script>
 <script src="js/main.js"></script>
 </body></html>

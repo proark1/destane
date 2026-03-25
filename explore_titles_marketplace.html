@@ -102,7 +102,11 @@
 <span class="material-symbols-outlined text-on-surface-variant text-sm mr-2">search</span>
 <input class="bg-transparent border-none focus:ring-0 text-sm w-48 placeholder-on-surface-variant/50" placeholder="Search titles..." type="text"/>
 </div>
-<a href="compliance_onboarding.html" class="bg-[#d4af37] text-[#3c2f00] px-5 py-2 rounded-lg font-bold text-sm scale-95 active:scale-90 transition-transform hover:bg-[#f2ca50] inline-block">Connect Wallet</a>
+<a href="login.html" data-auth="guest" class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-5 py-2 rounded-md font-bold text-sm tracking-tight no-underline">Sign In</a>
+<div data-auth="user" style="display:none" class="flex items-center gap-3">
+<span class="text-on-surface-variant text-xs">Welcome, <span data-auth="username" class="text-primary font-bold"></span></span>
+<button data-auth="logout" class="bg-surface-container-highest text-on-surface-variant px-4 py-2 rounded-md text-xs font-bold hover:text-primary transition-colors">Sign Out</button>
+</div>
 <div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden border border-primary/20">
 <img alt="Investor Profile" data-alt="Close up portrait of a professional investor in a dark studio setting with soft warm rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoN0RSTXIjdCcW1vLjT2E1F9wkiRR2uq51ewn84OPEtp1QaLs560Aas-mbb0FSHBBCy5bXjr4AUfZOL_GtOI6kzsQtK32v8q0r9Jk4f9jifVQ4rKR2c3ZM1VnhRb_10SJHFHXCxOYONiug3lPpXpYpfF7xB4WWska-eUhNUCaIz60UxEIbGteMPsls9yqwe6HIXPbPmjj2tpYXaSp6mr73CJu5BYvLv7QxTOu7aXUTGw5svIFEoABw26eeN61AxqG7kUMhXxzRgw"/>
 </div>
@@ -349,5 +353,6 @@
 <span class="text-[8px] font-bold uppercase tracking-widest">Config</span>
 </a>
 </nav>
+<script src="js/auth.js"></script>
 <script src="js/main.js"></script>
 </body></html>

@@ -123,6 +123,11 @@
 <span>Settings</span>
 </a>
 </nav>
+<div data-auth="user" style="display:none" class="px-6 py-4 border-t border-outline-variant/10 mb-4">
+<p class="text-[10px] text-on-surface-variant/60 uppercase tracking-widest">Signed in as</p>
+<p data-auth="username" class="text-sm text-primary font-bold mt-1"></p>
+<button data-auth="logout" class="mt-2 text-xs text-on-surface-variant/40 hover:text-primary transition-colors">Sign Out</button>
+</div>
 <div class="px-6 mt-auto">
 <button class="w-full signature-gradient text-on-primary font-bold py-3 rounded-md text-xs uppercase tracking-widest shadow-lg shadow-primary/10 transition-transform active:scale-95">
                 Mint New Token
@@ -384,5 +389,6 @@
 <a href="advanced_analytics_dashboard.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">insights</span><span class="text-[8px] font-bold uppercase tracking-widest">Analytics</span></a>
 <a href="user_platform_settings.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">settings</span><span class="text-[8px] font-bold uppercase tracking-widest">Settings</span></a>
 </nav>
+<script src="js/auth.js"></script>
 <script src="js/main.js"></script>
 </body></html>

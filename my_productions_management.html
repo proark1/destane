@@ -120,6 +120,11 @@
 <span class="font-headline text-sm tracking-tight">Settings</span>
 </a>
 </nav>
+<div data-auth="user" style="display:none" class="px-6 py-4 border-t border-outline-variant/10 mb-4">
+<p class="text-[10px] text-on-surface-variant/60 uppercase tracking-widest">Signed in as</p>
+<p data-auth="username" class="text-sm text-primary font-bold mt-1"></p>
+<button data-auth="logout" class="mt-2 text-xs text-on-surface-variant/40 hover:text-primary transition-colors">Sign Out</button>
+</div>
 <div class="mt-auto px-4 border-t border-outline-variant/10 pt-6">
 <div class="flex items-center gap-3 px-2 mb-6">
 <div class="w-10 h-10 rounded-md bg-surface-container-highest flex items-center justify-center border border-primary/20 overflow-hidden">
@@ -362,5 +367,6 @@
   <a href="producer_portal.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">movie_filter</span><span class="text-[8px] font-bold uppercase tracking-widest">Create</span></a>
   <a href="user_platform_settings.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">settings</span><span class="text-[8px] font-bold uppercase tracking-widest">Settings</span></a>
 </nav>
+<script src="js/auth.js"></script>
 <script src="js/main.js"></script>
 </body></html>

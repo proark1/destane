@@ -108,7 +108,11 @@
 <span class="material-symbols-outlined text-on-surface-variant text-sm mr-2">search</span>
 <input class="bg-transparent border-none text-sm focus:ring-0 p-0 text-on-surface w-48" placeholder="Search productions..." type="text"/>
 </div>
-<button class="bg-primary text-on-primary px-6 py-2 rounded-md font-bold text-sm tracking-tight scale-95 active:scale-90 transition-transform hover:bg-[#f2ca50]/10">Connect Wallet</button>
+<a href="login.html" data-auth="guest" class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-5 py-2 rounded-md font-bold text-sm tracking-tight no-underline">Sign In</a>
+<div data-auth="user" style="display:none" class="flex items-center gap-3">
+<span class="text-on-surface-variant text-xs">Welcome, <span data-auth="username" class="text-primary font-bold"></span></span>
+<button data-auth="logout" class="bg-surface-container-highest text-on-surface-variant px-4 py-2 rounded-md text-xs font-bold hover:text-primary transition-colors">Sign Out</button>
+</div>
 <img alt="Investor Profile" class="w-10 h-10 rounded-full border border-primary/20 object-cover" data-alt="close-up portrait of a professional man with a sleek haircut against a dark minimalist studio background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjew5xRtH0r3XwK5GuHKFjR-ATZRNR6adf7FlTT6etcPbf5_lxXuUQy5JzBSYyaBFo5oguAusVo5j9z46uTgwNVr-gM8f317b38tA7QkpdWQHVp-h4eEstXhHTftz1Gvhl3H53PeNVW8RmLK9JFRbPf-Um1imQOjABWPVKrFjLKcZwHAnxDfmFxJDcohR51EDsCkGNG0UvpCyPOLlF_7ki5lpzc9nBQnScuuHIw2PsqgPYX2VCr41fgWSUZV2KNeqNTFUf0lFOGQ"/>
 </div>
 </nav>
@@ -299,5 +303,6 @@
   <a href="producer_portal.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">movie_filter</span><span class="text-[8px] font-bold uppercase tracking-widest">Create</span></a>
   <a href="user_platform_settings.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">settings</span><span class="text-[8px] font-bold uppercase tracking-widest">Settings</span></a>
 </nav>
+<script src="js/auth.js"></script>
 <script src="js/main.js"></script>
 </body></html>
