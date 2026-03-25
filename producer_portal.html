@@ -87,24 +87,26 @@
             background: linear-gradient(135deg, #f2ca50 0%, #d4af37 100%);
         }
     </style>
+<link rel="stylesheet" href="css/styles.css"/>
 </head>
 <body class="bg-surface text-on-surface font-body selection:bg-primary/30">
 <!-- SideNavBar Component -->
-<aside class="fixed left-0 top-0 h-full w-64 border-r border-outline-variant/10 bg-[#0e0e0e] flex flex-col py-6 z-50">
+<aside class="sidebar fixed left-0 top-0 h-full w-64 border-r border-outline-variant/10 bg-[#0e0e0e] flex flex-col py-6 z-50">
+<button id="sidebar-close" class="md:hidden absolute top-4 right-4 text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">close</span></button>
 <div class="px-6 mb-10">
-<h1 class="text-lg font-black text-[#d4af37] font-headline tracking-tighter">DESTANE</h1>
+<a href="destane_landing_page.html" class="text-lg font-black text-[#d4af37] font-headline tracking-tighter no-underline">DESTANE</a>
 <p class="text-[10px] font-label uppercase tracking-[0.2em] text-on-surface-variant/60 mt-1">Cinematic Studio</p>
 </div>
 <nav class="flex-1 space-y-1 px-3">
-<a class="flex items-center gap-4 px-4 py-3 bg-[#201f1f] text-[#f2ca50] border-l-4 border-[#f2ca50] font-bold font-headline text-sm uppercase tracking-widest transition-transform duration-200" href="#">
+<a class="flex items-center gap-4 px-4 py-3 bg-[#201f1f] text-[#f2ca50] border-l-4 border-[#f2ca50] font-bold font-headline text-sm uppercase tracking-widest transition-transform duration-200" href="producer_portal.html">
 <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
 <span>Dashboard</span>
 </a>
-<a class="flex items-center gap-4 px-4 py-3 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 font-headline text-sm uppercase tracking-widest transition-all duration-200" href="#">
+<a class="flex items-center gap-4 px-4 py-3 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 font-headline text-sm uppercase tracking-widest transition-all duration-200" href="my_productions_management.html">
 <span class="material-symbols-outlined" data-icon="movie_filter">movie_filter</span>
 <span>Productions</span>
 </a>
-<a class="flex items-center gap-4 px-4 py-3 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 font-headline text-sm uppercase tracking-widest transition-all duration-200" href="#">
+<a class="flex items-center gap-4 px-4 py-3 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 font-headline text-sm uppercase tracking-widest transition-all duration-200" href="investor_dashboard.html">
 <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
 <span>Funding</span>
 </a>
@@ -112,11 +114,11 @@
 <span class="material-symbols-outlined" data-icon="groups">groups</span>
 <span>Community</span>
 </a>
-<a class="flex items-center gap-4 px-4 py-3 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 font-headline text-sm uppercase tracking-widest transition-all duration-200" href="#">
+<a class="flex items-center gap-4 px-4 py-3 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 font-headline text-sm uppercase tracking-widest transition-all duration-200" href="advanced_analytics_dashboard.html">
 <span class="material-symbols-outlined" data-icon="insights">insights</span>
 <span>Analytics</span>
 </a>
-<a class="flex items-center gap-4 px-4 py-3 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 font-headline text-sm uppercase tracking-widest transition-all duration-200" href="#">
+<a class="flex items-center gap-4 px-4 py-3 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 font-headline text-sm uppercase tracking-widest transition-all duration-200" href="user_platform_settings.html">
 <span class="material-symbols-outlined" data-icon="settings">settings</span>
 <span>Settings</span>
 </a>
@@ -127,15 +129,19 @@
             </button>
 </div>
 </aside>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
 <!-- Main Content Canvas -->
-<main class="ml-64 p-12 min-h-screen">
+<main class="md:ml-64 ml-0 p-4 md:p-8 lg:p-12 min-h-screen">
 <!-- Header Section -->
-<header class="flex justify-between items-end mb-16">
+<header class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-16 gap-4">
+<div class="flex items-center gap-4 w-full md:w-auto">
+<button id="sidebar-toggle" class="mobile-menu-btn items-center justify-center w-10 h-10 rounded-md"><span class="material-symbols-outlined text-primary">menu</span></button>
 <div>
 <span class="text-primary font-label text-xs uppercase tracking-[0.3em] mb-2 block">Executive Overview</span>
-<h2 class="text-5xl font-extrabold font-headline tracking-tighter text-on-surface">Producer Portal</h2>
+<h2 class="text-3xl md:text-5xl font-extrabold font-headline tracking-tighter text-on-surface">Producer Portal</h2>
 </div>
-<div class="flex gap-4">
+</div>
+<div class="flex gap-4 flex-wrap">
 <button class="px-6 py-2.5 glass-panel text-primary font-label text-xs uppercase tracking-widest rounded-md hover:bg-surface-container-highest transition-colors">
 <span class="flex items-center gap-2">
 <span class="material-symbols-outlined text-sm" data-icon="download">download</span>
@@ -150,7 +156,7 @@
 <!-- Bento Grid Dashboard -->
 <section class="grid grid-cols-12 gap-6 mb-12">
 <!-- Funding Progress (Active Project) -->
-<div class="col-span-8 bg-surface-container-low p-8 rounded-xl relative overflow-hidden group">
+<div class="col-span-12 lg:col-span-8 bg-surface-container-low p-4 md:p-8 rounded-xl relative overflow-hidden group">
 <div class="flex justify-between items-start mb-8">
 <div>
 <h3 class="text-2xl font-bold font-headline mb-1 tracking-tight">The Midnight Protocol</h3>
@@ -178,7 +184,7 @@
 </div>
 </div>
 <!-- Audience Stats -->
-<div class="col-span-4 bg-surface-container p-8 rounded-xl border border-outline-variant/10">
+<div class="col-span-12 lg:col-span-4 bg-surface-container p-4 md:p-8 rounded-xl border border-outline-variant/10">
 <div class="flex items-center justify-between mb-6">
 <h3 class="font-headline font-bold uppercase tracking-widest text-sm">Audience Reach</h3>
 <span class="material-symbols-outlined text-primary" data-icon="trending_up">trending_up</span>
@@ -262,8 +268,8 @@
 </div>
 </div>
 </div>
-<div class="overflow-hidden">
-<table class="w-full text-left">
+<div class="overflow-x-auto">
+<table class="w-full text-left min-w-[600px]">
 <thead>
 <tr class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/40 border-b border-outline-variant/5">
 <th class="px-8 py-4 font-bold">Project Name</th>
@@ -315,7 +321,7 @@
 </div>
 </div>
 <!-- Heatmap / Region Interest -->
-<div class="col-span-7 bg-surface-container-low p-8 rounded-xl border border-outline-variant/10 h-full">
+<div class="col-span-12 lg:col-span-7 bg-surface-container-low p-4 md:p-8 rounded-xl border border-outline-variant/10 h-full">
 <div class="flex justify-between items-center mb-8">
 <h3 class="font-headline font-bold text-sm uppercase tracking-widest">Global Interest Heatmap</h3>
 <span class="text-[10px] font-label text-on-surface-variant/40">Real-time engagement</span>
@@ -332,7 +338,7 @@
 </div>
 </div>
 <!-- Communication Panel -->
-<div class="col-span-5 flex flex-col gap-6">
+<div class="col-span-12 lg:col-span-5 flex flex-col gap-6">
 <div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/10 flex-1">
 <div class="flex items-center gap-4 mb-6">
 <div class="p-3 bg-primary/10 rounded-lg">
@@ -371,4 +377,12 @@
             </p>
 </footer>
 </main>
+<!-- Mobile Bottom Navigation -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-[#131313]/95 backdrop-blur-xl border-t border-[#4d4635]/15 flex justify-around py-3 z-50">
+<a href="producer_portal.html" class="flex flex-col items-center gap-1 text-[#f2ca50]"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span><span class="text-[8px] font-bold uppercase tracking-widest">Portal</span></a>
+<a href="my_productions_management.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">movie_filter</span><span class="text-[8px] font-bold uppercase tracking-widest">Projects</span></a>
+<a href="advanced_analytics_dashboard.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">insights</span><span class="text-[8px] font-bold uppercase tracking-widest">Analytics</span></a>
+<a href="user_platform_settings.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">settings</span><span class="text-[8px] font-bold uppercase tracking-widest">Settings</span></a>
+</nav>
+<script src="js/main.js"></script>
 </body></html>

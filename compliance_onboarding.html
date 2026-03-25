@@ -85,6 +85,7 @@
         -webkit-backdrop-filter: blur(20px);
       }
     </style>
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary selection:text-on-primary">
 <!-- Global Navigation Suppressed for Onboarding Flow as per Rule -->
@@ -94,7 +95,7 @@
 <div class="absolute bottom-[-5%] right-[-5%] w-[30%] h-[30%] bg-tertiary/5 blur-[100px] rounded-full"></div>
 <!-- Header / Logo -->
 <div class="mb-16 text-center">
-<h1 class="font-headline font-extrabold text-2xl tracking-tighter text-primary">DESTANE</h1>
+<a href="destane_landing_page.html" class="font-headline font-extrabold text-2xl tracking-tighter text-primary no-underline">DESTANE</a>
 <p class="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/60 mt-2">Institutional Compliance Portal</p>
 </div>
 <!-- Progress Stepper -->
@@ -106,23 +107,23 @@
 <!-- Steps -->
 <div class="relative z-10 flex flex-col items-center group">
 <div class="w-10 h-10 rounded-lg bg-primary text-on-primary flex items-center justify-center font-bold text-sm shadow-[0_0_20px_rgba(242,202,80,0.3)]">1</div>
-<span class="absolute -bottom-8 whitespace-nowrap font-label text-[10px] uppercase tracking-wider text-primary font-bold">Account</span>
+<span class="absolute -bottom-8 whitespace-nowrap font-label text-[10px] uppercase tracking-wider text-primary font-bold hidden md:block">Account</span>
 </div>
 <div class="relative z-10 flex flex-col items-center group">
 <div class="w-10 h-10 rounded-lg bg-surface-container border border-outline-variant/50 text-on-surface-variant flex items-center justify-center font-bold text-sm">2</div>
-<span class="absolute -bottom-8 whitespace-nowrap font-label text-[10px] uppercase tracking-wider text-on-surface-variant/40">Identity</span>
+<span class="absolute -bottom-8 whitespace-nowrap font-label text-[10px] uppercase tracking-wider text-on-surface-variant/40 hidden md:block">Identity</span>
 </div>
 <div class="relative z-10 flex flex-col items-center group">
 <div class="w-10 h-10 rounded-lg bg-surface-container border border-outline-variant/50 text-on-surface-variant flex items-center justify-center font-bold text-sm">3</div>
-<span class="absolute -bottom-8 whitespace-nowrap font-label text-[10px] uppercase tracking-wider text-on-surface-variant/40">Accreditation</span>
+<span class="absolute -bottom-8 whitespace-nowrap font-label text-[10px] uppercase tracking-wider text-on-surface-variant/40 hidden md:block">Accreditation</span>
 </div>
 <div class="relative z-10 flex flex-col items-center group">
 <div class="w-10 h-10 rounded-lg bg-surface-container border border-outline-variant/50 text-on-surface-variant flex items-center justify-center font-bold text-sm">4</div>
-<span class="absolute -bottom-8 whitespace-nowrap font-label text-[10px] uppercase tracking-wider text-on-surface-variant/40">Wallet</span>
+<span class="absolute -bottom-8 whitespace-nowrap font-label text-[10px] uppercase tracking-wider text-on-surface-variant/40 hidden md:block">Wallet</span>
 </div>
 <div class="relative z-10 flex flex-col items-center group">
 <div class="w-10 h-10 rounded-lg bg-surface-container border border-outline-variant/50 text-on-surface-variant flex items-center justify-center font-bold text-sm">5</div>
-<span class="absolute -bottom-8 whitespace-nowrap font-label text-[10px] uppercase tracking-wider text-on-surface-variant/40">Payment</span>
+<span class="absolute -bottom-8 whitespace-nowrap font-label text-[10px] uppercase tracking-wider text-on-surface-variant/40 hidden md:block">Payment</span>
 </div>
 </div>
 </div>
@@ -219,4 +220,5 @@
 <p class="font-['Inter'] text-[10px] tracking-normal leading-relaxed text-[#f5f5f5]/30">© 2024 DESTANE. Regulated cinematic securities platform.</p>
 </div>
 </footer>
+<script src="js/main.js"></script>
 </body></html>

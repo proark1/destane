@@ -86,40 +86,41 @@
             background: linear-gradient(135deg, #f2ca50 0%, #d4af37 100%);
         }
     </style>
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="bg-background text-on-background font-body antialiased">
 <!-- TopNavBar -->
-<header class="fixed top-0 w-full flex justify-between items-center px-8 py-4 bg-[#131313]/80 backdrop-blur-xl border-b border-[#4d4635]/15 shadow-[0_4px_30px_rgba(0,0,0,0.5)] z-50 font-['Plus_Jakarta_Sans'] tracking-tight antialiased">
-<div class="text-2xl font-bold tracking-tighter text-[#f2ca50]">DESTANE</div>
+<header class="fixed top-0 w-full flex justify-between items-center px-4 lg:px-8 py-4 bg-[#131313]/80 backdrop-blur-xl border-b border-[#4d4635]/15 shadow-[0_4px_30px_rgba(0,0,0,0.5)] z-50 font-['Plus_Jakarta_Sans'] tracking-tight antialiased">
+<a href="destane_landing_page.html" class="text-2xl font-bold tracking-tighter text-[#f2ca50]">DESTANE</a>
 <nav class="hidden md:flex items-center gap-8">
-<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="#">Watch</a>
-<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="#">Invest</a>
-<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="#">Creators</a>
+<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="explore_titles_marketplace.html">Watch</a>
+<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="investor_dashboard.html">Invest</a>
+<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="producer_portal.html">Creators</a>
 </nav>
 <div class="flex items-center gap-6">
 <div class="hidden lg:flex items-center bg-surface-container-lowest px-4 py-2 rounded-lg border border-outline-variant/20">
 <span class="material-symbols-outlined text-on-surface-variant text-sm mr-2">search</span>
 <input class="bg-transparent border-none focus:ring-0 text-sm w-48 placeholder-on-surface-variant/50" placeholder="Search titles..." type="text"/>
 </div>
-<button class="bg-[#d4af37] text-[#3c2f00] px-5 py-2 rounded-lg font-bold text-sm scale-95 active:scale-90 transition-transform hover:bg-[#f2ca50]">Connect Wallet</button>
+<a href="compliance_onboarding.html" class="bg-[#d4af37] text-[#3c2f00] px-5 py-2 rounded-lg font-bold text-sm scale-95 active:scale-90 transition-transform hover:bg-[#f2ca50] inline-block">Connect Wallet</a>
 <div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden border border-primary/20">
 <img alt="Investor Profile" data-alt="Close up portrait of a professional investor in a dark studio setting with soft warm rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoN0RSTXIjdCcW1vLjT2E1F9wkiRR2uq51ewn84OPEtp1QaLs560Aas-mbb0FSHBBCy5bXjr4AUfZOL_GtOI6kzsQtK32v8q0r9Jk4f9jifVQ4rKR2c3ZM1VnhRb_10SJHFHXCxOYONiug3lPpXpYpfF7xB4WWska-eUhNUCaIz60UxEIbGteMPsls9yqwe6HIXPbPmjj2tpYXaSp6mr73CJu5BYvLv7QxTOu7aXUTGw5svIFEoABw26eeN61AxqG7kUMhXxzRgw"/>
 </div>
 </div>
 </header>
-<main class="pt-24 pb-16 px-8 max-w-[1600px] mx-auto flex gap-12">
+<main class="pt-24 pb-16 px-4 lg:px-8 max-w-[1600px] mx-auto flex flex-col lg:flex-row gap-0 lg:gap-12">
 <!-- Sidebar Navigation (Filters Focused) -->
-<aside class="hidden lg:flex flex-col w-64 h-[calc(100vh-8rem)] sticky top-28 py-6 space-y-10">
+<aside class="sidebar hidden lg:flex flex-col w-64 h-[calc(100vh-8rem)] sticky top-28 py-6 space-y-10">
 <div>
 <h3 class="font-headline text-xs font-black uppercase tracking-[0.2em] text-primary mb-6">Marketplace</h3>
 <nav class="space-y-1">
-<a class="flex items-center gap-3 px-4 py-3 bg-[#201f1f] text-[#f2ca50] border-l-4 border-[#f2ca50] font-bold text-sm uppercase tracking-widest hover:translate-x-1 transition-transform duration-200" href="#">
+<a class="flex items-center gap-3 px-4 py-3 bg-[#201f1f] text-[#f2ca50] border-l-4 border-[#f2ca50] font-bold text-sm uppercase tracking-widest hover:translate-x-1 transition-transform duration-200" href="investor_dashboard.html">
 <span class="material-symbols-outlined">dashboard</span> Dashboard
                     </a>
-<a class="flex items-center gap-3 px-4 py-3 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] text-sm uppercase tracking-widest hover:translate-x-1 transition-transform duration-200" href="#">
+<a class="flex items-center gap-3 px-4 py-3 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] text-sm uppercase tracking-widest hover:translate-x-1 transition-transform duration-200" href="investor_dashboard.html">
 <span class="material-symbols-outlined">account_balance_wallet</span> Portfolio
                     </a>
-<a class="flex items-center gap-3 px-4 py-3 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] text-sm uppercase tracking-widest hover:translate-x-1 transition-transform duration-200" href="#">
+<a class="flex items-center gap-3 px-4 py-3 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] text-sm uppercase tracking-widest hover:translate-x-1 transition-transform duration-200" href="producer_portal.html">
 <span class="material-symbols-outlined">movie_filter</span> Studio
                     </a>
 </nav>
@@ -163,12 +164,12 @@
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
 <div>
 <span class="text-primary font-headline text-sm font-bold tracking-[0.3em] uppercase mb-2 block">Cinematic Marketplace</span>
-<h1 class="font-headline text-5xl font-extrabold text-on-surface tracking-tighter">Explore <span class="text-primary italic">Titles</span></h1>
+<h1 class="font-headline text-3xl md:text-4xl lg:text-5xl font-extrabold text-on-surface tracking-tighter">Explore <span class="text-primary italic">Titles</span></h1>
 </div>
-<div class="flex items-center gap-4 bg-surface-container-low p-1.5 rounded-xl border border-outline-variant/10">
-<button class="px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-primary bg-surface-container-highest rounded-lg">Ending Soon</button>
-<button class="px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-on-surface-variant hover:text-on-surface transition-colors">Recently Added</button>
-<button class="px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-on-surface-variant hover:text-on-surface transition-colors">Top Revenue</button>
+<div class="flex items-center gap-4 bg-surface-container-low p-1.5 rounded-xl border border-outline-variant/10 overflow-x-auto hide-scrollbar">
+<button class="px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-primary bg-surface-container-highest rounded-lg whitespace-nowrap">Ending Soon</button>
+<button class="px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap">Recently Added</button>
+<button class="px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap">Top Revenue</button>
 </div>
 </div>
 <!-- Titles Grid -->
@@ -331,21 +332,22 @@
 </footer>
 <!-- Mobile Navigation (Bottom Bar) -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full bg-[#131313]/95 backdrop-blur-xl border-t border-[#4d4635]/15 flex justify-around py-3 px-4 z-50">
-<button class="flex flex-col items-center gap-1 text-[#f2ca50]">
+<a href="explore_titles_marketplace.html" class="flex flex-col items-center gap-1 text-[#f2ca50]">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">explore</span>
 <span class="text-[8px] font-bold uppercase tracking-widest">Explore</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-[#f5f5f5]/40">
+</a>
+<a href="investor_dashboard.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40">
 <span class="material-symbols-outlined">account_balance_wallet</span>
 <span class="text-[8px] font-bold uppercase tracking-widest">Assets</span>
-</button>
+</a>
 <button class="flex flex-col items-center gap-1 text-[#f5f5f5]/40">
 <span class="material-symbols-outlined">add_circle</span>
 <span class="text-[8px] font-bold uppercase tracking-widest">Mint</span>
 </button>
-<button class="flex flex-col items-center gap-1 text-[#f5f5f5]/40">
+<a href="user_platform_settings.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40">
 <span class="material-symbols-outlined">settings</span>
 <span class="text-[8px] font-bold uppercase tracking-widest">Config</span>
-</button>
+</a>
 </nav>
+<script src="js/main.js"></script>
 </body></html>

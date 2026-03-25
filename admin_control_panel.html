@@ -91,15 +91,17 @@
             border: 1px solid rgba(77, 70, 53, 0.15);
         }
     </style>
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="antialiased overflow-x-hidden">
 <!-- TopNavBar -->
 <header class="fixed top-0 w-full flex justify-between items-center px-8 py-4 bg-[#131313]/80 backdrop-blur-xl border-b border-[#4d4635]/15 shadow-[0_4px_30px_rgba(0,0,0,0.5)] z-50">
-<div class="text-2xl font-bold tracking-tighter text-[#f2ca50] font-headline">DESTANE</div>
+<button id="sidebar-toggle" class="mobile-menu-btn items-center justify-center w-10 h-10 rounded-md md:hidden"><span class="material-symbols-outlined text-primary">menu</span></button>
+<div class="text-2xl font-bold tracking-tighter text-[#f2ca50] font-headline"><a href="destane_landing_page.html">DESTANE</a></div>
 <nav class="hidden md:flex items-center gap-8 font-headline tracking-tight antialiased">
-<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="#">Watch</a>
-<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="#">Invest</a>
-<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="#">Creators</a>
+<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="explore_titles_marketplace.html">Watch</a>
+<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="investor_dashboard.html">Invest</a>
+<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="producer_portal.html">Creators</a>
 </nav>
 <div class="flex items-center gap-6">
 <div class="relative hidden lg:block">
@@ -111,29 +113,30 @@
 </div>
 </header>
 <!-- SideNavBar -->
-<aside class="fixed left-0 top-0 h-full w-64 border-r border-[#4d4635]/10 bg-[#0e0e0e] flex flex-col py-6 z-40 pt-24">
+<aside class="sidebar fixed left-0 top-0 h-full w-64 border-r border-[#4d4635]/10 bg-[#0e0e0e] flex flex-col py-6 z-40 pt-24">
+<button id="sidebar-close" class="md:hidden absolute top-4 right-4 text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">close</span></button>
 <div class="px-6 mb-8">
 <h2 class="text-lg font-black text-[#d4af37] font-headline">Creator Portal</h2>
 <p class="text-[10px] uppercase tracking-widest text-on-surface-variant/60">Cinematic Studio</p>
 </div>
 <nav class="flex-1 space-y-1">
-<a class="flex items-center gap-3 px-6 py-4 bg-[#201f1f] text-[#f2ca50] border-l-4 border-[#f2ca50] font-bold font-headline text-sm uppercase tracking-widest" href="#">
+<a class="flex items-center gap-3 px-6 py-4 bg-[#201f1f] text-[#f2ca50] border-l-4 border-[#f2ca50] font-bold font-headline text-sm uppercase tracking-widest" href="admin_control_panel.html">
 <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
                 Dashboard
             </a>
-<a class="flex items-center gap-3 px-6 py-4 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 transition-transform duration-200 font-headline text-sm uppercase tracking-widest" href="#">
+<a class="flex items-center gap-3 px-6 py-4 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 transition-transform duration-200 font-headline text-sm uppercase tracking-widest" href="investor_dashboard.html">
 <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
                 Portfolio
             </a>
-<a class="flex items-center gap-3 px-6 py-4 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 transition-transform duration-200 font-headline text-sm uppercase tracking-widest" href="#">
+<a class="flex items-center gap-3 px-6 py-4 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 transition-transform duration-200 font-headline text-sm uppercase tracking-widest" href="explore_titles_marketplace.html">
 <span class="material-symbols-outlined" data-icon="movie_filter">movie_filter</span>
                 Studio
             </a>
-<a class="flex items-center gap-3 px-6 py-4 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 transition-transform duration-200 font-headline text-sm uppercase tracking-widest" href="#">
+<a class="flex items-center gap-3 px-6 py-4 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 transition-transform duration-200 font-headline text-sm uppercase tracking-widest" href="advanced_analytics_dashboard.html">
 <span class="material-symbols-outlined" data-icon="insights">insights</span>
                 Analytics
             </a>
-<a class="flex items-center gap-3 px-6 py-4 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 transition-transform duration-200 font-headline text-sm uppercase tracking-widest" href="#">
+<a class="flex items-center gap-3 px-6 py-4 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 transition-transform duration-200 font-headline text-sm uppercase tracking-widest" href="user_platform_settings.html">
 <span class="material-symbols-outlined" data-icon="settings">settings</span>
                 Settings
             </a>
@@ -144,10 +147,11 @@
             </button>
 </div>
 </aside>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
 <!-- Main Content Canvas -->
-<main class="ml-64 pt-24 px-10 pb-12 min-h-screen">
+<main class="md:ml-64 ml-0 pt-24 px-4 md:px-10 pb-12 min-h-screen">
 <!-- Header Section -->
-<header class="mb-12 flex justify-between items-end">
+<header class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8 md:mb-12">
 <div>
 <h1 class="text-5xl font-extrabold font-headline tracking-tighter text-on-surface mb-2">Admin Control</h1>
 <p class="text-on-surface-variant/70 font-body max-w-md">Internal surveillance and asset management protocol for the Destane Cinematic Ecosystem.</p>
@@ -202,7 +206,7 @@
 </section>
 <!-- Management Tabs & Table Area -->
 <section class="bg-surface-container-low rounded-xl border border-outline-variant/10 overflow-hidden shadow-2xl">
-<div class="flex border-b border-outline-variant/20 px-4">
+<div class="flex overflow-x-auto border-b border-outline-variant/20 px-4">
 <button class="px-6 py-5 border-b-2 border-primary text-primary text-xs font-bold uppercase tracking-widest transition-all">Approval Queue</button>
 <button class="px-6 py-5 text-on-surface-variant/50 hover:text-on-surface text-xs font-bold uppercase tracking-widest transition-all">User Verification</button>
 <button class="px-6 py-5 text-on-surface-variant/50 hover:text-on-surface text-xs font-bold uppercase tracking-widest transition-all">Token Manager</button>
@@ -429,7 +433,7 @@
 </section>
 </main>
 <!-- Footer -->
-<footer class="w-full bg-[#0e0e0e] border-t border-[#4d4635]/20 mt-12 ml-64 max-w-[calc(100%-16rem)]">
+<footer class="w-full bg-[#0e0e0e] border-t border-[#4d4635]/20 mt-12 md:ml-64 ml-0 md:max-w-[calc(100%-16rem)] max-w-full">
 <div class="w-full max-w-7xl mx-auto px-12 py-16 flex flex-col items-center gap-8">
 <div class="flex gap-8">
 <a class="text-[#f5f5f5]/30 hover:text-[#f2ca50] font-body text-[10px] uppercase tracking-widest" href="#">Investment Disclosures</a>
@@ -442,4 +446,11 @@
             </p>
 </div>
 </footer>
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-[#131313]/95 backdrop-blur-xl border-t border-[#4d4635]/15 flex justify-around py-3 z-50">
+  <a href="admin_control_panel.html" class="flex flex-col items-center gap-1 text-[#f2ca50]"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span><span class="text-[8px] font-bold uppercase tracking-widest">Admin</span></a>
+  <a href="investor_dashboard.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">account_balance_wallet</span><span class="text-[8px] font-bold uppercase tracking-widest">Portfolio</span></a>
+  <a href="advanced_analytics_dashboard.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">insights</span><span class="text-[8px] font-bold uppercase tracking-widest">Analytics</span></a>
+  <a href="user_platform_settings.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">settings</span><span class="text-[8px] font-bold uppercase tracking-widest">Settings</span></a>
+</nav>
+<script src="js/main.js"></script>
 </body></html>
