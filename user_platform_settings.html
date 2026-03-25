@@ -155,6 +155,11 @@
 <span>Settings</span>
 </a>
 </nav>
+<div data-auth="user" style="display:none" class="px-6 py-4 border-t border-outline-variant/10 mb-4">
+<p class="text-[10px] text-on-surface-variant/60 uppercase tracking-widest">Signed in as</p>
+<p data-auth="username" class="text-sm text-primary font-bold mt-1"></p>
+<button data-auth="logout" class="mt-2 text-xs text-on-surface-variant/40 hover:text-primary transition-colors">Sign Out</button>
+</div>
 <div class="mt-auto space-y-1 pt-6 border-t border-[#4d4635]/10">
 <a class="flex items-center gap-3 text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md font-['Plus_Jakarta_Sans'] text-sm tracking-tight" href="#">
 <span class="material-symbols-outlined" data-icon="help">help</span>

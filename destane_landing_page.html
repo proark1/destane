@@ -121,7 +121,11 @@
 <a class="text-[#f2ca50] text-sm font-medium py-2" href="explore_titles_marketplace.html">Watch</a>
 <a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors text-sm font-medium py-2" href="investor_dashboard.html">Invest</a>
 <a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors text-sm font-medium py-2" href="producer_portal.html">Creators</a>
-<a href="compliance_onboarding.html" class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 py-2.5 rounded-md font-bold text-sm tracking-tight text-center no-underline mt-2">Connect Wallet</a>
+<a href="login.html" data-auth="guest" class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-5 py-2 rounded-md font-bold text-sm tracking-tight no-underline">Sign In</a>
+<div data-auth="user" style="display:none" class="flex items-center gap-3">
+<span class="text-on-surface-variant text-xs">Welcome, <span data-auth="username" class="text-primary font-bold"></span></span>
+<button data-auth="logout" class="bg-surface-container-highest text-on-surface-variant px-4 py-2 rounded-md text-xs font-bold hover:text-primary transition-colors">Sign Out</button>
+</div>
 </div>
 </div>
 <!-- Hero Section -->
