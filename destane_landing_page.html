@@ -85,28 +85,45 @@
             text-shadow: 0 0 20px rgba(242, 202, 80, 0.3);
         }
     </style>
+<link rel="stylesheet" href="css/styles.css"/>
 </head>
 <body class="bg-background text-on-surface font-body selection:bg-primary selection:text-on-primary">
 <!-- Top Navigation Bar -->
-<nav class="fixed top-0 w-full flex justify-between items-center px-8 py-4 bg-[#131313]/80 backdrop-blur-xl border-b border-[#4d4635]/15 shadow-[0_4px_30px_rgba(0,0,0,0.5)] z-50 font-['Plus_Jakarta_Sans'] tracking-tight antialiased">
-<div class="text-2xl font-bold tracking-tighter text-[#f2ca50]">DESTANE</div>
+<nav class="fixed top-0 w-full flex justify-between items-center px-4 md:px-8 py-4 bg-[#131313]/80 backdrop-blur-xl border-b border-[#4d4635]/15 shadow-[0_4px_30px_rgba(0,0,0,0.5)] z-50 font-['Plus_Jakarta_Sans'] tracking-tight antialiased">
+<a href="destane_landing_page.html" class="text-2xl font-bold tracking-tighter text-[#f2ca50] no-underline">DESTANE</a>
 <div class="hidden md:flex items-center gap-10">
-<a class="text-[#f2ca50] border-b-2 border-[#f2ca50] pb-1 text-sm font-medium" href="#">Watch</a>
-<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors text-sm font-medium" href="#">Invest</a>
-<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors text-sm font-medium" href="#">Creators</a>
+<a class="text-[#f2ca50] border-b-2 border-[#f2ca50] pb-1 text-sm font-medium" href="explore_titles_marketplace.html">Watch</a>
+<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors text-sm font-medium" href="investor_dashboard.html">Invest</a>
+<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors text-sm font-medium" href="producer_portal.html">Creators</a>
 </div>
-<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 md:gap-6">
 <div class="hidden lg:flex items-center bg-surface-container-lowest border border-outline-variant/20 px-4 py-2 rounded-lg">
 <span class="material-symbols-outlined text-on-surface-variant text-lg">search</span>
 <input class="bg-transparent border-none focus:ring-0 text-xs w-48 text-on-surface" placeholder="Search productions..." type="text"/>
 </div>
-<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 py-2.5 rounded-md font-bold text-sm tracking-tight scale-95 active:scale-90 transition-transform">
+<a href="compliance_onboarding.html" class="hidden sm:inline-block bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 py-2.5 rounded-md font-bold text-sm tracking-tight scale-95 active:scale-90 transition-transform no-underline">
                 Connect Wallet
-            </button>
+            </a>
+<button id="mobile-nav-toggle" class="mobile-menu-btn items-center justify-center w-10 h-10 rounded-md">
+<div class="hamburger flex flex-col gap-1.5 items-center justify-center">
+<span class="hamburger-line"></span>
+<span class="hamburger-line"></span>
+<span class="hamburger-line"></span>
+</div>
+</button>
 </div>
 </nav>
+<!-- Mobile Nav Menu -->
+<div id="mobile-nav-menu" class="hidden md:hidden fixed top-[64px] left-0 w-full bg-[#131313]/95 backdrop-blur-xl border-b border-[#4d4635]/15 z-40 px-4 py-6">
+<div class="flex flex-col gap-4">
+<a class="text-[#f2ca50] text-sm font-medium py-2" href="explore_titles_marketplace.html">Watch</a>
+<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors text-sm font-medium py-2" href="investor_dashboard.html">Invest</a>
+<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors text-sm font-medium py-2" href="producer_portal.html">Creators</a>
+<a href="compliance_onboarding.html" class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 py-2.5 rounded-md font-bold text-sm tracking-tight text-center no-underline mt-2">Connect Wallet</a>
+</div>
+</div>
 <!-- Hero Section -->
-<header class="relative min-h-screen flex flex-col justify-center items-start px-8 md:px-24 pt-20 overflow-hidden">
+<header class="relative min-h-screen flex flex-col justify-center items-start px-4 md:px-8 lg:px-24 pt-20 overflow-hidden">
 <div class="absolute inset-0 z-0">
 <img class="w-full h-full object-cover opacity-40 mix-blend-luminosity" data-alt="Cinematic wide shot of a futuristic movie production set with dramatic gold lighting, high contrast shadows and mist" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQbr0_bgpdI3VsEnurV3RxnHP_WP6EgNF_a55KAnsxDWBt8GAL-OcFwO1TJYO_r9y8Ll4Mh7WqaEKQ6xfTMNhzZ3VMsMGt-GQYdJeBe2HpQbs0ZW1XJ9k2XWQk2NYOWkPVNBn_2sZesV-VwPTuA-NDgvZSxv3kT_I-Ic8-4v3DBONljioCtrb4NSfzQ_t5N5aPn0uQ1KZVbjwEBB5935-zx60X1YDDyqceSOQt-HVvlFuYlrEHklHgsJ3B3dWKaq0mHkV_m2YWCw"/>
 <div class="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent"></div>
@@ -120,7 +137,7 @@
 </span>
                 Now Premiering: The First AI-Equity Title
             </div>
-<h1 class="text-6xl md:text-8xl font-headline font-extrabold tracking-tighter leading-[0.9] text-on-surface">
+<h1 class="text-4xl md:text-6xl lg:text-8xl font-headline font-extrabold tracking-tighter leading-[0.9] text-on-surface">
                 Own the stories<br/>
 <span class="text-primary italic">you believe in.</span>
 </h1>
@@ -128,12 +145,12 @@
                 AI-powered film production meets blockchain-based fan ownership. Invest in individual titles and share in global revenue through regulated cinematic securities.
             </p>
 <div class="flex flex-wrap gap-4 pt-4">
-<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-4 rounded-md font-bold text-lg hover:shadow-[0_0_30px_rgba(242,202,80,0.3)] transition-all">
+<a href="explore_titles_marketplace.html" class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 md:px-8 py-3 md:py-4 rounded-md font-bold text-base md:text-lg hover:shadow-[0_0_30px_rgba(242,202,80,0.3)] transition-all no-underline text-center">
                     Explore Titles
-                </button>
-<button class="bg-surface-container-highest border border-primary/30 text-primary px-8 py-4 rounded-md font-bold text-lg hover:bg-surface-container transition-colors">
+                </a>
+<a href="production_detail_investment.html" class="bg-surface-container-highest border border-primary/30 text-primary px-6 md:px-8 py-3 md:py-4 rounded-md font-bold text-base md:text-lg hover:bg-surface-container transition-colors no-underline text-center">
                     Invest in a Project
-                </button>
+                </a>
 </div>
 </div>
 <!-- Float Snippet: Investment UI -->
@@ -188,7 +205,7 @@
 </div>
 </section>
 <!-- Featured Productions -->
-<section class="py-32 px-8 max-w-7xl mx-auto">
+<section class="py-16 md:py-32 px-4 md:px-8 max-w-7xl mx-auto">
 <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
 <div class="space-y-4">
 <h2 class="text-4xl md:text-5xl font-headline font-bold tracking-tight">Active Offerings</h2>
@@ -275,7 +292,7 @@
 </div>
 </section>
 <!-- How It Works Section -->
-<section class="bg-surface-container-lowest py-32">
+<section class="bg-surface-container-lowest py-16 md:py-32">
 <div class="max-w-7xl mx-auto px-8">
 <div class="text-center mb-20">
 <h2 class="text-4xl md:text-5xl font-headline font-bold mb-6">The Cycle of Ownership</h2>
@@ -316,8 +333,8 @@
 </div>
 </section>
 <!-- Why Destane -->
-<section class="py-32 px-8 overflow-hidden">
-<div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-20 items-center">
+<section class="py-16 md:py-32 px-4 md:px-8 overflow-hidden">
+<div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
 <div class="lg:w-1/2 space-y-10">
 <div class="space-y-4">
 <h2 class="text-display-lg text-5xl md:text-6xl font-headline font-extrabold leading-tight">A New Paradigm in <span class="text-primary italic">Creative Equity.</span></h2>
@@ -371,14 +388,14 @@
 </div>
 </section>
 <!-- CTA Section -->
-<section class="py-32 px-8">
-<div class="max-w-5xl mx-auto glass-card rounded-2xl p-16 text-center space-y-8 relative overflow-hidden">
+<section class="py-16 md:py-32 px-4 md:px-8">
+<div class="max-w-5xl mx-auto glass-card rounded-2xl p-6 md:p-12 lg:p-16 text-center space-y-6 md:space-y-8 relative overflow-hidden">
 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
 <h2 class="text-4xl md:text-5xl font-headline font-bold">Ready to reshape cinema?</h2>
 <p class="text-on-surface-variant max-w-2xl mx-auto text-lg">Whether you are an investor looking for high-growth assets or a creator with a vision, Destane is your portal to the future of film.</p>
 <div class="flex flex-wrap justify-center gap-4">
-<button class="bg-primary text-on-primary px-10 py-4 rounded-md font-bold text-lg">Start Investing</button>
-<button class="bg-surface-container-highest border border-outline-variant/20 px-10 py-4 rounded-md font-bold text-lg">Submit Your Production</button>
+<a href="explore_titles_marketplace.html" class="bg-primary text-on-primary px-8 md:px-10 py-3 md:py-4 rounded-md font-bold text-base md:text-lg no-underline">Start Investing</a>
+<a href="producer_portal.html" class="bg-surface-container-highest border border-outline-variant/20 px-8 md:px-10 py-3 md:py-4 rounded-md font-bold text-base md:text-lg no-underline">Submit Your Production</a>
 </div>
 </div>
 </section>
@@ -386,8 +403,8 @@
 <footer class="bg-[#0e0e0e] w-full border-t border-[#4d4635]/20 mt-20">
 <div class="w-full max-w-7xl mx-auto px-12 py-16 flex flex-col items-center gap-8 font-['Inter'] text-[10px] tracking-normal leading-relaxed">
 <div class="w-full flex flex-col md:flex-row justify-between items-center gap-8 border-b border-outline-variant/10 pb-12">
-<div class="text-2xl font-bold tracking-tighter text-[#f2ca50] font-headline">DESTANE</div>
-<div class="flex flex-wrap justify-center gap-8 uppercase tracking-widest font-bold text-on-surface-variant">
+<a href="destane_landing_page.html" class="text-2xl font-bold tracking-tighter text-[#f2ca50] font-headline no-underline">DESTANE</a>
+<div class="flex flex-wrap justify-center gap-4 md:gap-8 uppercase tracking-widest font-bold text-on-surface-variant">
 <a class="text-[#f5f5f5]/30 hover:text-[#f2ca50] transition-opacity" href="#">Investment Disclosures</a>
 <a class="text-[#f5f5f5]/30 hover:text-[#f2ca50] transition-opacity" href="#">Privacy Protocol</a>
 <a class="text-[#f5f5f5]/30 hover:text-[#f2ca50] transition-opacity" href="#">Terms of Equity</a>
@@ -404,4 +421,24 @@
             </p>
 </div>
 </footer>
+<!-- Mobile Bottom Navigation -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-[#131313]/95 backdrop-blur-xl border-t border-[#4d4635]/15 flex justify-around py-3 px-4 z-50">
+<a href="explore_titles_marketplace.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[8px] font-bold uppercase tracking-widest">Explore</span>
+</a>
+<a href="investor_dashboard.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-[8px] font-bold uppercase tracking-widest">Portfolio</span>
+</a>
+<a href="producer_portal.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40">
+<span class="material-symbols-outlined">movie_filter</span>
+<span class="text-[8px] font-bold uppercase tracking-widest">Create</span>
+</a>
+<a href="user_platform_settings.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[8px] font-bold uppercase tracking-widest">Settings</span>
+</a>
+</nav>
+<script src="js/main.js"></script>
 </body></html>

@@ -84,31 +84,33 @@
             border: 1px solid rgba(77, 70, 53, 0.15);
         }
     </style>
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="bg-surface text-on-surface selection:bg-primary/30 min-h-screen">
 <!-- SideNavBar (Shared Component) -->
-<aside class="fixed left-0 top-0 h-full w-64 border-r border-[#4d4635]/10 bg-[#0e0e0e] flex flex-col h-full py-6 z-40 hidden md:flex">
+<aside class="sidebar fixed left-0 top-0 h-full w-64 border-r border-[#4d4635]/10 bg-[#0e0e0e] flex flex-col h-full py-6 z-40 hidden md:flex">
+<button id="sidebar-close" class="md:hidden absolute top-4 right-4 text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">close</span></button>
 <div class="px-6 mb-8">
-<h1 class="text-xl font-bold text-[#f2ca50] tracking-tighter">DESTANE</h1>
+<a href="destane_landing_page.html"><h1 class="text-xl font-bold text-[#f2ca50] tracking-tighter">DESTANE</h1></a>
 </div>
 <div class="flex flex-col flex-1 space-y-1">
-<a class="text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md flex items-center gap-3" href="#">
+<a class="text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md flex items-center gap-3" href="producer_portal.html">
 <span class="material-symbols-outlined">dashboard</span>
 <span class="font-['Plus_Jakarta_Sans'] text-sm tracking-tight">Dashboard</span>
 </a>
-<a class="text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md flex items-center gap-3" href="#">
+<a class="text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md flex items-center gap-3" href="investor_dashboard.html">
 <span class="material-symbols-outlined">account_balance_wallet</span>
 <span class="font-['Plus_Jakarta_Sans'] text-sm tracking-tight">Portfolio</span>
 </a>
-<a class="text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md flex items-center gap-3" href="#">
+<a class="text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md flex items-center gap-3" href="explore_titles_marketplace.html">
 <span class="material-symbols-outlined">movie_filter</span>
 <span class="font-['Plus_Jakarta_Sans'] text-sm tracking-tight">Marketplace</span>
 </a>
-<a class="bg-gradient-to-r from-[#f2ca50] to-[#d4af37] text-[#131313] font-bold rounded-md px-4 py-3 mx-2 flex items-center gap-3" href="#">
+<a class="bg-gradient-to-r from-[#f2ca50] to-[#d4af37] text-[#131313] font-bold rounded-md px-4 py-3 mx-2 flex items-center gap-3" href="advanced_analytics_dashboard.html">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">insights</span>
 <span class="font-['Plus_Jakarta_Sans'] text-sm tracking-tight">Analytics</span>
 </a>
-<a class="text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md flex items-center gap-3" href="#">
+<a class="text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-3 mx-2 transition-all hover:bg-[#201f1f] rounded-md flex items-center gap-3" href="user_platform_settings.html">
 <span class="material-symbols-outlined">settings</span>
 <span class="font-['Plus_Jakarta_Sans'] text-sm tracking-tight">Settings</span>
 </a>
@@ -126,21 +128,23 @@
 <a class="text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-2 flex items-center gap-3 text-xs transition-colors" href="#">
 <span class="material-symbols-outlined text-lg">help</span> Support
             </a>
-<a class="text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-2 flex items-center gap-3 text-xs transition-colors" href="#">
+<a class="text-[#f2ca50]/50 hover:text-[#f2ca50] px-4 py-2 flex items-center gap-3 text-xs transition-colors" href="destane_landing_page.html">
 <span class="material-symbols-outlined text-lg">logout</span> Logout
             </a>
 </div>
 </aside>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
 <!-- Main Content Area -->
 <main class="md:ml-64 min-h-screen relative">
 <!-- TopAppBar (Shared Component) -->
 <header class="sticky top-0 z-50 bg-[#131313]/80 backdrop-blur-xl border-b border-[#4d4635]/15 flex justify-between items-center w-full px-8 py-4 max-w-none">
 <div class="flex items-center gap-8">
+<button id="sidebar-toggle" class="mobile-menu-btn items-center justify-center w-10 h-10 rounded-md md:hidden"><span class="material-symbols-outlined text-primary">menu</span></button>
 <div class="md:hidden text-2xl font-black tracking-tighter text-[#f2ca50]">DESTANE</div>
 <nav class="hidden md:flex items-center gap-6">
-<a class="text-[#f2ca50]/60 hover:text-[#f2ca50] transition-colors font-['Plus_Jakarta_Sans'] tracking-[-0.02em] font-bold uppercase text-[0.75rem]" href="#">Watch</a>
-<a class="text-[#f2ca50]/60 hover:text-[#f2ca50] transition-colors font-['Plus_Jakarta_Sans'] tracking-[-0.02em] font-bold uppercase text-[0.75rem]" href="#">Invest</a>
-<a class="text-[#f2ca50]/60 hover:text-[#f2ca50] transition-colors font-['Plus_Jakarta_Sans'] tracking-[-0.02em] font-bold uppercase text-[0.75rem]" href="#">Creators</a>
+<a class="text-[#f2ca50]/60 hover:text-[#f2ca50] transition-colors font-['Plus_Jakarta_Sans'] tracking-[-0.02em] font-bold uppercase text-[0.75rem]" href="explore_titles_marketplace.html">Watch</a>
+<a class="text-[#f2ca50]/60 hover:text-[#f2ca50] transition-colors font-['Plus_Jakarta_Sans'] tracking-[-0.02em] font-bold uppercase text-[0.75rem]" href="investor_dashboard.html">Invest</a>
+<a class="text-[#f2ca50]/60 hover:text-[#f2ca50] transition-colors font-['Plus_Jakarta_Sans'] tracking-[-0.02em] font-bold uppercase text-[0.75rem]" href="producer_portal.html">Creators</a>
 </nav>
 </div>
 <div class="flex items-center gap-4">
@@ -157,7 +161,7 @@
 </div>
 </header>
 <!-- Dashboard Content -->
-<div class="p-8 max-w-7xl mx-auto">
+<div class="p-4 md:p-8 max-w-7xl mx-auto">
 <!-- Page Header -->
 <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
 <div>
@@ -180,9 +184,9 @@
 </div>
 </div>
 <!-- Bento Grid Layout -->
-<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<div class="grid grid-cols-12 md:grid-cols-12 gap-6">
 <!-- Main Chart: Revenue Projection -->
-<div class="md:col-span-8 glass-card rounded-xl p-8 relative overflow-hidden">
+<div class="col-span-12 md:col-span-8 glass-card rounded-xl p-8 relative overflow-hidden">
 <div class="flex justify-between items-start mb-10">
 <div>
 <h3 class="text-lg font-bold text-on-surface mb-1">Revenue Projection vs Actual</h3>
@@ -244,7 +248,7 @@
 </div>
 </div>
 <!-- Marketplace Snapshot: Token Trading Volume -->
-<div class="md:col-span-4 flex flex-col gap-6">
+<div class="col-span-12 md:col-span-4 flex flex-col gap-6">
 <div class="glass-card rounded-xl p-6 flex-1">
 <div class="flex items-center justify-between mb-4">
 <h3 class="text-xs font-bold uppercase tracking-widest text-primary">Token Trading Volume</h3>
@@ -305,7 +309,7 @@
 </div>
 </div>
 <!-- Full Width: Audience Sentiment Heatmap -->
-<div class="md:col-span-12 glass-card rounded-xl p-8">
+<div class="col-span-12 md:col-span-12 glass-card rounded-xl p-8">
 <div class="flex items-center justify-between mb-8">
 <div>
 <h3 class="text-lg font-bold text-on-surface">Audience Sentiment Heatmap</h3>
@@ -379,7 +383,7 @@
 </div>
 </div>
 <!-- Asset Detail Cards -->
-<div class="md:col-span-6 glass-card rounded-xl p-6 flex items-center gap-6 group hover:bg-surface-container-high transition-all">
+<div class="col-span-12 md:col-span-6 glass-card rounded-xl p-6 flex items-center gap-6 group hover:bg-surface-container-high transition-all">
 <div class="w-24 h-32 rounded-lg bg-surface-container-highest overflow-hidden relative">
 <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="cinematic film production still with dramatic lighting and high contrast shadows cinematic mood gold tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZvOJY8DPAffSwXqrwZ50kYnvTSFOfFlCcWO946pJZfVtNh5VCYxtm3WH6hubGJ8Vnx8nL0qSuhNeKiu73VoJjullmbRK76XQ8-ShURtfC4t6Dgf84OWG80IUS0zlMM8MMLdgd1JpwRsrQx3EHUKyAMDkQfK2SI81U8Vk10wzz_PjbvN7aGC3-ulFQcNEK4C6c8FvsGbrh9yYOJvFn4hLlcoSXmjPq5TNocxcGhehirmEO-UbJ3YfcPcoWLU8FKv-_FNjK3oT-VQ"/>
 </div>
@@ -398,7 +402,7 @@
 </div>
 </div>
 </div>
-<div class="md:col-span-6 glass-card rounded-xl p-6 flex items-center gap-6 group hover:bg-surface-container-high transition-all">
+<div class="col-span-12 md:col-span-6 glass-card rounded-xl p-6 flex items-center gap-6 group hover:bg-surface-container-high transition-all">
 <div class="w-24 h-32 rounded-lg bg-surface-container-highest overflow-hidden relative">
 <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="abstract digital art showing glowing particles of light in dark space warm gold and amber color palette" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy693Y4cGYrWDxmgejNUjoHmT9jToPWtPf4GjlPNkIHQx76NzGz2dNkd4X0h70Cap6iJ6zp8jjXYsLIaB9CnC9070ecws4Wb71nNpEoUfcaDUXXt3s2Lz0IU_kfGYtzc3sDkexHH87m6HI3qrGiVuY2-VCwe_HOJtGYRVoux-O8d9SLErRUX7UhgcvVwrZuh_BhLgzT4GnEzSqtpX1G-YWg3FZYAUntzXMFMtDjyBWfpQuiylCV3mU69ZCsfR8isahtLwFkv25xg"/>
 </div>
@@ -424,21 +428,22 @@
 </main>
 <!-- Bottom Navigation Bar (Shared Component - Mobile Only) -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full bg-[#131313]/90 backdrop-blur-xl border-t border-outline-variant/20 flex justify-around items-center py-3 z-50">
-<a class="flex flex-col items-center gap-1 text-[#f2ca50]/60" href="#">
+<a class="flex flex-col items-center gap-1 text-[#f2ca50]/60" href="destane_landing_page.html">
 <span class="material-symbols-outlined text-xl">dashboard</span>
 <span class="text-[10px] uppercase font-bold tracking-tighter">Home</span>
 </a>
-<a class="flex flex-col items-center gap-1 text-[#f2ca50]" href="#">
+<a class="flex flex-col items-center gap-1 text-[#f2ca50]" href="advanced_analytics_dashboard.html">
 <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">insights</span>
 <span class="text-[10px] uppercase font-bold tracking-tighter">Analytics</span>
 </a>
-<a class="flex flex-col items-center gap-1 text-[#f2ca50]/60" href="#">
+<a class="flex flex-col items-center gap-1 text-[#f2ca50]/60" href="explore_titles_marketplace.html">
 <span class="material-symbols-outlined text-xl">movie_filter</span>
 <span class="text-[10px] uppercase font-bold tracking-tighter">Assets</span>
 </a>
-<a class="flex flex-col items-center gap-1 text-[#f2ca50]/60" href="#">
+<a class="flex flex-col items-center gap-1 text-[#f2ca50]/60" href="investor_dashboard.html">
 <span class="material-symbols-outlined text-xl">account_balance_wallet</span>
 <span class="text-[10px] uppercase font-bold tracking-tighter">Wallet</span>
 </a>
 </nav>
+<script src="js/main.js"></script>
 </body></html>

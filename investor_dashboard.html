@@ -88,15 +88,19 @@
             font-family: 'Inter', sans-serif;
         }
     </style>
+<link rel="stylesheet" href="css/styles.css"/>
 </head>
 <body class="antialiased">
 <!-- TopNavBar Shell -->
-<nav class="fixed top-0 w-full flex justify-between items-center px-8 py-4 bg-[#131313]/80 backdrop-blur-xl z-50 border-b border-[#4d4635]/15 shadow-[0_4px_30px_rgba(0,0,0,0.5)] font-['Plus_Jakarta_Sans'] tracking-tight">
-<div class="text-2xl font-bold tracking-tighter text-[#f2ca50]">DESTANE</div>
+<nav class="fixed top-0 w-full flex justify-between items-center px-4 md:px-8 py-4 bg-[#131313]/80 backdrop-blur-xl z-50 border-b border-[#4d4635]/15 shadow-[0_4px_30px_rgba(0,0,0,0.5)] font-['Plus_Jakarta_Sans'] tracking-tight">
+<div class="flex items-center gap-4">
+<button id="sidebar-toggle" class="mobile-menu-btn items-center justify-center w-10 h-10 rounded-md md:hidden"><span class="material-symbols-outlined text-primary">menu</span></button>
+<a href="destane_landing_page.html" class="text-2xl font-bold tracking-tighter text-[#f2ca50] no-underline">DESTANE</a>
+</div>
 <div class="hidden md:flex items-center gap-12">
-<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="#">Watch</a>
-<a class="text-[#f2ca50] border-b-2 border-[#f2ca50] pb-1" href="#">Invest</a>
-<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="#">Creators</a>
+<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="explore_titles_marketplace.html">Watch</a>
+<a class="text-[#f2ca50] border-b-2 border-[#f2ca50] pb-1" href="investor_dashboard.html">Invest</a>
+<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="producer_portal.html">Creators</a>
 </div>
 <div class="flex items-center gap-6">
 <div class="hidden lg:flex items-center bg-surface-container-low px-4 py-2 rounded-lg border border-outline-variant/20">
@@ -110,25 +114,26 @@
 </div>
 </nav>
 <!-- SideNavBar Shell -->
-<aside class="fixed left-0 top-0 h-full w-64 border-r border-[#4d4635]/10 bg-[#0e0e0e] flex flex-col py-6 z-40 pt-24 hidden md:flex">
+<aside class="sidebar fixed left-0 top-0 h-full w-64 border-r border-[#4d4635]/10 bg-[#0e0e0e] flex flex-col py-6 z-40 pt-24 hidden md:flex">
+<button id="sidebar-close" class="md:hidden absolute top-4 right-4 text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">close</span></button>
 <div class="px-6 mb-10">
-<h2 class="font-['Plus_Jakarta_Sans'] text-lg font-black text-[#d4af37] uppercase tracking-widest">Creator Portal</h2>
+<a href="destane_landing_page.html" class="font-['Plus_Jakarta_Sans'] text-lg font-black text-[#d4af37] uppercase tracking-widest no-underline">Creator Portal</a>
 <p class="text-[10px] text-on-surface-variant/60 uppercase tracking-widest mt-1">Cinematic Studio</p>
 </div>
 <div class="flex-1 space-y-2">
-<a class="flex items-center px-6 py-4 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 transition-all font-['Plus_Jakarta_Sans'] text-sm uppercase tracking-widest" href="#">
+<a class="flex items-center px-6 py-4 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 transition-all font-['Plus_Jakarta_Sans'] text-sm uppercase tracking-widest" href="producer_portal.html">
 <span class="material-symbols-outlined mr-4" data-icon="dashboard">dashboard</span> Dashboard
             </a>
-<a class="flex items-center px-6 py-4 bg-[#201f1f] text-[#f2ca50] border-l-4 border-[#f2ca50] font-bold font-['Plus_Jakarta_Sans'] text-sm uppercase tracking-widest" href="#">
+<a class="flex items-center px-6 py-4 bg-[#201f1f] text-[#f2ca50] border-l-4 border-[#f2ca50] font-bold font-['Plus_Jakarta_Sans'] text-sm uppercase tracking-widest" href="investor_dashboard.html">
 <span class="material-symbols-outlined mr-4" data-icon="account_balance_wallet" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span> Portfolio
             </a>
-<a class="flex items-center px-6 py-4 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 transition-all font-['Plus_Jakarta_Sans'] text-sm uppercase tracking-widest" href="#">
+<a class="flex items-center px-6 py-4 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 transition-all font-['Plus_Jakarta_Sans'] text-sm uppercase tracking-widest" href="explore_titles_marketplace.html">
 <span class="material-symbols-outlined mr-4" data-icon="movie_filter">movie_filter</span> Studio
             </a>
-<a class="flex items-center px-6 py-4 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 transition-all font-['Plus_Jakarta_Sans'] text-sm uppercase tracking-widest" href="#">
+<a class="flex items-center px-6 py-4 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 transition-all font-['Plus_Jakarta_Sans'] text-sm uppercase tracking-widest" href="advanced_analytics_dashboard.html">
 <span class="material-symbols-outlined mr-4" data-icon="insights">insights</span> Analytics
             </a>
-<a class="flex items-center px-6 py-4 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 transition-all font-['Plus_Jakarta_Sans'] text-sm uppercase tracking-widest" href="#">
+<a class="flex items-center px-6 py-4 text-[#f5f5f5]/40 hover:bg-[#1c1b1b] hover:translate-x-1 transition-all font-['Plus_Jakarta_Sans'] text-sm uppercase tracking-widest" href="user_platform_settings.html">
 <span class="material-symbols-outlined mr-4" data-icon="settings">settings</span> Settings
             </a>
 </div>
@@ -138,9 +143,10 @@
             </button>
 </div>
 </aside>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
 <!-- Main Content Canvas -->
 <main class="md:pl-64 pt-24 min-h-screen bg-surface-container-lowest">
-<div class="max-w-7xl mx-auto px-8 py-8">
+<div class="max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-8">
 <!-- Page Header -->
 <header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
 <div>
@@ -416,26 +422,27 @@
 </footer>
 <!-- Mobile Navigation Shell -->
 <div class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container/95 backdrop-blur-lg border-t border-outline-variant/10 flex justify-around items-center py-4 z-50">
-<a class="flex flex-col items-center gap-1 text-[#f5f5f5]/40" href="#">
+<a class="flex flex-col items-center gap-1 text-[#f5f5f5]/40" href="producer_portal.html">
 <span class="material-symbols-outlined">dashboard</span>
 <span class="text-[8px] uppercase tracking-widest">Dashboard</span>
 </a>
-<a class="flex flex-col items-center gap-1 text-[#f2ca50]" href="#">
+<a class="flex flex-col items-center gap-1 text-[#f2ca50]" href="investor_dashboard.html">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
 <span class="text-[8px] uppercase tracking-widest font-bold">Portfolio</span>
 </a>
 <div class="relative -top-6">
-<button class="bg-gradient-to-br from-primary to-primary-container p-4 rounded-full shadow-lg shadow-primary/20">
+<a href="explore_titles_marketplace.html" class="bg-gradient-to-br from-primary to-primary-container p-4 rounded-full shadow-lg shadow-primary/20 block">
 <span class="material-symbols-outlined text-on-primary">add</span>
-</button>
+</a>
 </div>
-<a class="flex flex-col items-center gap-1 text-[#f5f5f5]/40" href="#">
+<a class="flex flex-col items-center gap-1 text-[#f5f5f5]/40" href="advanced_analytics_dashboard.html">
 <span class="material-symbols-outlined">insights</span>
 <span class="text-[8px] uppercase tracking-widest">Analytics</span>
 </a>
-<a class="flex flex-col items-center gap-1 text-[#f5f5f5]/40" href="#">
+<a class="flex flex-col items-center gap-1 text-[#f5f5f5]/40" href="user_platform_settings.html">
 <span class="material-symbols-outlined">settings</span>
 <span class="text-[8px] uppercase tracking-widest">Settings</span>
 </a>
 </div>
+<script src="js/main.js"></script>
 </body></html>

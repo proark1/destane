@@ -92,15 +92,16 @@
             font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
         }
     </style>
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="bg-background text-on-surface font-body selection:bg-primary/30">
 <!-- TopNavBar -->
 <nav class="fixed top-0 w-full flex justify-between items-center px-8 py-4 bg-[#131313]/80 backdrop-blur-xl border-b border-[#4d4635]/15 shadow-[0_4px_30px_rgba(0,0,0,0.5)] z-50 font-['Plus_Jakarta_Sans'] tracking-tight antialiased">
-<div class="text-2xl font-bold tracking-tighter text-[#f2ca50]">DESTANE</div>
+<a href="destane_landing_page.html" class="text-2xl font-bold tracking-tighter text-[#f2ca50] no-underline">DESTANE</a>
 <div class="hidden md:flex items-center gap-8">
-<a class="text-[#f2ca50] border-b-2 border-[#f2ca50] pb-1" href="#">Watch</a>
-<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="#">Invest</a>
-<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="#">Creators</a>
+<a class="text-[#f2ca50] border-b-2 border-[#f2ca50] pb-1" href="explore_titles_marketplace.html">Watch</a>
+<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="investor_dashboard.html">Invest</a>
+<a class="text-[#f5f5f5]/60 hover:text-[#f2ca50] transition-colors" href="producer_portal.html">Creators</a>
 </div>
 <div class="flex items-center gap-6">
 <div class="hidden lg:flex items-center bg-surface-container-lowest px-4 py-2 rounded-lg border border-outline-variant/20">
@@ -113,7 +114,7 @@
 </nav>
 <main class="pt-20 pb-16">
 <!-- Hero Section -->
-<section class="relative h-[716px] w-full overflow-hidden">
+<section class="relative h-[400px] md:h-[560px] lg:h-[716px] w-full overflow-hidden">
 <div class="absolute inset-0">
 <img class="w-full h-full object-cover" data-alt="cinematic widescreen shot of a futuristic cyberpunk city at night with neon lights and flying vehicles in heavy rain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBy5FhonEsjh8F4tS4AOIzEgDdQ0fTod88_-y2o6-Y6bumbvOC7wNWtXrE5aO2B0cB6JLIyuME_-iOv2kSstFkJ_VJXvtbWdMDmi0hEVgNChli_yZOo8-OMXKwSRAF26_HXzrfNrgVRxR9bDb8CUJN6hvZ69a6ufmOe90_j-kn2-FC57jO1BE1JWq7iQsP9mE4U-DoAHWUhthIQUxjapl3P_hwsq_7xx5F7o1S37bNpuYmLwP2IpArr5INnkb8rEqz1qNxL9prWLQ"/>
 <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
@@ -124,9 +125,9 @@
 <span class="bg-primary/20 text-primary px-3 py-1 text-[10px] font-bold tracking-widest uppercase rounded border border-primary/30">AI Production Insight</span>
 <span class="text-on-surface-variant text-[10px] font-bold tracking-widest uppercase">SCI-FI THRILLER • 2025</span>
 </div>
-<h1 class="font-headline text-6xl lg:text-8xl font-extrabold tracking-tighter text-on-surface mb-6">The Last Protocol</h1>
+<h1 class="font-headline text-4xl md:text-6xl lg:text-8xl font-extrabold tracking-tighter text-on-surface mb-6">The Last Protocol</h1>
 <p class="text-on-surface-variant text-lg max-w-2xl leading-relaxed">In a world where memories are traded as currency, a disgraced detective uncovers a conspiracy that threatens to delete the collective history of humanity.</p>
-<div class="flex items-center gap-12 mt-8 border-t border-outline-variant/20 pt-8">
+<div class="flex flex-wrap items-center gap-6 md:gap-12 mt-8 border-t border-outline-variant/20 pt-8">
 <div>
 <p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">Director</p>
 <p class="font-semibold text-on-surface">Elena Vance</p>
@@ -157,12 +158,12 @@
 <!-- Left: Tabbed Content -->
 <div class="lg:col-span-8">
 <div class="flex border-b border-outline-variant/10 mb-8 gap-8 overflow-x-auto">
-<button class="pb-4 text-primary border-b-2 border-primary font-bold text-sm tracking-wide">Overview</button>
-<button class="pb-4 text-on-surface-variant hover:text-on-surface font-bold text-sm tracking-wide transition-colors">Tokenomics</button>
-<button class="pb-4 text-on-surface-variant hover:text-on-surface font-bold text-sm tracking-wide transition-colors">Revenue Share</button>
-<button class="pb-4 text-on-surface-variant hover:text-on-surface font-bold text-sm tracking-wide transition-colors">Updates</button>
-<button class="pb-4 text-on-surface-variant hover:text-on-surface font-bold text-sm tracking-wide transition-colors">Community</button>
-<button class="pb-4 text-on-surface-variant hover:text-on-surface font-bold text-sm tracking-wide transition-colors">Legal</button>
+<button class="pb-4 text-primary border-b-2 border-primary font-bold text-sm tracking-wide whitespace-nowrap">Overview</button>
+<button class="pb-4 text-on-surface-variant hover:text-on-surface font-bold text-sm tracking-wide transition-colors whitespace-nowrap">Tokenomics</button>
+<button class="pb-4 text-on-surface-variant hover:text-on-surface font-bold text-sm tracking-wide transition-colors whitespace-nowrap">Revenue Share</button>
+<button class="pb-4 text-on-surface-variant hover:text-on-surface font-bold text-sm tracking-wide transition-colors whitespace-nowrap">Updates</button>
+<button class="pb-4 text-on-surface-variant hover:text-on-surface font-bold text-sm tracking-wide transition-colors whitespace-nowrap">Community</button>
+<button class="pb-4 text-on-surface-variant hover:text-on-surface font-bold text-sm tracking-wide transition-colors whitespace-nowrap">Legal</button>
 </div>
 <div class="space-y-12">
 <div class="prose prose-invert max-w-none">
@@ -291,4 +292,12 @@
 </div>
 </div>
 </footer>
+<!-- Mobile Bottom Nav -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-[#131313]/95 backdrop-blur-xl border-t border-[#4d4635]/15 flex justify-around py-3 z-50">
+  <a href="explore_titles_marketplace.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">explore</span><span class="text-[8px] font-bold uppercase tracking-widest">Explore</span></a>
+  <a href="investor_dashboard.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">account_balance_wallet</span><span class="text-[8px] font-bold uppercase tracking-widest">Portfolio</span></a>
+  <a href="producer_portal.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">movie_filter</span><span class="text-[8px] font-bold uppercase tracking-widest">Create</span></a>
+  <a href="user_platform_settings.html" class="flex flex-col items-center gap-1 text-[#f5f5f5]/40"><span class="material-symbols-outlined">settings</span><span class="text-[8px] font-bold uppercase tracking-widest">Settings</span></a>
+</nav>
+<script src="js/main.js"></script>
 </body></html>
