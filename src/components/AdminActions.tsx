@@ -6,11 +6,16 @@ export default function AdminActions({ productionId }: { productionId: number })
   const router = useRouter();
 
   async function handleAction(status: string) {
-    await fetch(`/api/productions/${productionId}`, {
+    const res = await fetch(`/api/productions/${productionId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
     });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({ error: "Request failed" }));
+      toast.error(data.error || "Failed to update production");
+      return;
+    }
     toast.success(`Production ${status === 'funding' ? 'approved' : 'rejected'}`);
     router.refresh();
   }

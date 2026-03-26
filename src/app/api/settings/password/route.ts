@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import { query } from "@/lib/db";
+import { query, initDb } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 
 export async function PUT(request: NextRequest) {
   try {
+    await initDb();
     const user = await getSession();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 

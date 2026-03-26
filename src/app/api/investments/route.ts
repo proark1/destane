@@ -55,14 +55,20 @@ export async function POST(request: NextRequest) {
     const tokens = Math.floor(amount / parseFloat(production.token_price));
     const equity = (amount / parseFloat(production.funding_goal)) * 100;
 
-    // Create investment
+    // Atomically update funding — prevents over-subscription under concurrency
+    const fundingUpdate = await query(
+      "UPDATE productions SET funding_raised = funding_raised + $1 WHERE id = $2 AND status = 'funding' AND funding_raised + $1 <= funding_goal RETURNING *",
+      [amount, production_id]
+    );
+    if (fundingUpdate.rows.length === 0) {
+      return NextResponse.json({ error: "Investment exceeds remaining funding capacity. Please try a smaller amount." }, { status: 400 });
+    }
+
+    // Create investment record
     const inv = await query(
       "INSERT INTO investments (user_id, production_id, amount, tokens, equity_pct) VALUES ($1,$2,$3,$4,$5) RETURNING *",
       [user.id, production_id, amount, tokens, equity]
     );
-
-    // Update funding raised
-    await query("UPDATE productions SET funding_raised = funding_raised + $1 WHERE id = $2", [amount, production_id]);
 
     // Atomically transition to 'production' if fully funded
     await query(
