@@ -1,8 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import DashboardLayout from "@/components/DashboardLayout";
-import { getSession } from "@/lib/auth";
+"use client";
 
-const notifications = [
+import { useState, useEffect } from "react";
+import DashboardLayout from "@/components/DashboardLayout";
+
+const notificationDefaults = [
   { label: "Investment Updates", description: "Portfolio changes and dividend payouts", enabled: true },
   { label: "Production Milestones", description: "Status changes for your productions", enabled: true },
   { label: "Market Alerts", description: "Token price movements and volume spikes", enabled: false },
@@ -14,10 +16,58 @@ const wallets = [
   { name: "Phantom", address: "Hk9v...m2Qx", chain: "Solana", connected: false },
 ];
 
-export default async function SettingsPage() {
-  const user = await getSession();
-  const displayName = user?.username ?? "User";
-  const email = user?.email ?? "user@destane.io";
+export default function SettingsPage() {
+  const [displayName, setDisplayName] = useState("");
+  const [email, setEmail] = useState("");
+  const [bio, setBio] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [notifications, setNotifications] = useState(notificationDefaults);
+
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.user) {
+          setDisplayName(data.user.username || "");
+          setEmail(data.user.email || "");
+          setBio(data.user.bio || "");
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
+  async function handleSaveProfile() {
+    setSaving(true);
+    setMessage(null);
+
+    try {
+      const res = await fetch("/api/settings/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: displayName, email, bio }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setMessage({ type: "error", text: data.error || "Failed to save profile" });
+      } else {
+        setMessage({ type: "success", text: "Profile updated successfully" });
+      }
+    } catch {
+      setMessage({ type: "error", text: "Network error. Please try again." });
+    } finally {
+      setSaving(false);
+      setTimeout(() => setMessage(null), 4000);
+    }
+  }
+
+  function toggleNotification(index: number) {
+    setNotifications((prev) =>
+      prev.map((n, i) => (i === index ? { ...n, enabled: !n.enabled } : n))
+    );
+  }
 
   return (
     <DashboardLayout>
@@ -49,17 +99,31 @@ export default async function SettingsPage() {
               <img src="/images/ui/empty-avatar.svg" alt="Profile" className="w-full h-full object-cover" />
             </div>
             <div>
-              <p className="text-lg font-bold text-on-surface font-[family-name:var(--font-plus-jakarta)]">Alexander Sterling</p>
+              <p className="text-lg font-bold text-on-surface font-[family-name:var(--font-plus-jakarta)]">
+                {loading ? "Loading..." : displayName || "User"}
+              </p>
               <p className="text-xs text-on-surface-variant">Premium Tier Investor</p>
             </div>
           </div>
+
+          {message && (
+            <div className={`mb-5 p-3 rounded-lg text-xs font-medium ${
+              message.type === "success"
+                ? "bg-green-500/10 border border-green-500/30 text-green-400"
+                : "bg-error-container/20 border border-error/30 text-error"
+            }`}>
+              {message.text}
+            </div>
+          )}
+
           <div className="space-y-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label className="font-[family-name:var(--font-inter)] text-[10px] uppercase tracking-widest text-on-surface-variant/60 block mb-1.5">Display Name</label>
                 <input
                   type="text"
-                  defaultValue={displayName}
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
                   className="w-full bg-surface-container-highest/30 border border-outline-variant/10 rounded-lg px-4 py-2.5 font-[family-name:var(--font-inter)] text-sm text-on-surface focus:outline-none focus:border-primary/40 transition-colors"
                 />
               </div>
@@ -67,7 +131,8 @@ export default async function SettingsPage() {
                 <label className="font-[family-name:var(--font-inter)] text-[10px] uppercase tracking-widest text-on-surface-variant/60 block mb-1.5">Email Address</label>
                 <input
                   type="email"
-                  defaultValue={email}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full bg-surface-container-highest/30 border border-outline-variant/10 rounded-lg px-4 py-2.5 font-[family-name:var(--font-inter)] text-sm text-on-surface focus:outline-none focus:border-primary/40 transition-colors"
                 />
               </div>
@@ -76,13 +141,19 @@ export default async function SettingsPage() {
               <label className="font-[family-name:var(--font-inter)] text-[10px] uppercase tracking-widest text-on-surface-variant/60 block mb-1.5">Bio</label>
               <textarea
                 rows={3}
-                defaultValue="Entertainment investor and producer focused on emerging digital media."
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+                placeholder="Tell us about yourself..."
                 className="w-full bg-surface-container-highest/30 border border-outline-variant/10 rounded-lg px-4 py-2.5 font-[family-name:var(--font-inter)] text-sm text-on-surface focus:outline-none focus:border-primary/40 transition-colors resize-none"
               />
             </div>
             <div className="flex justify-end">
-              <button className="btn-gold text-on-primary font-[family-name:var(--font-inter)] text-xs font-bold px-5 py-2.5 rounded-md shadow-lg shadow-primary/20">
-                Save Profile
+              <button
+                onClick={handleSaveProfile}
+                disabled={saving}
+                className="btn-gold text-on-primary font-[family-name:var(--font-inter)] text-xs font-bold px-5 py-2.5 rounded-md shadow-lg shadow-primary/20 disabled:opacity-50"
+              >
+                {saving ? "Saving..." : "Save Profile"}
               </button>
             </div>
           </div>
@@ -125,13 +196,16 @@ export default async function SettingsPage() {
             Notification Preferences
           </h3>
           <div className="space-y-1">
-            {notifications.map((n) => (
+            {notifications.map((n, i) => (
               <div key={n.label} className="flex items-center justify-between py-3 border-b border-outline-variant/10 last:border-0">
                 <div>
                   <p className="font-[family-name:var(--font-inter)] text-sm font-medium">{n.label}</p>
                   <p className="font-[family-name:var(--font-inter)] text-xs text-on-surface-variant mt-0.5">{n.description}</p>
                 </div>
-                <button className={`relative w-11 h-6 rounded-full transition-colors ${n.enabled ? "bg-primary" : "bg-surface-container-highest"}`}>
+                <button
+                  onClick={() => toggleNotification(i)}
+                  className={`relative w-11 h-6 rounded-full transition-colors ${n.enabled ? "bg-primary" : "bg-surface-container-highest"}`}
+                >
                   <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${n.enabled ? "left-5" : "left-0.5"}`} />
                 </button>
               </div>

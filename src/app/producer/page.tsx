@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+export const dynamic = "force-dynamic";
 import DashboardLayout from "@/components/DashboardLayout";
 import { getSession } from "@/lib/auth";
 

@@ -1,9 +1,62 @@
 /* eslint-disable @next/next/no-img-element */
+export const dynamic = "force-dynamic";
 import DashboardLayout from "@/components/DashboardLayout";
 import { getSession } from "@/lib/auth";
+import { query, initDb } from "@/lib/db";
 
 export default async function AnalyticsPage() {
   const user = await getSession();
+  await initDb();
+
+  // Fetch aggregate stats from DB
+  const [revenueRes, investmentRes, topProductionsRes, recentInvestmentsRes] =
+    await Promise.all([
+      query("SELECT COALESCE(SUM(funding_raised),0) AS total FROM productions"),
+      query("SELECT COALESCE(SUM(amount),0) AS total, COUNT(*) AS count FROM investments"),
+      query("SELECT * FROM productions ORDER BY funding_raised DESC LIMIT 5"),
+      query(
+        `SELECT i.*, p.title FROM investments i JOIN productions p ON i.production_id = p.id ORDER BY i.invested_at DESC LIMIT 5`
+      ),
+    ]);
+
+  const totalRevenue = parseFloat(revenueRes.rows[0].total);
+  const totalInvested = parseFloat(investmentRes.rows[0].total);
+  const investmentCount = parseInt(investmentRes.rows[0].count);
+  const topProductions = topProductionsRes.rows;
+  const recentInvestments = recentInvestmentsRes.rows;
+
+  function formatCurrency(val: number) {
+    if (val >= 1_000_000) return `$${(val / 1_000_000).toFixed(1)}M`;
+    if (val >= 1_000) return `$${(val / 1_000).toFixed(0)}K`;
+    return `$${val.toFixed(0)}`;
+  }
+
+  const kpis = [
+    {
+      label: "Total Revenue",
+      value: formatCurrency(totalRevenue),
+      icon: "payments",
+      sub: "All-time funding raised",
+    },
+    {
+      label: "Total Invested",
+      value: formatCurrency(totalInvested),
+      icon: "account_balance_wallet",
+      sub: `${investmentCount.toLocaleString()} investments`,
+    },
+    {
+      label: "Top Productions",
+      value: topProductions.length.toString(),
+      icon: "trending_up",
+      sub: "By funding raised",
+    },
+    {
+      label: "Recent Investments",
+      value: recentInvestments.length.toString(),
+      icon: "receipt_long",
+      sub: "Latest transactions",
+    },
+  ];
 
   return (
     <DashboardLayout>
@@ -15,7 +68,7 @@ export default async function AnalyticsPage() {
               Performance Portal
             </p>
             <h1 className="font-[family-name:var(--font-plus-jakarta)] text-3xl md:text-4xl font-extrabold tracking-tighter">
-              Analytics Screen
+              Analytics
             </h1>
           </div>
           <div className="flex gap-1 bg-surface-container-highest/50 rounded-lg p-1">
@@ -34,19 +87,39 @@ export default async function AnalyticsPage() {
           </div>
         </div>
 
-        {/* Revenue Chart */}
+        {/* KPI Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          {kpis.map((k) => (
+            <div key={k.label} className="glass-panel rounded-xl p-5">
+              <div className="flex items-center justify-between mb-3">
+                <span className="material-symbols-outlined text-primary text-xl">{k.icon}</span>
+              </div>
+              <p className="font-[family-name:var(--font-plus-jakarta)] text-2xl font-extrabold tracking-tight">{k.value}</p>
+              <p className="font-[family-name:var(--font-inter)] text-[10px] uppercase tracking-widest text-on-surface-variant/60 mt-1">{k.label}</p>
+              <p className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant/40 mt-0.5">{k.sub}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Revenue Chart (visual placeholder with real summary) */}
         <div className="glass-panel rounded-xl p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
               <p className="font-[family-name:var(--font-inter)] text-[10px] uppercase tracking-widest text-on-surface-variant/60 mb-1">
                 Total Revenue
               </p>
-              <h3 className="font-[family-name:var(--font-plus-jakarta)] text-2xl font-extrabold tracking-tight">$3.24M</h3>
-              <p className="font-[family-name:var(--font-inter)] text-xs text-primary">+18.2% vs prior period</p>
+              <h3 className="font-[family-name:var(--font-plus-jakarta)] text-2xl font-extrabold tracking-tight">
+                {formatCurrency(totalRevenue)}
+              </h3>
+              <p className="font-[family-name:var(--font-inter)] text-xs text-primary">
+                {investmentCount.toLocaleString()} total investments
+              </p>
             </div>
             <div className="text-right">
-              <p className="font-[family-name:var(--font-inter)] text-xs text-on-surface-variant">Avg. Daily</p>
-              <p className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold">$108K</p>
+              <p className="font-[family-name:var(--font-inter)] text-xs text-on-surface-variant">Avg. Investment</p>
+              <p className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold">
+                {investmentCount > 0 ? formatCurrency(totalInvested / investmentCount) : "$0"}
+              </p>
             </div>
           </div>
           <div className="flex items-end gap-1.5 h-40">
@@ -59,55 +132,129 @@ export default async function AnalyticsPage() {
             ))}
           </div>
           <div className="flex justify-between mt-2">
-            <span className="font-[family-name:var(--font-inter)] text-[9px] text-on-surface-variant/40">Feb 24</span>
-            <span className="font-[family-name:var(--font-inter)] text-[9px] text-on-surface-variant/40">Mar 25</span>
+            <span className="font-[family-name:var(--font-inter)] text-[9px] text-on-surface-variant/40">Placeholder chart</span>
+            <span className="font-[family-name:var(--font-inter)] text-[9px] text-on-surface-variant/40">Real totals above</span>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Token Trading Volume */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Top Productions by Funding */}
           <div className="glass-panel rounded-xl p-6">
-            <p className="font-[family-name:var(--font-inter)] text-[10px] uppercase tracking-widest text-on-surface-variant/60 mb-4">
-              Token Trading Volume
+            <p className="font-[family-name:var(--font-inter)] text-[10px] uppercase tracking-widest text-on-surface-variant/60 mb-1">
+              Leaderboard
             </p>
-            <div className="space-y-4">
-              {[
-                { token: "MDP-X", name: "Midnight Protocol", price: "$12.84", change: "+4.2%", volume: "$1.2M", positive: true },
-                { token: "CRM-X", name: "Crimson Meridian", price: "$8.42", change: "+1.8%", volume: "$842K", positive: true },
-                { token: "NEX-X", name: "Neon Exodus", price: "$5.10", change: "-2.1%", volume: "$620K", positive: false },
-              ].map((t) => (
-                <div key={t.token} className="flex items-center justify-between py-3 border-b border-outline-variant/10 last:border-0">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-surface-container-highest rounded overflow-hidden flex-shrink-0 relative">
-                      <img src="/images/ui/film-reel.svg" alt="" className="w-full h-full object-cover opacity-40" />
+            <h3 className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold tracking-tight mb-4">
+              Top Productions by Funding
+            </h3>
+            {topProductions.length === 0 ? (
+              <p className="font-[family-name:var(--font-inter)] text-sm text-on-surface-variant/60">No productions yet.</p>
+            ) : (
+              <div className="space-y-3">
+                {topProductions.map((p: Record<string, string | number>, idx: number) => {
+                  const raised = parseFloat(p.funding_raised as string) || 0;
+                  const goal = parseFloat(p.funding_goal as string) || 1;
+                  const pct = Math.min(Math.round((raised / goal) * 100), 100);
+                  return (
+                    <div key={p.id} className="flex items-center gap-3 py-3 border-b border-outline-variant/10 last:border-0">
+                      <span className="font-[family-name:var(--font-plus-jakarta)] text-xs font-bold text-on-surface-variant/40 w-5 text-center">
+                        {idx + 1}
+                      </span>
+                      <div className="w-8 h-8 bg-surface-container-highest rounded overflow-hidden flex-shrink-0">
+                        {p.image_url ? (
+                          <img src={p.image_url as string} alt="" className="w-full h-full object-cover" />
+                        ) : (
+                          <img src="/images/ui/film-reel.svg" alt="" className="w-full h-full object-cover opacity-40" />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-2">
+                          <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold truncate">{p.title}</p>
+                          <span className="font-[family-name:var(--font-inter)] text-xs font-bold text-primary shrink-0">
+                            {formatCurrency(raised)}
+                          </span>
+                        </div>
+                        <div className="mt-1.5 w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-linear-to-r from-primary to-primary-container rounded-full"
+                            style={{ width: `${pct}%` }}
+                          />
+                        </div>
+                        <div className="flex justify-between mt-1">
+                          <span className="font-[family-name:var(--font-inter)] text-[9px] text-on-surface-variant/50">
+                            Goal: {formatCurrency(goal)}
+                          </span>
+                          <span className="font-[family-name:var(--font-inter)] text-[9px] text-primary font-bold">
+                            {pct}%
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold">{t.token}</p>
-                      <p className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant">{t.name}</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-[family-name:var(--font-inter)] text-sm font-medium">{t.price}</p>
-                    <p className={`font-[family-name:var(--font-inter)] text-[10px] ${t.positive ? "text-primary" : "text-error"}`}>
-                      {t.change} &middot; {t.volume}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
-          {/* Market Liquidity */}
+          {/* Recent Investments */}
+          <div className="glass-panel rounded-xl p-6">
+            <p className="font-[family-name:var(--font-inter)] text-[10px] uppercase tracking-widest text-on-surface-variant/60 mb-1">
+              Activity
+            </p>
+            <h3 className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold tracking-tight mb-4">
+              Recent Investments
+            </h3>
+            {recentInvestments.length === 0 ? (
+              <p className="font-[family-name:var(--font-inter)] text-sm text-on-surface-variant/60">No investments yet.</p>
+            ) : (
+              <div className="space-y-3">
+                {recentInvestments.map((inv: Record<string, string | number>) => {
+                  const amount = parseFloat(inv.amount as string) || 0;
+                  const date = inv.invested_at
+                    ? new Date(inv.invested_at as string).toLocaleDateString()
+                    : "N/A";
+                  return (
+                    <div key={inv.id} className="flex items-center justify-between py-3 border-b border-outline-variant/10 last:border-0">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-linear-to-br from-primary/20 to-tertiary/20 rounded-full flex items-center justify-center">
+                          <span className="material-symbols-outlined text-primary text-sm">arrow_upward</span>
+                        </div>
+                        <div>
+                          <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold">{inv.title}</p>
+                          <p className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant">{date}</p>
+                        </div>
+                      </div>
+                      <span className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold text-primary">
+                        {formatCurrency(amount)}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+            <div className="mt-4 pt-4 border-t border-outline-variant/10 flex justify-between text-xs">
+              <span className="font-[family-name:var(--font-inter)] text-on-surface-variant">Total Invested</span>
+              <span className="font-[family-name:var(--font-plus-jakarta)] font-bold text-primary">
+                {formatCurrency(totalInvested)}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Heatmap & Liquidity Placeholders */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Market Liquidity Placeholder */}
           <div className="glass-panel rounded-xl p-6 flex flex-col">
             <p className="font-[family-name:var(--font-inter)] text-[10px] uppercase tracking-widest text-on-surface-variant/60 mb-1">
               Market Liquidity
             </p>
-            <h3 className="font-[family-name:var(--font-plus-jakarta)] text-2xl font-extrabold tracking-tight text-primary mb-2">$8.4M</h3>
-            <p className="font-[family-name:var(--font-inter)] text-xs text-on-surface-variant mb-4">Total Pool Depth</p>
+            <h3 className="font-[family-name:var(--font-plus-jakarta)] text-2xl font-extrabold tracking-tight text-primary mb-2">
+              {formatCurrency(totalInvested)}
+            </h3>
+            <p className="font-[family-name:var(--font-inter)] text-xs text-on-surface-variant mb-4">Total Invested Capital</p>
             <div className="flex-1 flex flex-col justify-end gap-2">
               {[
-                { label: "Buy Orders", pct: 62, color: "bg-primary" },
-                { label: "Sell Orders", pct: 38, color: "bg-tertiary" },
+                { label: "Funding Raised", pct: totalRevenue > 0 ? Math.min(Math.round((totalRevenue / (totalRevenue + totalInvested || 1)) * 100), 100) : 50, color: "bg-primary" },
+                { label: "Direct Investment", pct: totalInvested > 0 ? Math.min(Math.round((totalInvested / (totalRevenue + totalInvested || 1)) * 100), 100) : 50, color: "bg-tertiary" },
               ].map((order) => (
                 <div key={order.label}>
                   <div className="flex justify-between mb-1">
@@ -122,13 +269,13 @@ export default async function AnalyticsPage() {
             </div>
             <div className="mt-4 pt-4 border-t border-outline-variant/10">
               <div className="flex justify-between text-xs">
-                <span className="font-[family-name:var(--font-inter)] text-on-surface-variant">Bid-Ask Spread</span>
-                <span className="font-[family-name:var(--font-plus-jakarta)] font-bold">0.12%</span>
+                <span className="font-[family-name:var(--font-inter)] text-on-surface-variant">Total Transactions</span>
+                <span className="font-[family-name:var(--font-plus-jakarta)] font-bold">{investmentCount.toLocaleString()}</span>
               </div>
             </div>
           </div>
 
-          {/* Audience Sentiment Heatmap */}
+          {/* Audience Sentiment Heatmap Placeholder */}
           <div className="glass-panel rounded-xl p-6">
             <p className="font-[family-name:var(--font-inter)] text-[10px] uppercase tracking-widest text-on-surface-variant/60 mb-4">
               Audience Sentiment Heatmap
@@ -155,66 +302,13 @@ export default async function AnalyticsPage() {
             <div className="mt-3 pt-3 border-t border-outline-variant/10 text-center">
               <div className="flex items-center justify-center gap-2">
                 <img src="/images/ui/shield-verified.svg" alt="Verified" className="w-4 h-4 opacity-60" />
-                <p className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold text-primary">87%</p>
+                <p className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold text-primary">
+                  {topProductions.length > 0 ? `${topProductions.length}` : "0"} Active
+                </p>
               </div>
-              <p className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant">Overall Positive Sentiment</p>
+              <p className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant">Top Funded Productions</p>
             </div>
           </div>
-        </div>
-
-        {/* Asset Detail Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[
-            {
-              title: "The Midnight Protocol",
-              token: "MDP-X",
-              marketCap: "$2.8M",
-              holders: "1,242",
-              dayVolume: "$420K",
-              dayChange: "+4.2%",
-              sparkline: [30, 45, 42, 55, 50, 62, 58, 70, 65, 72, 68, 80],
-            },
-            {
-              title: "Crimson Meridian",
-              token: "CRM-X",
-              marketCap: "$1.6M",
-              holders: "864",
-              dayVolume: "$280K",
-              dayChange: "+1.8%",
-              sparkline: [40, 38, 45, 50, 48, 52, 55, 58, 54, 60, 62, 58],
-            },
-          ].map((asset) => (
-            <div key={asset.token} className="glass-panel rounded-xl p-6">
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h3 className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold tracking-tight">{asset.title}</h3>
-                  <p className="font-[family-name:var(--font-inter)] text-[10px] uppercase tracking-wider text-primary">{asset.token}</p>
-                </div>
-                <span className="font-[family-name:var(--font-inter)] text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-md">
-                  {asset.dayChange}
-                </span>
-              </div>
-              <div className="flex items-end gap-0.5 h-16 mb-4">
-                {asset.sparkline.map((h, i) => (
-                  <div key={i} className="flex-1 bg-primary/30 rounded-sm" style={{ height: `${h}%` }} />
-                ))}
-              </div>
-              <div className="grid grid-cols-3 gap-4 pt-4 border-t border-outline-variant/10">
-                <div>
-                  <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-wider text-on-surface-variant/60">Market Cap</p>
-                  <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold">{asset.marketCap}</p>
-                </div>
-                <div>
-                  <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-wider text-on-surface-variant/60">Holders</p>
-                  <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold">{asset.holders}</p>
-                </div>
-                <div>
-                  <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-wider text-on-surface-variant/60">24h Volume</p>
-                  <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold">{asset.dayVolume}</p>
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </DashboardLayout>

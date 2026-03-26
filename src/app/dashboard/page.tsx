@@ -1,46 +1,96 @@
+export const dynamic = "force-dynamic";
 import DashboardLayout from "@/components/DashboardLayout";
 import { getSession } from "@/lib/auth";
-
-const stats = [
-  { label: "Total Invested", value: "$420,000", icon: "account_balance", change: "+12.4%" },
-  { label: "Portfolio Value", value: "$684,250", icon: "trending_up", change: "+62.9%" },
-  { label: "Projected Earnings", value: "$1.2M", icon: "rocket_launch", change: "+18.7%" },
-  { label: "Actual Payouts", value: "$58,900", icon: "payments", change: "+8.2%" },
-];
-
-const chartData = [
-  { month: "Jul", value: 35 },
-  { month: "Aug", value: 48 },
-  { month: "Sep", value: 42 },
-  { month: "Oct", value: 65 },
-  { month: "Nov", value: 58 },
-  { month: "Dec", value: 72 },
-  { month: "Jan", value: 80 },
-  { month: "Feb", value: 68 },
-  { month: "Mar", value: 90 },
-];
-
-const ownedTitles = [
-  { title: "Neon Horizon", genre: "Sci-Fi Thriller", equity: "2.4%", apy: "14.8%", status: "In Production", image: "https://lh3.googleusercontent.com/aida/AXQ1bvN7_W5bkV8s4rX_CG0WSrJwG_QeBmvDkEl1eAFvdLKTnHd0R4c0XQNPI5SYJCM3xnE_rOYGQcvNy8cKjEfrHpnihAJ=s512" },
-  { title: "The Last Aria", genre: "Drama", equity: "1.1%", apy: "11.2%", status: "Post-Production", image: "https://lh3.googleusercontent.com/aida/AXQ1bvOkO5TCMIx_0YISJJ_yCSXPQQkr0RjYVcfjJUZUOPRHXwYEKX0JcwzLx0L1BIy8x2q1vO4jCyP0I1d_ycJ1PL4FMKRM=s512" },
-];
-
-const releases = [
-  { title: "Neon Horizon", date: "Apr 12, 2026", type: "Theatrical" },
-  { title: "The Last Aria", date: "Jun 08, 2026", type: "Streaming" },
-  { title: "Crimson Meridian", date: "Sep 21, 2026", type: "Festival" },
-];
-
-const activity = [
-  { text: "Dividend payout received", amount: "+$1,240", time: "2h ago" },
-  { text: "New compliance doc signed", amount: "", time: "1d ago" },
-  { text: "Portfolio rebalanced", amount: "", time: "3d ago" },
-  { text: "Investment in Neon Horizon", amount: "-$25,000", time: "1w ago" },
-];
+import { query, initDb } from "@/lib/db";
+import Link from "next/link";
 
 export default async function DashboardPage() {
+  await initDb();
   const user = await getSession();
   const displayName = user?.username ?? "Investor";
+
+  // Fetch portfolio stats
+  const statsResult = user
+    ? await query(
+        "SELECT COALESCE(SUM(amount),0) as total_invested, COUNT(*) as positions FROM investments WHERE user_id = $1",
+        [user.id]
+      )
+    : null;
+
+  const totalInvested = parseFloat(statsResult?.rows[0]?.total_invested ?? "0");
+  const positions = parseInt(statsResult?.rows[0]?.positions ?? "0");
+
+  // Fetch user investments with production details
+  const investmentsResult = user
+    ? await query(
+        `SELECT i.*, p.title, p.genre, p.status as production_status, p.projected_roi, p.image_url
+         FROM investments i
+         JOIN productions p ON i.production_id = p.id
+         WHERE i.user_id = $1
+         ORDER BY i.invested_at DESC`,
+        [user.id]
+      )
+    : null;
+
+  const investments = investmentsResult?.rows ?? [];
+
+  // Calculate portfolio value and projected earnings
+  const portfolioValue = investments.reduce((sum: number, inv: { amount: string; projected_roi: string }) => {
+    const amount = parseFloat(inv.amount);
+    const roi = parseFloat(inv.projected_roi) / 100;
+    return sum + amount * (1 + roi);
+  }, 0);
+
+  const projectedEarnings = investments.reduce((sum: number, inv: { amount: string; projected_roi: string }) => {
+    const amount = parseFloat(inv.amount);
+    const roi = parseFloat(inv.projected_roi) / 100;
+    return sum + amount * roi;
+  }, 0);
+
+  // Fetch activity
+  const activityResult = user
+    ? await query(
+        "SELECT * FROM activity_log WHERE user_id = $1 ORDER BY created_at DESC LIMIT 10",
+        [user.id]
+      )
+    : null;
+
+  const activityRows = activityResult?.rows ?? [];
+
+  const portfolioChange = totalInvested > 0 ? (((portfolioValue - totalInvested) / totalInvested) * 100).toFixed(1) : "0.0";
+
+  const stats = [
+    { label: "Total Invested", value: `$${totalInvested.toLocaleString()}`, icon: "account_balance", change: `${positions} positions` },
+    { label: "Portfolio Value", value: `$${Math.round(portfolioValue).toLocaleString()}`, icon: "trending_up", change: `+${portfolioChange}%` },
+    { label: "Projected Earnings", value: `$${Math.round(projectedEarnings).toLocaleString()}`, icon: "rocket_launch", change: positions > 0 ? `${positions} titles` : "—" },
+    { label: "Positions", value: String(positions), icon: "payments", change: positions > 0 ? "Active" : "None" },
+  ];
+
+  const chartData = [
+    { month: "Jul", value: 35 },
+    { month: "Aug", value: 48 },
+    { month: "Sep", value: 42 },
+    { month: "Oct", value: 65 },
+    { month: "Nov", value: 58 },
+    { month: "Dec", value: 72 },
+    { month: "Jan", value: 80 },
+    { month: "Feb", value: 68 },
+    { month: "Mar", value: 90 },
+  ];
+
+  function timeAgo(dateStr: string) {
+    const now = new Date();
+    const date = new Date(dateStr);
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    if (diffMins < 60) return `${diffMins}m ago`;
+    const diffHours = Math.floor(diffMins / 60);
+    if (diffHours < 24) return `${diffHours}h ago`;
+    const diffDays = Math.floor(diffHours / 24);
+    if (diffDays < 7) return `${diffDays}d ago`;
+    const diffWeeks = Math.floor(diffDays / 7);
+    return `${diffWeeks}w ago`;
+  }
 
   return (
     <DashboardLayout>
@@ -102,36 +152,62 @@ export default async function DashboardPage() {
           {/* Owned Title Tokens */}
           <div className="mb-8">
             <h2 className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold tracking-tight mb-4">Owned Title Tokens</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {ownedTitles.map((t) => (
-                <div key={t.title} className="glass-panel rounded-xl overflow-hidden group hover:border-primary/30 transition-all">
-                  <div className="relative h-36 overflow-hidden">
-                    <img src={t.image} alt={t.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    <div className="absolute inset-0 bg-linear-to-t from-[#131313] via-transparent to-transparent" />
-                    <span className="absolute top-3 left-3 font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest bg-surface/80 backdrop-blur-sm px-2.5 py-1 rounded-md text-on-surface-variant">
-                      {t.genre}
-                    </span>
-                  </div>
-                  <div className="p-5">
-                    <h3 className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold tracking-tight">{t.title}</h3>
-                    <div className="mt-3 grid grid-cols-3 gap-3">
-                      <div>
-                        <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest text-on-surface-variant/50">Equity</p>
-                        <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold text-primary mt-0.5">{t.equity}</p>
+            {investments.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {investments.map((inv: { id: number; title: string; genre: string; image_url: string; equity_pct: string; projected_roi: string; production_status: string; amount: string }) => (
+                  <div key={inv.id} className="glass-panel rounded-xl overflow-hidden group hover:border-primary/30 transition-all">
+                    <div className="relative h-36 overflow-hidden">
+                      {inv.image_url ? (
+                        <img src={inv.image_url} alt={inv.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      ) : (
+                        <div className="w-full h-full bg-surface-container-highest flex items-center justify-center">
+                          <span className="material-symbols-outlined text-on-surface-variant/30 text-4xl">movie</span>
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-linear-to-t from-[#131313] via-transparent to-transparent" />
+                      <span className="absolute top-3 left-3 font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest bg-surface/80 backdrop-blur-sm px-2.5 py-1 rounded-md text-on-surface-variant">
+                        {inv.genre}
+                      </span>
+                    </div>
+                    <div className="p-5">
+                      <h3 className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold tracking-tight">{inv.title}</h3>
+                      <div className="mt-3 grid grid-cols-3 gap-3">
+                        <div>
+                          <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest text-on-surface-variant/50">Equity</p>
+                          <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold text-primary mt-0.5">{parseFloat(inv.equity_pct).toFixed(2)}%</p>
+                        </div>
+                        <div>
+                          <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest text-on-surface-variant/50">Proj. ROI</p>
+                          <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold text-green-400 mt-0.5">{parseFloat(inv.projected_roi).toFixed(1)}%</p>
+                        </div>
+                        <div>
+                          <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest text-on-surface-variant/50">Status</p>
+                          <p className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant mt-0.5 capitalize">{inv.production_status}</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest text-on-surface-variant/50">APY</p>
-                        <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold text-green-400 mt-0.5">{t.apy}</p>
-                      </div>
-                      <div>
-                        <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest text-on-surface-variant/50">Status</p>
-                        <p className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant mt-0.5">{t.status}</p>
+                      <div className="mt-2">
+                        <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest text-on-surface-variant/50">Invested</p>
+                        <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold mt-0.5">${parseFloat(inv.amount).toLocaleString()}</p>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="glass-panel rounded-xl p-10 text-center">
+                <span className="material-symbols-outlined text-on-surface-variant/30 text-5xl mb-4 block">movie</span>
+                <p className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold tracking-tight mb-2">No investments yet</p>
+                <p className="font-[family-name:var(--font-inter)] text-sm text-on-surface-variant/60 mb-6">
+                  Start building your portfolio by exploring curated film productions.
+                </p>
+                <Link
+                  href="/explore"
+                  className="inline-block bg-primary text-on-primary font-[family-name:var(--font-plus-jakarta)] font-bold px-6 py-2.5 rounded-md text-sm hover:opacity-90 transition-opacity"
+                >
+                  Explore Titles
+                </Link>
+              </div>
+            )}
           </div>
         </div>
 
@@ -157,27 +233,6 @@ export default async function DashboardPage() {
             </div>
           </div>
 
-          {/* Upcoming Releases */}
-          <div className="glass-panel rounded-xl p-5">
-            <h3 className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold tracking-tight mb-4 flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary text-lg">calendar_month</span>
-              Upcoming Releases
-            </h3>
-            <div className="space-y-4">
-              {releases.map((r) => (
-                <div key={r.title} className="flex items-start gap-3">
-                  <div className="w-1 h-10 rounded-full bg-linear-to-b from-primary to-primary-container shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold tracking-tight">{r.title}</p>
-                    <p className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant/60 mt-0.5">
-                      {r.date} &middot; {r.type}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* Recent Activity */}
           <div className="glass-panel rounded-xl p-5">
             <h3 className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold tracking-tight mb-4 flex items-center gap-2">
@@ -185,19 +240,23 @@ export default async function DashboardPage() {
               Recent Activity
             </h3>
             <div className="space-y-3">
-              {activity.map((a, i) => (
-                <div key={i} className="flex items-center justify-between py-1.5 border-b border-outline-variant/10 last:border-0">
-                  <div>
-                    <p className="font-[family-name:var(--font-inter)] text-xs text-on-surface">{a.text}</p>
-                    <p className="font-[family-name:var(--font-inter)] text-[9px] text-on-surface-variant/40 mt-0.5">{a.time}</p>
-                  </div>
-                  {a.amount && (
-                    <span className={`font-[family-name:var(--font-plus-jakarta)] text-xs font-bold ${a.amount.startsWith("+") ? "text-green-400" : "text-on-surface-variant"}`}>
-                      {a.amount}
+              {activityRows.length > 0 ? (
+                activityRows.map((a: { id: number; message: string; type: string; created_at: string }, i: number) => (
+                  <div key={a.id ?? i} className="flex items-center justify-between py-1.5 border-b border-outline-variant/10 last:border-0">
+                    <div>
+                      <p className="font-[family-name:var(--font-inter)] text-xs text-on-surface">{a.message}</p>
+                      <p className="font-[family-name:var(--font-inter)] text-[9px] text-on-surface-variant/40 mt-0.5">{timeAgo(a.created_at)}</p>
+                    </div>
+                    <span className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest text-on-surface-variant/40 bg-surface-container-highest px-2 py-0.5 rounded">
+                      {a.type}
                     </span>
-                  )}
-                </div>
-              ))}
+                  </div>
+                ))
+              ) : (
+                <p className="font-[family-name:var(--font-inter)] text-xs text-on-surface-variant/40 text-center py-4">
+                  No recent activity
+                </p>
+              )}
             </div>
           </div>
         </div>

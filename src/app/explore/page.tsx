@@ -1,54 +1,58 @@
+/* eslint-disable @next/next/no-img-element */
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import TopNav from "@/components/TopNav";
 import Footer from "@/components/Footer";
 import MobileBottomNav from "@/components/MobileBottomNav";
 
-const tabs = [
-  { label: "Ending Soon", icon: "timer", active: true },
-  { label: "Recently Added", icon: "new_releases", active: false },
-  { label: "Top Revenue", icon: "trending_up", active: false },
-];
+interface Production {
+  id: number;
+  title: string;
+  genre: string;
+  description: string;
+  director: string;
+  funding_goal: string;
+  funding_raised: string;
+  projected_roi: string;
+  token_price: string;
+  status: string;
+  image_url: string;
+  release_date: string;
+}
 
-const projects = [
-  {
-    title: "AETHER DRIFT",
-    genre: "Sci-Fi Epic",
-    director: "Mika Tanaka",
-    funded: 72,
-    target: "$4.2M",
-    raised: "$3.02M",
-    roi: "18.4%",
-    investors: 2840,
-    daysLeft: 14,
-    image: "https://lh3.googleusercontent.com/aida/AXQ1bvN7_W5bkV8s4rX_CG0WSrJwG_QeBmvDkEl1eAFvdLKTnHd0R4c0XQNPI5SYJCM3xnE_rOYGQcvNy8cKjEfrHpnihAJ=s512",
-  },
-  {
-    title: "THE PROTOCOL",
-    genre: "Cyber Thriller",
-    director: "James Whitfield",
-    funded: 91,
-    target: "$1.8M",
-    raised: "$1.64M",
-    roi: "22.1%",
-    investors: 1560,
-    daysLeft: 5,
-    image: "https://lh3.googleusercontent.com/aida/AXQ1bvOkO5TCMIx_0YISJJ_yCSXPQQkr0RjYVcfjJUZUOPRHXwYEKX0JcwzLx0L1BIy8x2q1vO4jCyP0I1d_ycJ1PL4FMKRM=s512",
-  },
-  {
-    title: "ONYX GARDEN",
-    genre: "Art House Drama",
-    director: "Solange Mbeki",
-    funded: 38,
-    target: "$3.6M",
-    raised: "$1.37M",
-    roi: "15.7%",
-    investors: 920,
-    daysLeft: 31,
-    image: "https://lh3.googleusercontent.com/aida/AXQ1bvMNQmTpGBK1OiYx6b8mpWUaS1x9VIaLMFOe90WACG1vhNqjGC-MBaLMj-HHacCmKL-3VIHwYG6zqPrYqD3m7hMt7r0=s512",
-  },
+const tabs = [
+  { label: "All", icon: "grid_view", filter: "" },
+  { label: "Funding", icon: "timer", filter: "funding" },
+  { label: "In Production", icon: "movie", filter: "in_production" },
+  { label: "Pending", icon: "new_releases", filter: "pending" },
 ];
 
 export default function ExplorePage() {
+  const [activeFilter, setActiveFilter] = useState("funding");
+  const [productions, setProductions] = useState<Production[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    const url = activeFilter
+      ? `/api/productions?status=${activeFilter}`
+      : `/api/productions`;
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setProductions(data.productions ?? []);
+      })
+      .catch(() => {
+        setProductions([]);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [activeFilter]);
+
   return (
     <div className="min-h-screen bg-surface-container-lowest text-on-surface">
       <TopNav />
@@ -74,8 +78,9 @@ export default function ExplorePage() {
             {tabs.map((tab) => (
               <button
                 key={tab.label}
+                onClick={() => setActiveFilter(tab.filter)}
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-[family-name:var(--font-inter)] text-xs uppercase tracking-widest font-bold whitespace-nowrap transition-all ${
-                  tab.active
+                  activeFilter === tab.filter
                     ? "bg-primary/10 text-primary border border-primary/20"
                     : "text-on-surface-variant/40 border border-outline-variant/10 hover:border-outline-variant/30 hover:text-on-surface-variant"
                 }`}
@@ -89,78 +94,108 @@ export default function ExplorePage() {
 
         {/* Project Cards */}
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((p) => (
-              <Link
-                key={p.title}
-                href="/invest"
-                className="glass-panel rounded-xl overflow-hidden group hover:border-primary/30 transition-all no-underline"
-              >
-                {/* Image */}
-                <div className="relative h-52 overflow-hidden">
-                  <img
-                    src={p.image}
-                    alt={p.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-[#131313] via-transparent to-transparent" />
-                  <span className="absolute top-3 left-3 font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest bg-surface/80 backdrop-blur-sm px-2.5 py-1 rounded-md text-on-surface-variant">
-                    {p.genre}
-                  </span>
-                  <span className="absolute top-3 right-3 font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest bg-primary/20 backdrop-blur-sm px-2.5 py-1 rounded-md text-primary font-bold">
-                    {p.daysLeft}d left
-                  </span>
-                </div>
+          {loading ? (
+            <div className="flex justify-center items-center py-20">
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+                <p className="font-[family-name:var(--font-inter)] text-sm text-on-surface-variant/60">Loading productions...</p>
+              </div>
+            </div>
+          ) : productions.length === 0 ? (
+            <div className="flex justify-center items-center py-20">
+              <div className="text-center">
+                <span className="material-symbols-outlined text-on-surface-variant/30 text-5xl mb-4 block">movie</span>
+                <p className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold tracking-tight mb-2">No productions found</p>
+                <p className="font-[family-name:var(--font-inter)] text-sm text-on-surface-variant/60">
+                  Try a different filter or check back later.
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {productions.map((p) => {
+                const goal = parseFloat(p.funding_goal);
+                const raised = parseFloat(p.funding_raised);
+                const fundedPct = goal > 0 ? Math.round((raised / goal) * 100) : 0;
 
-                {/* Content */}
-                <div className="p-5">
-                  <h3 className="font-[family-name:var(--font-plus-jakarta)] text-lg font-extrabold tracking-tight text-on-surface">
-                    {p.title}
-                  </h3>
-                  <p className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant/60 mt-1">
-                    Dir. {p.director}
-                  </p>
+                return (
+                  <Link
+                    key={p.id}
+                    href={`/invest/${p.id}`}
+                    className="glass-panel rounded-xl overflow-hidden group hover:border-primary/30 transition-all no-underline"
+                  >
+                    {/* Image */}
+                    <div className="relative h-52 overflow-hidden">
+                      {p.image_url ? (
+                        <img
+                          src={p.image_url}
+                          alt={p.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-surface-container-highest flex items-center justify-center">
+                          <span className="material-symbols-outlined text-on-surface-variant/30 text-5xl">movie</span>
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-linear-to-t from-[#131313] via-transparent to-transparent" />
+                      <span className="absolute top-3 left-3 font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest bg-surface/80 backdrop-blur-sm px-2.5 py-1 rounded-md text-on-surface-variant">
+                        {p.genre}
+                      </span>
+                      <span className="absolute top-3 right-3 font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest bg-primary/20 backdrop-blur-sm px-2.5 py-1 rounded-md text-primary font-bold capitalize">
+                        {p.status}
+                      </span>
+                    </div>
 
-                  {/* Stats Row */}
-                  <div className="mt-4 grid grid-cols-3 gap-3">
-                    <div>
-                      <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest text-on-surface-variant/50">Raised</p>
-                      <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold mt-0.5">{p.raised}</p>
-                    </div>
-                    <div>
-                      <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest text-on-surface-variant/50">Target</p>
-                      <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold mt-0.5">{p.target}</p>
-                    </div>
-                    <div>
-                      <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest text-on-surface-variant/50">Proj. ROI</p>
-                      <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold text-green-400 mt-0.5">{p.roi}</p>
-                    </div>
-                  </div>
+                    {/* Content */}
+                    <div className="p-5">
+                      <h3 className="font-[family-name:var(--font-plus-jakarta)] text-lg font-extrabold tracking-tight text-on-surface">
+                        {p.title}
+                      </h3>
+                      <p className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant/60 mt-1">
+                        Dir. {p.director}
+                      </p>
 
-                  {/* Progress Bar */}
-                  <div className="mt-4">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant/60">{p.investors.toLocaleString()} investors</span>
-                      <span className="font-[family-name:var(--font-inter)] text-[10px] text-primary font-bold">{p.funded}% funded</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-linear-to-r from-primary to-primary-container rounded-full"
-                        style={{ width: `${p.funded}%` }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+                      {/* Stats Row */}
+                      <div className="mt-4 grid grid-cols-3 gap-3">
+                        <div>
+                          <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest text-on-surface-variant/50">Raised</p>
+                          <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold mt-0.5">${raised.toLocaleString()}</p>
+                        </div>
+                        <div>
+                          <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest text-on-surface-variant/50">Target</p>
+                          <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold mt-0.5">${goal.toLocaleString()}</p>
+                        </div>
+                        <div>
+                          <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest text-on-surface-variant/50">Proj. ROI</p>
+                          <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold text-green-400 mt-0.5">{parseFloat(p.projected_roi).toFixed(1)}%</p>
+                        </div>
+                      </div>
 
-          {/* Load More */}
-          <div className="flex justify-center mt-12">
-            <button className="border border-outline-variant/30 text-on-surface-variant font-[family-name:var(--font-plus-jakarta)] font-bold px-8 py-3 rounded-md text-sm hover:border-primary/40 hover:text-primary transition-all">
-              Load More Titles
-            </button>
-          </div>
+                      {/* Token Price */}
+                      <div className="mt-3">
+                        <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest text-on-surface-variant/50">Token Price</p>
+                        <p className="font-[family-name:var(--font-plus-jakarta)] text-sm font-bold text-primary mt-0.5">${parseFloat(p.token_price).toLocaleString()}</p>
+                      </div>
+
+                      {/* Progress Bar */}
+                      <div className="mt-4">
+                        <div className="flex items-center justify-between mb-1.5">
+                          <span className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant/60">{p.release_date}</span>
+                          <span className="font-[family-name:var(--font-inter)] text-[10px] text-primary font-bold">{fundedPct}% funded</span>
+                        </div>
+                        <div className="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-linear-to-r from-primary to-primary-container rounded-full"
+                            style={{ width: `${fundedPct}%` }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
 

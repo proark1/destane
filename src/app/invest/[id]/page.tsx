@@ -1,13 +1,10 @@
-import Link from "next/link";
+/* eslint-disable @next/next/no-img-element */
+export const dynamic = "force-dynamic";
 import TopNav from "@/components/TopNav";
 import Footer from "@/components/Footer";
-
-const tabs = [
-  { label: "Overview", active: true },
-  { label: "Financials", active: false },
-  { label: "Team", active: false },
-  { label: "Documents", active: false },
-];
+import InvestForm from "@/components/InvestForm";
+import { getSession } from "@/lib/auth";
+import { query, initDb } from "@/lib/db";
 
 const revenueModel = [
   { source: "Theatrical Release", share: "35%", icon: "theaters" },
@@ -16,7 +13,41 @@ const revenueModel = [
   { source: "Merchandise & Ancillary", share: "15%", icon: "storefront" },
 ];
 
-export default function InvestPage() {
+export default async function InvestDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  await initDb();
+  const { id } = await params;
+  const user = await getSession();
+
+  const prodResult = await query("SELECT * FROM productions WHERE id = $1", [id]);
+  const production = prodResult.rows[0];
+
+  if (!production) {
+    return (
+      <div className="min-h-screen bg-surface-container-lowest text-on-surface">
+        <TopNav />
+        <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+          <span className="material-symbols-outlined text-on-surface-variant text-6xl">movie_off</span>
+          <h1 className="font-[family-name:var(--font-plus-jakarta)] text-2xl font-extrabold tracking-tight">Production Not Found</h1>
+          <p className="text-on-surface-variant text-sm">The production you are looking for does not exist or has been removed.</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  const investorResult = await query(
+    "SELECT COUNT(DISTINCT user_id) FROM investments WHERE production_id = $1",
+    [id]
+  );
+  const investorCount = parseInt(investorResult.rows[0].count) || 0;
+
+  const fundingGoal = parseFloat(production.funding_goal);
+  const fundingRaised = parseFloat(production.funding_raised);
+  const fundingPct = fundingGoal > 0 ? ((fundingRaised / fundingGoal) * 100).toFixed(1) : "0";
+  const tokenPrice = parseFloat(production.token_price);
+  const minInvestment = parseFloat(production.min_investment);
+  const projectedRoi = parseFloat(production.projected_roi);
+
   return (
     <div className="min-h-screen bg-surface-container-lowest text-on-surface">
       <TopNav />
@@ -25,8 +56,8 @@ export default function InvestPage() {
       <section className="relative h-[60vh] min-h-[420px] flex items-end overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://lh3.googleusercontent.com/aida/AXQ1bvOkO5TCMIx_0YISJJ_yCSXPQQkr0RjYVcfjJUZUOPRHXwYEKX0JcwzLx0L1BIy8x2q1vO4jCyP0I1d_ycJ1PL4FMKRM=s512"
-            alt="The Last Protocol"
+            src={production.image_url || "/images/ui/placeholder.jpg"}
+            alt={production.title}
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-linear-to-t from-[#131313] via-[#131313]/70 to-transparent" />
@@ -34,27 +65,42 @@ export default function InvestPage() {
         </div>
         <div className="relative z-10 max-w-6xl mx-auto px-6 pb-10 w-full">
           <span className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest bg-primary/20 backdrop-blur-sm px-3 py-1 rounded-md text-primary font-bold inline-block mb-4">
-            Now Funding
+            {production.status === "funding" ? "Now Funding" : production.status}
           </span>
           <h1 className="font-[family-name:var(--font-plus-jakarta)] text-4xl md:text-6xl font-extrabold tracking-tighter leading-[0.95]">
-            The Last Protocol
+            {production.title}
           </h1>
           <div className="flex flex-wrap gap-6 mt-4 font-[family-name:var(--font-inter)] text-xs text-on-surface-variant">
-            <span>
-              <span className="text-on-surface-variant/50 uppercase tracking-widest text-[9px]">Director</span>
-              <br />
-              <span className="text-on-surface font-bold mt-0.5 inline-block">James Whitfield</span>
-            </span>
-            <span>
-              <span className="text-on-surface-variant/50 uppercase tracking-widest text-[9px]">Starring</span>
-              <br />
-              <span className="text-on-surface font-bold mt-0.5 inline-block">Elena Voss, Marcus Reid</span>
-            </span>
-            <span>
-              <span className="text-on-surface-variant/50 uppercase tracking-widest text-[9px]">Budget</span>
-              <br />
-              <span className="text-on-surface font-bold mt-0.5 inline-block">$1.8M</span>
-            </span>
+            {production.director && (
+              <span>
+                <span className="text-on-surface-variant/50 uppercase tracking-widest text-[9px]">Director</span>
+                <br />
+                <span className="text-on-surface font-bold mt-0.5 inline-block">{production.director}</span>
+              </span>
+            )}
+            {production.starring && (
+              <span>
+                <span className="text-on-surface-variant/50 uppercase tracking-widest text-[9px]">Starring</span>
+                <br />
+                <span className="text-on-surface font-bold mt-0.5 inline-block">{production.starring}</span>
+              </span>
+            )}
+            {production.budget && (
+              <span>
+                <span className="text-on-surface-variant/50 uppercase tracking-widest text-[9px]">Budget</span>
+                <br />
+                <span className="text-on-surface font-bold mt-0.5 inline-block">
+                  ${Number(production.budget).toLocaleString()}
+                </span>
+              </span>
+            )}
+            {production.genre && (
+              <span>
+                <span className="text-on-surface-variant/50 uppercase tracking-widest text-[9px]">Genre</span>
+                <br />
+                <span className="text-on-surface font-bold mt-0.5 inline-block">{production.genre}</span>
+              </span>
+            )}
           </div>
         </div>
       </section>
@@ -64,46 +110,23 @@ export default function InvestPage() {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left Content */}
           <div className="flex-1 min-w-0">
-            {/* Tabs */}
-            <div className="flex gap-1 border-b border-outline-variant/15 mb-8 overflow-x-auto hide-scrollbar">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.label}
-                  className={`font-[family-name:var(--font-inter)] text-xs uppercase tracking-widest font-bold px-5 py-3 whitespace-nowrap transition-all border-b-2 ${
-                    tab.active
-                      ? "text-primary border-primary"
-                      : "text-on-surface-variant/40 border-transparent hover:text-on-surface-variant"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-
             {/* Vision */}
             <div className="mb-10">
               <h2 className="font-[family-name:var(--font-plus-jakarta)] text-xl font-bold tracking-tight mb-4">
                 Vision
               </h2>
-              <p className="font-[family-name:var(--font-inter)] text-sm text-on-surface-variant leading-relaxed mb-4">
-                The Last Protocol is a cyber-thriller set in 2049, where a rogue AI architect discovers that the
-                global financial system runs on a single, decaying protocol written decades ago. When she attempts
-                to patch it, she triggers a cascade that threatens to erase the digital economy entirely.
-              </p>
               <p className="font-[family-name:var(--font-inter)] text-sm text-on-surface-variant leading-relaxed">
-                Blending the tension of a heist film with the philosophical weight of speculative fiction, this
-                production has already secured distribution interest from three major streaming platforms and a
-                commitment for a 2,400-screen theatrical window.
+                {production.description || "No description available."}
               </p>
             </div>
 
             {/* Key Metrics */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
               {[
-                { label: "Projected ROI", value: "22.1%", color: "text-green-400" },
-                { label: "Token Holders", value: "1,560", color: "text-on-surface" },
-                { label: "Est. Revenue", value: "$8.4M", color: "text-on-surface" },
-                { label: "Payout Start", value: "Q3 2027", color: "text-primary" },
+                { label: "Projected ROI", value: `${projectedRoi}%`, color: "text-green-400" },
+                { label: "Investors", value: investorCount.toLocaleString(), color: "text-on-surface" },
+                { label: "Token Price", value: `$${tokenPrice.toLocaleString()}`, color: "text-on-surface" },
+                { label: "Min Investment", value: `$${minInvestment.toLocaleString()}`, color: "text-primary" },
               ].map((m) => (
                 <div key={m.label} className="glass-panel rounded-xl p-4">
                   <p className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest text-on-surface-variant/50">{m.label}</p>
@@ -158,24 +181,24 @@ export default function InvestPage() {
                 <div className="mb-5">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-[family-name:var(--font-inter)] text-[10px] uppercase tracking-widest text-on-surface-variant/60">Funded</span>
-                    <span className="font-[family-name:var(--font-plus-jakarta)] text-sm font-extrabold text-primary">78%</span>
+                    <span className="font-[family-name:var(--font-plus-jakarta)] text-sm font-extrabold text-primary">{fundingPct}%</span>
                   </div>
                   <div className="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden">
-                    <div className="h-full bg-linear-to-r from-primary to-primary-container rounded-full" style={{ width: "78%" }} />
+                    <div className="h-full bg-linear-to-r from-primary to-primary-container rounded-full" style={{ width: `${Math.min(parseFloat(fundingPct), 100)}%` }} />
                   </div>
                   <div className="flex items-center justify-between mt-2">
-                    <span className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant/40">$1.40M raised</span>
-                    <span className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant/40">of $1.80M</span>
+                    <span className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant/40">${fundingRaised.toLocaleString()} raised</span>
+                    <span className="font-[family-name:var(--font-inter)] text-[10px] text-on-surface-variant/40">of ${fundingGoal.toLocaleString()}</span>
                   </div>
                 </div>
 
                 {/* Details */}
                 <div className="space-y-3 mb-6 py-4 border-y border-outline-variant/10">
                   {[
-                    { label: "Token Price", value: "$50.00" },
-                    { label: "Min. Entry", value: "$250 (5 tokens)" },
-                    { label: "Equity per Token", value: "0.0028%" },
-                    { label: "Days Remaining", value: "5" },
+                    { label: "Token Price", value: `$${tokenPrice.toFixed(2)}` },
+                    { label: "Min. Entry", value: `$${minInvestment.toLocaleString()} (${Math.ceil(minInvestment / tokenPrice)} tokens)` },
+                    { label: "Revenue Share", value: `${production.revenue_share_pct}%` },
+                    { label: "Release", value: production.release_date || "TBD" },
                   ].map((d) => (
                     <div key={d.label} className="flex items-center justify-between">
                       <span className="font-[family-name:var(--font-inter)] text-xs text-on-surface-variant">{d.label}</span>
@@ -184,13 +207,16 @@ export default function InvestPage() {
                   ))}
                 </div>
 
-                {/* Invest Button */}
-                <Link
-                  href="/login"
-                  className="block w-full btn-gold text-on-primary font-[family-name:var(--font-plus-jakarta)] font-bold px-6 py-3.5 rounded-md text-sm text-center shadow-lg shadow-primary/20 no-underline"
-                >
-                  Invest Now
-                </Link>
+                {/* Invest Form */}
+                <InvestForm
+                  productionId={production.id}
+                  tokenPrice={tokenPrice}
+                  minInvestment={minInvestment}
+                  fundingGoal={fundingGoal}
+                  fundingRaised={fundingRaised}
+                  isAuthenticated={!!user}
+                />
+
                 <p className="font-[family-name:var(--font-inter)] text-[9px] text-on-surface-variant/40 text-center mt-3">
                   Regulated by SEC. Accredited investors only.
                 </p>
