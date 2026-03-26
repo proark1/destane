@@ -11,8 +11,8 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: "Dashboard", icon: "dashboard", href: "/dashboard" },
-  { label: "Portfolio", icon: "account_balance_wallet", href: "/dashboard" },
-  { label: "Marketplace", icon: "movie_filter", href: "/explore" },
+  { label: "Productions", icon: "movie_filter", href: "/productions" },
+  { label: "Marketplace", icon: "explore", href: "/explore" },
   { label: "Analytics", icon: "insights", href: "/analytics" },
   { label: "Settings", icon: "settings", href: "/settings" },
 ];

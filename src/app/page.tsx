@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
+import TopNav from "@/components/TopNav";
 import Footer from "@/components/Footer";
-import MobileNav from "@/components/MobileNav";
+import MobileBottomNav from "@/components/MobileBottomNav";
 
 const productions = [
   {
@@ -37,8 +37,8 @@ const steps = [
 export default function Home() {
   return (
     <div className="min-h-screen bg-surface-container-lowest text-on-surface">
-      <Navbar />
-      <MobileNav />
+      <TopNav />
+      <MobileBottomNav />
 
       {/* Hero */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
