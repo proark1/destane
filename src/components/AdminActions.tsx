@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function AdminActions({ productionId }: { productionId: number }) {
   const router = useRouter();
@@ -10,6 +11,7 @@ export default function AdminActions({ productionId }: { productionId: number })
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
     });
+    toast.success(`Production ${status === 'funding' ? 'approved' : 'rejected'}`);
     router.refresh();
   }
 

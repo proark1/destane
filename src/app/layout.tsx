@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "DESTANE | Own the Stories You Believe In",
@@ -25,6 +26,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-background text-on-surface antialiased selection:bg-primary/30 min-h-screen">
+        <Toaster position="top-right" theme="dark" toastOptions={{ style: { background: '#201f1f', border: '1px solid rgba(77,70,53,0.15)', color: '#e5e2e1' } }} />
         {children}
       </body>
     </html>

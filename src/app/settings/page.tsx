@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "react";
 import DashboardLayout from "@/components/DashboardLayout";
+import { toast } from "sonner";
 
 const notificationDefaults = [
   { label: "Investment Updates", description: "Portfolio changes and dividend payouts", enabled: true },
@@ -29,6 +30,8 @@ export default function SettingsPage() {
   const [passwordError, setPasswordError] = useState("");
   const [passwordSuccess, setPasswordSuccess] = useState(false);
   const [notifications, setNotifications] = useState(notificationDefaults);
+
+  useEffect(() => { document.title = "Settings | DESTANE"; }, []);
 
   useEffect(() => {
     fetch("/api/auth/me")
@@ -59,6 +62,7 @@ export default function SettingsPage() {
         setMessage({ type: "error", text: data.error || "Failed to save profile" });
       } else {
         setMessage({ type: "success", text: "Profile updated successfully" });
+        toast.success("Profile updated");
       }
     } catch {
       setMessage({ type: "error", text: "Network error. Please try again." });
@@ -83,6 +87,7 @@ export default function SettingsPage() {
       const data = await res.json();
       if (!res.ok) { setPasswordError(data.error); return; }
       setPasswordSuccess(true);
+      toast.success("Password changed");
       setCurrentPassword("");
       setNewPassword("");
       setTimeout(() => { setShowPasswordForm(false); setPasswordSuccess(false); }, 2000);
@@ -200,7 +205,7 @@ export default function SettingsPage() {
                 <p className="font-[family-name:var(--font-inter)] text-sm font-medium">Two-Factor Authentication</p>
                 <p className="font-[family-name:var(--font-inter)] text-xs text-on-surface-variant mt-0.5">Add an extra layer of security with TOTP</p>
               </div>
-              <button className="relative w-11 h-6 bg-primary rounded-full transition-colors">
+              <button role="switch" aria-checked={true} className="relative w-11 h-6 bg-primary rounded-full transition-colors">
                 <span className="absolute top-0.5 left-5 w-5 h-5 bg-white rounded-full shadow transition-transform" />
               </button>
             </div>
@@ -263,6 +268,8 @@ export default function SettingsPage() {
                 </div>
                 <button
                   onClick={() => toggleNotification(i)}
+                  role="switch"
+                  aria-checked={n.enabled}
                   className={`relative w-11 h-6 rounded-full transition-colors ${n.enabled ? "bg-primary" : "bg-surface-container-highest"}`}
                 >
                   <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${n.enabled ? "left-5" : "left-0.5"}`} />

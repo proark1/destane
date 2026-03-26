@@ -1,4 +1,5 @@
 export const dynamic = "force-dynamic";
+export const metadata = { title: "Dashboard | DESTANE" };
 import DashboardLayout from "@/components/DashboardLayout";
 import { getSession } from "@/lib/auth";
 import { query, initDb } from "@/lib/db";
@@ -66,18 +67,6 @@ export default async function DashboardPage() {
     { label: "Positions", value: String(positions), icon: "payments", change: positions > 0 ? "Active" : "None" },
   ];
 
-  const chartData = [
-    { month: "Jul", value: 35 },
-    { month: "Aug", value: 48 },
-    { month: "Sep", value: 42 },
-    { month: "Oct", value: 65 },
-    { month: "Nov", value: 58 },
-    { month: "Dec", value: 72 },
-    { month: "Jan", value: 80 },
-    { month: "Feb", value: 68 },
-    { month: "Mar", value: 90 },
-  ];
-
   function timeAgo(dateStr: string) {
     const now = new Date();
     const date = new Date(dateStr);
@@ -124,29 +113,27 @@ export default async function DashboardPage() {
             ))}
           </div>
 
-          {/* Chart Section */}
-          <div className="glass-panel rounded-xl p-6 mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold tracking-tight">Revenue Performance</h2>
-                <p className="font-[family-name:var(--font-inter)] text-[10px] uppercase tracking-widest text-on-surface-variant/60 mt-1">Monthly earnings (thousands)</p>
-              </div>
-              <div className="flex gap-2">
-                {["6M", "1Y", "All"].map((period) => (
-                  <button key={period} className={`font-[family-name:var(--font-inter)] text-[10px] uppercase tracking-widest px-3 py-1 rounded-md ${period === "1Y" ? "bg-primary/10 text-primary font-bold" : "text-on-surface-variant/40 hover:text-on-surface-variant"}`}>
-                    {period}
-                  </button>
+          {/* Investment Timeline */}
+          <div className="glass-panel rounded-xl p-8 mb-8">
+            <h3 className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold tracking-tight mb-4">Investment Timeline</h3>
+            {investments.length > 0 ? (
+              <div className="space-y-4">
+                {investments.map((inv: any, i: number) => (
+                  <div key={i} className="flex items-center gap-4 py-3 border-b border-outline-variant/10 last:border-0">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <span className="material-symbols-outlined text-primary text-sm">payments</span>
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium">{inv.title}</p>
+                      <p className="text-xs text-on-surface-variant">{new Date(inv.invested_at).toLocaleDateString()}</p>
+                    </div>
+                    <p className="text-sm font-bold text-primary">${parseFloat(inv.amount).toLocaleString()}</p>
+                  </div>
                 ))}
               </div>
-            </div>
-            <div className="flex items-end gap-3 h-40">
-              {chartData.map((d) => (
-                <div key={d.month} className="flex-1 flex flex-col items-center gap-2">
-                  <div className="w-full rounded-t-md bg-linear-to-t from-primary/60 to-primary" style={{ height: `${d.value}%` }} />
-                  <span className="font-[family-name:var(--font-inter)] text-[9px] text-on-surface-variant/40">{d.month}</span>
-                </div>
-              ))}
-            </div>
+            ) : (
+              <p className="text-on-surface-variant text-sm">Your investment timeline will appear here after your first investment.</p>
+            )}
           </div>
 
           {/* Owned Title Tokens */}
@@ -220,16 +207,18 @@ export default async function DashboardPage() {
               Compliance &amp; Identity
             </h3>
             <div className="space-y-3">
-              {[
-                { label: "KYC Verification", status: "Verified", color: "text-green-400" },
-                { label: "Accredited Investor", status: "Approved", color: "text-green-400" },
-                { label: "Tax Documents", status: "Pending", color: "text-yellow-400" },
-              ].map((item) => (
-                <div key={item.label} className="flex items-center justify-between">
-                  <span className="font-[family-name:var(--font-inter)] text-xs text-on-surface-variant">{item.label}</span>
-                  <span className={`font-[family-name:var(--font-inter)] text-[10px] font-bold ${item.color}`}>{item.status}</span>
-                </div>
-              ))}
+              <div className="flex items-center justify-between">
+                <span className="font-[family-name:var(--font-inter)] text-xs text-on-surface-variant">KYC Verification</span>
+                <Link href="/settings" className="font-[family-name:var(--font-inter)] text-[10px] font-bold text-yellow-400 hover:underline">Not Started — Begin Verification</Link>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-[family-name:var(--font-inter)] text-xs text-on-surface-variant">Accredited Investor</span>
+                <span className="font-[family-name:var(--font-inter)] text-[10px] font-bold text-yellow-400">Pending</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-[family-name:var(--font-inter)] text-xs text-on-surface-variant">Tax Documents</span>
+                <span className="font-[family-name:var(--font-inter)] text-[10px] font-bold text-yellow-400">Pending</span>
+              </div>
             </div>
           </div>
 

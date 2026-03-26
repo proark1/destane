@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 export const dynamic = "force-dynamic";
+export const metadata = { title: "Producer Portal | DESTANE" };
 import DashboardLayout from "@/components/DashboardLayout";
 import { getSession } from "@/lib/auth";
 import { query, initDb } from "@/lib/db";

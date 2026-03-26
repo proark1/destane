@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
   const router = useRouter();
+  useEffect(() => { document.title = "Create Account | DESTANE"; }, []);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 

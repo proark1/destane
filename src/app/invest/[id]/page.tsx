@@ -67,7 +67,7 @@ export default async function InvestDetailPage({ params }: { params: Promise<{ i
           <span className="font-[family-name:var(--font-inter)] text-[9px] uppercase tracking-widest bg-primary/20 backdrop-blur-sm px-3 py-1 rounded-md text-primary font-bold inline-block mb-4">
             {production.status === "funding" ? "Now Funding" : production.status}
           </span>
-          <h1 className="font-[family-name:var(--font-plus-jakarta)] text-4xl md:text-6xl font-extrabold tracking-tighter leading-[0.95]">
+          <h1 className="font-[family-name:var(--font-plus-jakarta)] text-2xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter leading-[0.95]">
             {production.title}
           </h1>
           <div className="flex flex-wrap gap-6 mt-4 font-[family-name:var(--font-inter)] text-xs text-on-surface-variant">

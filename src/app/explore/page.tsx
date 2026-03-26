@@ -33,25 +33,38 @@ export default function ExplorePage() {
   const [activeFilter, setActiveFilter] = useState("funding");
   const [productions, setProductions] = useState<Production[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    setLoading(true);
-    const url = activeFilter
-      ? `/api/productions?status=${activeFilter}`
-      : `/api/productions`;
+    document.title = "Explore | DESTANE";
+  }, []);
 
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setProductions(data.productions ?? []);
-      })
-      .catch(() => {
-        setProductions([]);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [activeFilter]);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setLoading(true);
+      let url = activeFilter
+        ? `/api/productions?status=${activeFilter}`
+        : `/api/productions`;
+
+      if (searchQuery.trim()) {
+        url += url.includes("?") ? `&search=${encodeURIComponent(searchQuery.trim())}` : `?search=${encodeURIComponent(searchQuery.trim())}`;
+      }
+
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          setProductions(data.productions ?? []);
+        })
+        .catch(() => {
+          setProductions([]);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }, 300);
+
+    return () => clearTimeout(handler);
+  }, [activeFilter, searchQuery]);
 
   return (
     <div className="min-h-screen bg-surface-container-lowest text-on-surface">
@@ -72,6 +85,20 @@ export default function ExplorePage() {
           </p>
         </div>
 
+        {/* Search */}
+        <div className="max-w-6xl mx-auto px-6 mb-6">
+          <div className="relative">
+            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/40 text-xl">search</span>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by title or genre..."
+              className="w-full bg-surface-container-lowest border border-outline-variant/20 rounded-lg pl-12 pr-4 py-3 font-[family-name:var(--font-inter)] text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary/40 focus:ring-0 focus:outline-none"
+            />
+          </div>
+        </div>
+
         {/* Filter Tabs */}
         <div className="max-w-6xl mx-auto px-6 mb-8">
           <div className="flex gap-3 overflow-x-auto hide-scrollbar pb-2">
@@ -79,7 +106,7 @@ export default function ExplorePage() {
               <button
                 key={tab.label}
                 onClick={() => setActiveFilter(tab.filter)}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-[family-name:var(--font-inter)] text-xs uppercase tracking-widest font-bold whitespace-nowrap transition-all ${
+                className={`flex items-center gap-2 px-5 py-3 rounded-lg font-[family-name:var(--font-inter)] text-xs uppercase tracking-widest font-bold whitespace-nowrap transition-all min-h-[44px] ${
                   activeFilter === tab.filter
                     ? "bg-primary/10 text-primary border border-primary/20"
                     : "text-on-surface-variant/40 border border-outline-variant/10 hover:border-outline-variant/30 hover:text-on-surface-variant"

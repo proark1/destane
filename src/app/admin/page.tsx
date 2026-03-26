@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 export const dynamic = "force-dynamic";
+export const metadata = { title: "Admin Control | DESTANE" };
 import DashboardLayout from "@/components/DashboardLayout";
 import AdminActions from "@/components/AdminActions";
 import { getSession } from "@/lib/auth";

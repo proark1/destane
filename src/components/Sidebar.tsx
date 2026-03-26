@@ -51,7 +51,7 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <aside className={`fixed left-0 top-0 h-full w-64 border-r border-outline-variant/10 bg-surface-container-lowest flex flex-col py-6 z-50 transition-transform ${open ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}>
-        <button onClick={() => setOpen(false)} className="md:hidden absolute top-4 right-4 text-on-surface-variant hover:text-primary">
+        <button onClick={() => setOpen(false)} aria-label="Close sidebar" className="md:hidden absolute top-4 right-4 text-on-surface-variant hover:text-primary">
           <span className="material-symbols-outlined">close</span>
         </button>
         <div className="px-6 mb-10">

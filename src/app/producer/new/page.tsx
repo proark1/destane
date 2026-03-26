@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import DashboardLayout from "@/components/DashboardLayout";
+import { toast } from "sonner";
 
 export default function NewProductionPage() {
   const router = useRouter();
@@ -39,10 +40,12 @@ export default function NewProductionPage() {
     const data = await res.json();
     if (!res.ok) {
       setError(data.error);
+      toast.error(data.error);
       setLoading(false);
       return;
     }
 
+    toast.success("Production submitted for review!");
     router.push("/productions");
   }
 

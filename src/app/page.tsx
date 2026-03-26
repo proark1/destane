@@ -84,7 +84,7 @@ export default async function Home() {
 
       {/* Credibility Bar */}
       <section className="border-y border-outline-variant/10 py-8">
-        <div className="max-w-6xl mx-auto px-6 flex flex-wrap justify-center gap-8 md:gap-16">
+        <div className="max-w-6xl mx-auto px-6 flex flex-wrap justify-center gap-6 md:gap-16">
           {stats.map((stat) => (
             <div key={stat.label} className="text-center">
               <p className="font-[family-name:var(--font-plus-jakarta)] text-xl md:text-2xl font-extrabold text-primary tracking-tight">

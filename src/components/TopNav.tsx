@@ -1,10 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function TopNav() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [user, setUser] = useState<{ username: string } | null>(null);
+  const [searchValue, setSearchValue] = useState("");
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     fetch("/api/auth/me")
@@ -26,20 +30,27 @@ export default function TopNav() {
           DESTANE
         </Link>
         <div className="hidden md:flex items-center gap-10">
-          <Link href="/explore" className="text-[#f5f5f5]/60 hover:text-primary transition-colors text-sm font-medium">
-            Watch
+          <Link href="/explore" className={`${pathname === "/explore" || pathname.startsWith("/explore/") ? "text-primary" : "text-[#f5f5f5]/60"} hover:text-primary transition-colors text-sm font-medium`}>
+            Explore
           </Link>
-          <Link href="/dashboard" className="text-[#f5f5f5]/60 hover:text-primary transition-colors text-sm font-medium">
-            Invest
+          <Link href="/dashboard" className={`${pathname === "/dashboard" || pathname.startsWith("/dashboard/") ? "text-primary" : "text-[#f5f5f5]/60"} hover:text-primary transition-colors text-sm font-medium`}>
+            Portfolio
           </Link>
-          <Link href="/producer" className="text-[#f5f5f5]/60 hover:text-primary transition-colors text-sm font-medium">
+          <Link href="/producer" className={`${pathname === "/producer" || pathname.startsWith("/producer/") ? "text-primary" : "text-[#f5f5f5]/60"} hover:text-primary transition-colors text-sm font-medium`}>
             Creators
           </Link>
         </div>
         <div className="flex items-center gap-4">
           <div className="hidden lg:flex items-center bg-surface-container-lowest border border-outline-variant/20 px-4 py-2 rounded-lg">
             <span className="material-symbols-outlined text-on-surface-variant text-lg">search</span>
-            <input className="bg-transparent border-none focus:ring-0 focus:outline-none text-xs w-48 text-on-surface ml-2" placeholder="Search productions..." />
+            <input
+              className="bg-transparent border-none focus:ring-0 focus:outline-none text-xs w-48 text-on-surface ml-2"
+              placeholder="Search productions..."
+              aria-label="Search productions"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              onKeyDown={(e) => { if (e.key === "Enter" && searchValue.trim()) router.push(`/explore?search=${encodeURIComponent(searchValue.trim())}`); }}
+            />
           </div>
           {!user ? (
             <Link href="/login" className="bg-linear-to-br from-primary to-primary-container text-on-primary px-5 py-2 rounded-md font-bold text-sm tracking-tight">
@@ -55,7 +66,7 @@ export default function TopNav() {
               </button>
             </div>
           )}
-          <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden flex flex-col gap-1.5 items-center justify-center w-10 h-10">
+          <button onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu" className="md:hidden flex flex-col gap-1.5 items-center justify-center w-10 h-10">
             <span className={`block w-5 h-0.5 bg-primary transition-all ${mobileOpen ? "rotate-45 translate-y-1" : ""}`} />
             <span className={`block w-5 h-0.5 bg-primary transition-all ${mobileOpen ? "opacity-0" : ""}`} />
             <span className={`block w-5 h-0.5 bg-primary transition-all ${mobileOpen ? "-rotate-45 -translate-y-1" : ""}`} />
@@ -65,9 +76,9 @@ export default function TopNav() {
       {mobileOpen && (
         <div className="md:hidden fixed top-[64px] left-0 w-full bg-surface/95 backdrop-blur-xl border-b border-outline-variant/15 z-40 px-4 py-6">
           <div className="flex flex-col gap-4">
-            <Link href="/explore" className="text-[#f5f5f5]/60 hover:text-primary text-sm font-medium py-2">Watch</Link>
-            <Link href="/dashboard" className="text-[#f5f5f5]/60 hover:text-primary text-sm font-medium py-2">Invest</Link>
-            <Link href="/producer" className="text-[#f5f5f5]/60 hover:text-primary text-sm font-medium py-2">Creators</Link>
+            <Link href="/explore" onClick={() => setMobileOpen(false)} className={`${pathname === "/explore" || pathname.startsWith("/explore/") ? "text-primary" : "text-[#f5f5f5]/60"} hover:text-primary text-sm font-medium py-2`}>Explore</Link>
+            <Link href="/dashboard" onClick={() => setMobileOpen(false)} className={`${pathname === "/dashboard" || pathname.startsWith("/dashboard/") ? "text-primary" : "text-[#f5f5f5]/60"} hover:text-primary text-sm font-medium py-2`}>Portfolio</Link>
+            <Link href="/producer" onClick={() => setMobileOpen(false)} className={`${pathname === "/producer" || pathname.startsWith("/producer/") ? "text-primary" : "text-[#f5f5f5]/60"} hover:text-primary text-sm font-medium py-2`}>Creators</Link>
             {!user ? (
               <Link href="/login" className="bg-linear-to-br from-primary to-primary-container text-on-primary px-6 py-2.5 rounded-md font-bold text-sm text-center mt-2">
                 Sign In

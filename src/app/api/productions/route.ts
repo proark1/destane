@@ -7,10 +7,21 @@ export async function GET(request: NextRequest) {
     await initDb();
     const { searchParams } = new URL(request.url);
     const status = searchParams.get("status");
+    const search = searchParams.get("search");
 
     let result;
-    if (status) {
+    if (status && search) {
+      result = await query(
+        "SELECT * FROM productions WHERE status = $1 AND (title ILIKE $2 OR genre ILIKE $2) ORDER BY created_at DESC",
+        [status, `%${search}%`]
+      );
+    } else if (status) {
       result = await query("SELECT * FROM productions WHERE status = $1 ORDER BY created_at DESC", [status]);
+    } else if (search) {
+      result = await query(
+        "SELECT * FROM productions WHERE (title ILIKE $1 OR genre ILIKE $1) ORDER BY created_at DESC",
+        [`%${search}%`]
+      );
     } else {
       result = await query("SELECT * FROM productions ORDER BY created_at DESC");
     }
