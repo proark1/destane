@@ -103,9 +103,9 @@ export default async function ProducerPage() {
             <button className="border border-outline-variant/30 text-on-surface font-[family-name:var(--font-inter)] text-xs font-medium px-5 py-2.5 rounded-md hover:border-primary/40 transition-colors">
               Export Report
             </button>
-            <button className="btn-gold text-on-primary font-[family-name:var(--font-inter)] text-xs font-bold px-5 py-2.5 rounded-md shadow-lg shadow-primary/20">
+            <Link href="/producer/new" className="btn-gold text-on-primary font-[family-name:var(--font-inter)] text-xs font-bold px-5 py-2.5 rounded-md shadow-lg shadow-primary/20 no-underline">
               Submit New Title
-            </button>
+            </Link>
           </div>
         </div>
 

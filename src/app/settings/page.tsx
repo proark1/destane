@@ -23,6 +23,11 @@ export default function SettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordSuccess, setPasswordSuccess] = useState(false);
   const [notifications, setNotifications] = useState(notificationDefaults);
 
   useEffect(() => {
@@ -60,6 +65,29 @@ export default function SettingsPage() {
     } finally {
       setSaving(false);
       setTimeout(() => setMessage(null), 4000);
+    }
+  }
+
+  async function handlePasswordChange() {
+    setPasswordError("");
+    setPasswordSuccess(false);
+    if (!currentPassword || !newPassword) { setPasswordError("Both fields are required"); return; }
+    if (newPassword.length < 8) { setPasswordError("New password must be at least 8 characters"); return; }
+
+    try {
+      const res = await fetch("/api/settings/password", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
+      const data = await res.json();
+      if (!res.ok) { setPasswordError(data.error); return; }
+      setPasswordSuccess(true);
+      setCurrentPassword("");
+      setNewPassword("");
+      setTimeout(() => { setShowPasswordForm(false); setPasswordSuccess(false); }, 2000);
+    } catch {
+      setPasswordError("Network error");
     }
   }
 
@@ -177,14 +205,45 @@ export default function SettingsPage() {
               </button>
             </div>
             {/* Password Change */}
-            <div className="flex items-center justify-between py-3">
-              <div>
-                <p className="font-[family-name:var(--font-inter)] text-sm font-medium">Password</p>
-                <p className="font-[family-name:var(--font-inter)] text-xs text-on-surface-variant mt-0.5">Last changed 42 days ago</p>
+            <div className="py-3">
+              <div className="flex items-center justify-between mb-3">
+                <div>
+                  <p className="font-[family-name:var(--font-inter)] text-sm font-medium">Password</p>
+                  <p className="font-[family-name:var(--font-inter)] text-xs text-on-surface-variant mt-0.5">Change your account password</p>
+                </div>
+                <button
+                  onClick={() => setShowPasswordForm(!showPasswordForm)}
+                  className="border border-outline-variant/30 text-on-surface font-[family-name:var(--font-inter)] text-xs font-medium px-4 py-2 rounded-md hover:border-primary/40 transition-colors"
+                >
+                  {showPasswordForm ? "Cancel" : "Change Password"}
+                </button>
               </div>
-              <button className="border border-outline-variant/30 text-on-surface font-[family-name:var(--font-inter)] text-xs font-medium px-4 py-2 rounded-md hover:border-primary/40 transition-colors">
-                Change Password
-              </button>
+              {showPasswordForm && (
+                <div className="bg-surface-container-lowest rounded-lg p-4 space-y-3">
+                  <input
+                    type="password"
+                    placeholder="Current password"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    className="w-full bg-surface-container border border-outline-variant/20 rounded-md px-3 py-2 text-sm text-on-surface focus:border-primary/40 focus:ring-0 focus:outline-none"
+                  />
+                  <input
+                    type="password"
+                    placeholder="New password (min 8 characters)"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    className="w-full bg-surface-container border border-outline-variant/20 rounded-md px-3 py-2 text-sm text-on-surface focus:border-primary/40 focus:ring-0 focus:outline-none"
+                  />
+                  {passwordError && <p className="text-error text-xs">{passwordError}</p>}
+                  {passwordSuccess && <p className="text-green-400 text-xs">Password changed successfully!</p>}
+                  <button
+                    onClick={handlePasswordChange}
+                    className="btn-gold text-on-primary font-bold text-xs px-4 py-2 rounded-md"
+                  >
+                    Update Password
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
