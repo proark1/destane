@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     }
 
     const tokens = Math.floor(amount / parseFloat(production.token_price));
-    const equity = (amount / parseFloat(production.funding_goal)) * parseFloat(production.revenue_share_pct);
+    const equity = (amount / parseFloat(production.funding_goal)) * 100;
 
     // Create investment
     const inv = await query(
@@ -64,11 +64,11 @@ export async function POST(request: NextRequest) {
     // Update funding raised
     await query("UPDATE productions SET funding_raised = funding_raised + $1 WHERE id = $2", [amount, production_id]);
 
-    // Check if fully funded
-    const updated = await query("SELECT * FROM productions WHERE id = $1", [production_id]);
-    if (parseFloat(updated.rows[0].funding_raised) >= parseFloat(updated.rows[0].funding_goal)) {
-      await query("UPDATE productions SET status = 'production' WHERE id = $1", [production_id]);
-    }
+    // Atomically transition to 'production' if fully funded
+    await query(
+      "UPDATE productions SET status = 'production' WHERE id = $1 AND funding_raised >= funding_goal AND status = 'funding'",
+      [production_id]
+    );
 
     // Log activity
     await query("INSERT INTO activity_log (user_id, type, message) VALUES ($1, $2, $3)", [user.id, "investment", `Invested $${amount} in ${production.title}`]);

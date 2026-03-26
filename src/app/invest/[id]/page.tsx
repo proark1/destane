@@ -41,12 +41,12 @@ export default async function InvestDetailPage({ params }: { params: Promise<{ i
   );
   const investorCount = parseInt(investorResult.rows[0].count) || 0;
 
-  const fundingGoal = parseFloat(production.funding_goal);
-  const fundingRaised = parseFloat(production.funding_raised);
+  const fundingGoal = parseFloat(production.funding_goal || "0");
+  const fundingRaised = parseFloat(production.funding_raised || "0");
   const fundingPct = fundingGoal > 0 ? ((fundingRaised / fundingGoal) * 100).toFixed(1) : "0";
-  const tokenPrice = parseFloat(production.token_price);
-  const minInvestment = parseFloat(production.min_investment);
-  const projectedRoi = parseFloat(production.projected_roi);
+  const tokenPrice = parseFloat(production.token_price || "1");
+  const minInvestment = parseFloat(production.min_investment || "100");
+  const projectedRoi = parseFloat(production.projected_roi || "0");
 
   return (
     <div className="min-h-screen bg-surface-container-lowest text-on-surface">

@@ -76,7 +76,7 @@ export default function InvestForm({ productionId, tokenPrice, minInvestment, fu
               className="w-full bg-surface-container-lowest border border-outline-variant/20 rounded-md px-4 py-3 text-lg text-on-surface font-bold focus:border-primary/40 focus:ring-0 focus:outline-none"
             />
             <p className="text-[10px] text-on-surface-variant mt-1">
-              = {tokens} tokens ({((amount / fundingGoal) * 100).toFixed(2)}% equity)
+              = {tokens} tokens ({((tokens / (fundingGoal / tokenPrice)) * 100).toFixed(2)}% equity)
             </p>
           </div>
           {error && (
@@ -97,7 +97,7 @@ export default function InvestForm({ productionId, tokenPrice, minInvestment, fu
                 <div className="space-y-2 text-sm text-on-surface-variant">
                   <p>Amount: <span className="text-on-surface font-bold">${amount.toLocaleString()}</span></p>
                   <p>Tokens: <span className="text-on-surface font-bold">{tokens}</span></p>
-                  <p>Equity: <span className="text-on-surface font-bold">{((amount / fundingGoal) * 100).toFixed(2)}%</span></p>
+                  <p>Equity: <span className="text-on-surface font-bold">{((tokens / (fundingGoal / tokenPrice)) * 100).toFixed(2)}%</span></p>
                 </div>
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input

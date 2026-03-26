@@ -5,9 +5,11 @@ import DashboardLayout from "@/components/DashboardLayout";
 import AdminActions from "@/components/AdminActions";
 import { getSession } from "@/lib/auth";
 import { query, initDb } from "@/lib/db";
+import { redirect } from "next/navigation";
 
 export default async function AdminPage() {
   const user = await getSession();
+  if (!user || user.role !== "admin") redirect("/dashboard");
   await initDb();
 
   // Fetch platform stats

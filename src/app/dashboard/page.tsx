@@ -62,7 +62,7 @@ export default async function DashboardPage() {
 
   const stats = [
     { label: "Total Invested", value: `$${totalInvested.toLocaleString()}`, icon: "account_balance", change: `${positions} positions` },
-    { label: "Portfolio Value", value: `$${Math.round(portfolioValue).toLocaleString()}`, icon: "trending_up", change: `+${portfolioChange}%` },
+    { label: "Projected Value", value: `$${Math.round(portfolioValue).toLocaleString()}`, icon: "trending_up", change: `+${portfolioChange}%` },
     { label: "Projected Earnings", value: `$${Math.round(projectedEarnings).toLocaleString()}`, icon: "rocket_launch", change: positions > 0 ? `${positions} titles` : "—" },
     { label: "Positions", value: String(positions), icon: "payments", change: positions > 0 ? "Active" : "None" },
   ];

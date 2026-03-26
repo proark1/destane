@@ -120,9 +120,9 @@ export default async function ProducerPage() {
             <p className="font-[family-name:var(--font-inter)] text-sm text-on-surface-variant max-w-md mx-auto mb-6">
               You haven&apos;t created any productions yet. Submit your first title to start raising funds from the DESTANE investor community.
             </p>
-            <button className="btn-gold text-on-primary font-[family-name:var(--font-inter)] text-xs font-bold px-6 py-3 rounded-md shadow-lg shadow-primary/20">
+            <Link href="/producer/new" className="btn-gold text-on-primary font-[family-name:var(--font-inter)] text-xs font-bold px-6 py-3 rounded-md shadow-lg shadow-primary/20 no-underline inline-block">
               Submit Your First Title
-            </button>
+            </Link>
           </div>
         ) : (
           <>
