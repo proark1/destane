@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import TopNav from "@/components/TopNav";
 import Footer from "@/components/Footer";
 import MobileBottomNav from "@/components/MobileBottomNav";
@@ -30,10 +31,12 @@ const tabs = [
 ];
 
 export default function ExplorePage() {
-  const [activeFilter, setActiveFilter] = useState("funding");
+  const searchParams = useSearchParams();
+  const initialSearch = searchParams.get("search") || "";
+  const [activeFilter, setActiveFilter] = useState(initialSearch ? "" : "funding");
   const [productions, setProductions] = useState<Production[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(initialSearch);
 
   useEffect(() => {
     document.title = "Explore | DESTANE";
